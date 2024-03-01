@@ -1,5 +1,8 @@
 install
 
+create issues
+
 symfony check:requirements
 symfony new surf --version="7.0.*" --webapp
+
 
