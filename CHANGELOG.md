@@ -8,8 +8,6 @@ consult the list of BileMo products (name of the factice provider of service, ce
 
 ### 1. installation
 
-
-
 ### consultation 
 
 consult the details of a BileMo product;
