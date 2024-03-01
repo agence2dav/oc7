@@ -1,0 +1,10 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[remote "a2d"]
+	url = https://github.com/agence2dav/oc7.git
+	fetch = +refs/heads/*:refs/remotes/a2d/*

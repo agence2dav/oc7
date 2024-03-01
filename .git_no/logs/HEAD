@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 44e35152c7c6f993000f0bda2e7d7aedf9ab3efc agence2dav <agence2dav@gmail.com> 1709310817 +0100	commit (initial): Add initial set of files
+44e35152c7c6f993000f0bda2e7d7aedf9ab3efc 0000000000000000000000000000000000000000 agence2dav <agence2dav@gmail.com> 1709311044 +0100	Branch: renamed refs/heads/master to refs/heads/main
+0000000000000000000000000000000000000000 44e35152c7c6f993000f0bda2e7d7aedf9ab3efc agence2dav <agence2dav@gmail.com> 1709311044 +0100	Branch: renamed refs/heads/master to refs/heads/main
+44e35152c7c6f993000f0bda2e7d7aedf9ab3efc 44e35152c7c6f993000f0bda2e7d7aedf9ab3efc agence2dav <agence2dav@gmail.com> 1709311132 +0100	checkout: moving from main to dev
+44e35152c7c6f993000f0bda2e7d7aedf9ab3efc 44e35152c7c6f993000f0bda2e7d7aedf9ab3efc agence2dav <agence2dav@gmail.com> 1709311142 +0100	checkout: moving from dev to install
+44e35152c7c6f993000f0bda2e7d7aedf9ab3efc 44e35152c7c6f993000f0bda2e7d7aedf9ab3efc agence2dav <agence2dav@gmail.com> 1709311205 +0100	checkout: moving from install to main

@@ -2,7 +2,7 @@
 
 ## Issues
 
-### 1. consultation 
+### 1. consultation install cvomposer
 
 consult the list of BileMo products (name of the factice provider of service, certainly a joke);
 

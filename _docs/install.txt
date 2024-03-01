@@ -1,4 +1,0 @@
-install
-
-symfony check:requirements
-
