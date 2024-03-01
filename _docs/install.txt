@@ -1,3 +1,4 @@
 install
 
 symfony check:requirements
+
