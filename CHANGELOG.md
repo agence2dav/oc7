@@ -8,7 +8,7 @@ consult the list of BileMo products (name of the factice provider of service, ce
 
 ### 1. installation
 
-
+- install symfony 7.0
 
 ### consultation 
 
