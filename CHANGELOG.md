@@ -2,11 +2,22 @@
 
 ## Issues
 
-### 1. consultation install cvomposer
+### 1. install symfony #4
+
+- create repository
+- create project symfony for api
+- connect it to the repo
+- install builder for makes
+- install orm-pack
+- install database
+- create user
+- migrate database
+
+###  consultation 
 
 consult the list of BileMo products (name of the factice provider of service, certainly a joke);
 
-### 1. installation
+### installation
 
 ### consultation 
 
