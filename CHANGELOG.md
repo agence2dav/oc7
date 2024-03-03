@@ -2,11 +2,21 @@
 
 ## Issues
 
-### 1. consultation 
+### 1. install symfony #4
 
-consult the list of BileMo products (name of the factice provider of service, certainly a joke);
+- create repository
+- create project symfony for api
+- connect it to the repo
+- install builder for makes
+- install orm-pack
+- install database
+- create user
+- migrate database
 
-### 1. installation
+###  databases 
+
+- create database
+todo: install fake database of mobiles
 
 ### consultation 
 
