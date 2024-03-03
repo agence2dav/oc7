@@ -13,11 +13,9 @@
 - create user
 - migrate database
 
-###  consultation 
+###  databases 
 
-consult the list of BileMo products (name of the factice provider of service, certainly a joke);
-
-### installation
+todo: install fake database of mobiles
 
 ### consultation 
 
