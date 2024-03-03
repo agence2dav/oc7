@@ -15,7 +15,7 @@
 
 ###  databases 
 
-- create database
+- create database.xls
 todo: install fake database of mobiles
 
 ### consultation 
