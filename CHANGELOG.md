@@ -15,6 +15,7 @@
 
 ###  databases 
 
+- create database
 todo: install fake database of mobiles
 
 ### consultation 
