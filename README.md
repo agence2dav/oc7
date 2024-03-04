@@ -29,7 +29,7 @@ You can see :
 
 We use <a href="https://www.dotenv.org/docs/languages/php.html">Dotenv</a> to store the access for the Odbc. Use Composer to install it :
 
-We use the templater <a href="https://twig.symfony.com/doc/3.x/tags/extends.html">Twig</a> to dissociate the front-end from the back-end.
+We use the templater <a href="https://twig.symfony.com/doc/3.x/props/extends.html">Twig</a> to dissociate the front-end from the back-end.
 
 We use <a href="https://github.com/squizlabs/PHP_CodeSniffer">PhpCs</a> as a linter in the <a href="https://fr.wikipedia.org/wiki/Environnement_de_d%C3%A9veloppement">EDI</a> <a href="https://code.visualstudio.com/">VsCode</a> for the respect of the standard <a href="https://www.php-fig.org/psr/psr-12/">Psr-12</a>.
 

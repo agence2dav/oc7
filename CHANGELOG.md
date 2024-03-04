@@ -2,7 +2,9 @@
 
 ## Issues
 
-### 1. install symfony #4
+Start: 240301
+
+### 1. install symfony #4 (240302)
 
 - create repository
 - create project symfony for api
@@ -13,10 +15,10 @@
 - create user
 - migrate database
 
-###  databases 
+###  fixtures 
 
-- create database.xls
-todo: install fake database of mobiles
+- create database.xls (240303)
+- create set of related entities Device, Prop, Attr, DeviceProp (240304)
 
 ### consultation 
 
