@@ -26,7 +26,7 @@ Start: 240301
 
 ### consultatiogit #8
 
-consult the details of a BileMo product;
+- todo: consult the details of a BileMo product;
 
 ### consult list
 
