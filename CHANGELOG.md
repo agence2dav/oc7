@@ -24,7 +24,7 @@ Start: 240301
 - make working a request through mappers (240306)
 - create Uml of usage, sequence and class
 
-### consultation 
+### consultatiogit #8
 
 consult the details of a BileMo product;
 
