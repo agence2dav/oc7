@@ -39,7 +39,7 @@ class DevicePropsModel
         return $this;
     }
 
-    public function getAttr(): ?Device
+    public function getAttr(): ?Attr
     {
         return $this->attr;
     }

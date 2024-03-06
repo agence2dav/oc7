@@ -7,8 +7,6 @@ namespace App\Mapper;
 use App\Entity\Device;
 use App\Mapper\PropMapper;
 use App\Model\DeviceModel;
-use App\Mapper\MediaMapper;
-use App\Mapper\CommentMapper;
 use App\Mapper\DevicePropsMapper;
 use Doctrine\Common\Collections\Collection;
 
@@ -24,7 +22,7 @@ class DeviceMapper
     {
         $deviceModel = new DeviceModel();
         $deviceModel->setId($deviceEntity->getId());
-        $deviceModel->setPhone($deviceEntity->getPhone());
+        $deviceModel->setName($deviceEntity->getName());
         $deviceModel->setUrl($deviceEntity->getUrl());
         $deviceModel->setImage($deviceEntity->getImage());
         $deviceModel->setStatus($deviceEntity->getStatus());

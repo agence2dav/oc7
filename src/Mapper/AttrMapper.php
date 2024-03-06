@@ -9,22 +9,22 @@ use App\Model\AttrModel;
 
 class AttrMapper
 {
-    public function EntityToModel(object $catEntity): AttrModel
+    public function EntityToModel(object $attrEntity): AttrModel
     {
-        $catModel = new AttrModel();
-        $catModel->setId($catEntity->getId());
-        $catModel->setName($catEntity->getName());
-        $catModel->setProps($catEntity->getProps());
-        return $catModel;
+        $attrModel = new AttrModel();
+        $attrModel->setId($attrEntity->getId());
+        $attrModel->setName($attrEntity->getName());
+        //$attrModel->setProps($attrEntity->getProps());
+        return $attrModel;
     }
 
-    public function EntitiesToModels(array $catEntities): array
+    public function EntitiesToModels(array $attrEntities): array
     {
-        $catModels = [];
-        foreach ($catEntities as $catEntity) {
-            $catModels[] = $this->EntityToModel($catEntity);
+        $attrModels = [];
+        foreach ($attrEntities as $attrEntity) {
+            $attrModels[] = $this->EntityToModel($attrEntity);
         }
-        return $catModels;
+        return $attrModels;
     }
 
 }

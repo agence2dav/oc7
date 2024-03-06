@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: DeviceRepository::class)]
 //#[Broadcast]
-#[UniqueEntity(fields: ['phone'], message: 'Ce modèle existe déjà')]
+#[UniqueEntity(fields: ['name'], message: 'Ce modèle existe déjà')]
 class Device
 {
 
@@ -28,7 +28,7 @@ class Device
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $phone = null;
+    private ?string $name = null;
 
     #[ORM\Column(length: 255)]
     private ?string $url = null;
@@ -55,14 +55,14 @@ class Device
         return $this->id;
     }
 
-    public function getPhone(): ?string
+    public function getName(): ?string
     {
-        return $this->phone;
+        return $this->name;
     }
 
-    public function setPhone(string $phone): static
+    public function setName(string $name): static
     {
-        $this->phone = $phone;
+        $this->name = $name;
         return $this;
     }
 

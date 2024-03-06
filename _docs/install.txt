@@ -22,7 +22,6 @@ php bin/console cache:clear
 >crée une lignée ctrl+form+twig
 php bin/console make:crud
 
-
 >tout refaire
 php bin/console doctrine:database:drop --force
 php bin/console doctrine:database:create
@@ -128,5 +127,8 @@ php bin/console make:auth
 
 >mobiles
 php bin/console make:entity
+
+>create api
+symfony composer req api
 
 

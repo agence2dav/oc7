@@ -32,28 +32,42 @@ class FixturesService
         return $now;
     }
 
-    public function test(): void
+    public function devicesTables($test = 0): array
     {
-        $file = '../_docs/phonesdata.json';
+        if ($test)
+            $file = '../_docs/phonesdata.json';
+        else
+            $file = getcwd() . '/_docs/phonesdata.json';
         $datas = json_decode(file_get_contents($file), true);
         $headers = array_shift($datas);
         $attrDb = $headers;
+        unset($attrDb[19]);
+        unset($attrDb[20]);
+        array_shift($attrDb);
         $props = [];
         $propDb = [];
+        $allProps = [];
         $deviceDb = [];
         $devicePropDb = [];
+        $datasReshaped = [];
 
         foreach ($datas as $k => $row) {
             $image = $row[19];
             unset($row[19]);
+            unset($datas[$k][19]);
             $url = $row[20];
             unset($row[20]);
-            $device[] = [array_shift($row), $image, $url, 1];
-            foreach ($row as $ka => $col) {
-                $props[] = trim(str_replace(['"', ' , ', "\n", "\t"], '', $col));
-            }
+            unset($datas[$k][20]);
+            $deviceName = array_shift($row);
+            unset($datas[$k][0]);
+            $deviceDb[] = [$deviceName, $image, $url, 1];
+            foreach ($row as $ka => $col)
+                if ($col) {
+                    $datasReshaped[$k][$ka] = trim(str_replace(['"', ' , ', "\n", "\t"], '', $col));
+                }
+            $allProps = array_merge($allProps, $datasReshaped[$k]);
         }
-        $props = array_flip(array_flip($props));
+        $props = array_flip(array_flip($allProps));
         sort($props);
 
         $in_array_id = function ($r, $d) {
@@ -63,15 +77,29 @@ class FixturesService
             }
         };
 
-        foreach ($datas as $k => $row) {
-            foreach ($row as $ka => $col) {
+        foreach ($datasReshaped as $deviceId => $row) {
+            foreach ($row as $attrId => $col) {
                 $propId = $in_array_id($props, $col);
-                $devicePropDb[] = [$k, $propId];
-                $propDb[] = [$ka, $col];
+                $devicePropDb[] = [$deviceId, $propId];
+                $propDb[] = [$attrId, $col];
+            }
+        }
+        $res = [];
+        foreach ($devicePropDb as $k => $v) {
+            if ($v[0] == 0) {//each prop of device
+                //pr($v);
+                $res[0] = $deviceDb[$v[0]] ?? 0; //pr($device);
+                $propDevice = $propDb[$v[1]] ?? []; //pr($propDevice );
+                $attrId = $propDevice[0];
+                $propDevice[0] = $attrDb[$attrId] ?? [];
+                //pr($propDevice);
+                //$props = array_combine($attrDb, $propDevice);
+                $res[] = $propDevice;
+
             }
         }
 
-        dd($attrDb, $deviceDb, $propDb, $devicePropDb);
+        return [$deviceDb, $attrDb, $propDb, $devicePropDb, $res];
     }
 
 

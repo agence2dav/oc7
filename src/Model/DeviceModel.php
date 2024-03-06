@@ -7,7 +7,7 @@ namespace App\Model;
 class DeviceModel
 {
     private int $id;
-    private string $phone;
+    private string $name;
     private string $url;
     private string $image;
     private int $status;
@@ -24,14 +24,14 @@ class DeviceModel
         return $this;
     }
 
-    public function getPhone(): string
+    public function getName(): string
     {
-        return $this->phone;
+        return $this->name;
     }
 
-    public function setPhone(string $phone): static
+    public function setName(string $name): static
     {
-        $this->phone = $phone;
+        $this->name = $name;
         return $this;
     }
 

@@ -14,7 +14,6 @@ use App\Entity\User;
 
 class DeviceService
 {
-
     public function __construct(
         private readonly EntityManagerInterface $manager,
         private readonly DevicePropsRepository $devicePropsRepository,
@@ -23,7 +22,6 @@ class DeviceService
     ) {
 
     }
-    public const PAGINATOR_PER_PAGE = 10;
 
     public function getAll(): Device|array
     {
@@ -33,6 +31,12 @@ class DeviceService
     public function getById(int $id): DeviceModel
     {
         $deviceEntity = $this->deviceRepository->findOneById($id);
+        return $this->deviceMapper->EntityToModel($deviceEntity);
+    }
+
+    public function getByName(string $name): DeviceModel
+    {
+        $deviceEntity = $this->deviceRepository->findOneByName($name);
         return $this->deviceMapper->EntityToModel($deviceEntity);
     }
 

@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace App\Mapper;
 
-use Doctrine\Common\Collections\Collection;
+use App\Mapper\PropMapper;
 use App\Model\DevicePropsModel;
+use Doctrine\Common\Collections\Collection;
 
 class DevicePropsMapper
 {
+    public function __construct(
+        private readonly PropMapper $propMapper,
+    ) {
+
+    }
 
     public function EntityToModel(object $deviceProps): DevicePropsModel
     {
@@ -16,7 +22,7 @@ class DevicePropsMapper
         $devicePropsModel->setId($deviceProps->getId());
         $devicePropsModel->setProp($deviceProps->getProp());
         $devicePropsModel->setAttr($deviceProps->getProp()->getAttr());
-        $devicePropsModel->setDevice($deviceProps->getDevice());
+        //$devicePropsModel->setDevice($deviceProps->getDevice());
         return $devicePropsModel;
     }
 

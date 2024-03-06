@@ -15,10 +15,14 @@ Start: 240301
 - create user
 - migrate database
 
-###  fixtures 
+###  fixtures #6
 
-- create database.xls (240303)
+- create database.json of references for the project (240303)
+- create the Uml model of datas
 - create set of related entities Device, Prop, Attr, DeviceProp (240304)
+- create the transformer of simple json to 4 linked tables for fixtures (240305)
+- make working a request through mappers (240306)
+- create Uml of usage, sequence and class
 
 ### consultation 
 

@@ -14,7 +14,7 @@ class PropMapper
         $propModel = new PropModel();
         $propModel->setId($propEntity->getId());
         $propModel->setName($propEntity->getName());
-        $propModel->setDevice($propEntity->getDevice());
+        //$propModel->setDevice($propEntity->getDevice());
         $propModel->setAttr($propEntity->getAttr());
         return $propModel;
     }

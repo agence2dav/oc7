@@ -5,8 +5,12 @@ namespace App\DataFixtures;
 use DateTime;
 use DateInterval;
 use Faker\Factory;
+use App\Entity\Attr;
+use App\Entity\Prop;
 use App\Entity\User;
 use Faker\Generator;
+use App\Entity\Device;
+use App\Entity\DeviceProps;
 use App\Service\FixturesService;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Core\DateTime as FakeDatTime;
@@ -26,20 +30,65 @@ class AppFixtures extends Fixture
 
     public function __construct(
         private readonly UserPasswordHasherInterface $hasher,
-        //private FixturesService $fixturesService,
+        private FixturesService $fixturesService,
 
     ) {
         $this->faker = Factory::create('fr_FR');
     }
 
-    public function mobiles(ObjectManager $manager): void
+    public function device(ObjectManager $manager, array $deviceDb): void
     {
-        $file = getcwd() . '/_docs/phonesdata.csv';
-        //$datas = $this->fixturesService->getCsv($file);
-        $file = getcwd() . '/_docs/phonesdata.json';
-        $datas = json_decode(file_get_contents($file));
+        foreach ($deviceDb as $dataSet) {
+            $device = new Device();
+            $device
+                ->setName($dataSet[0])
+                ->setImage($dataSet[1])
+                ->setUrl($dataSet[2])
+                ->setStatus($dataSet[3])
+            ;
+            $this->objects['device'][] = $device;
+            $manager->persist($device);
+        }
+        $manager->flush();
+    }
 
-        $this->objects['images'] = $file;
+    public function attr(ObjectManager $manager, array $attrDb): void
+    {
+        foreach ($attrDb as $dataSet) {
+            $attr = new Attr();
+            $attr->setName($dataSet);
+            $this->objects['attr'][] = $attr;
+            $manager->persist($attr);
+        }
+        $manager->flush();
+    }
+
+    public function prop(ObjectManager $manager, array $propDb): void
+    {
+        $id = 0;
+        foreach ($propDb as $dataSet) {
+            $prop = new Prop();
+            $prop
+                ->setAttr($this->objects['attr'][$dataSet[0]])
+                ->setName($dataSet[1])
+            ;
+            $this->objects['prop'][] = $prop;
+            $manager->persist($prop);
+        }
+        $manager->flush();
+    }
+
+    public function deviceProps(ObjectManager $manager, array $devicePropDb): void
+    {
+        foreach ($devicePropDb as $dataSet) {
+            $deviceProps = new DeviceProps();
+            $deviceProps
+                ->setDevice($this->objects['device'][$dataSet[0]])
+                ->setProp($this->objects['prop'][$dataSet[1]])
+            ;
+            $manager->persist($deviceProps);
+        }
+        $manager->flush();
     }
 
     public function users(ObjectManager $manager): void
@@ -60,7 +109,12 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $this->mobiles($manager);
-        $this->users($manager);
+        [$deviceDb, $attrDb, $propDb, $devicePropDb] = $this->fixturesService->devicesTables();
+        //dd($deviceDb);
+        $this->device($manager, $deviceDb);
+        $this->attr($manager, $attrDb);
+        $this->prop($manager, $propDb);
+        $this->deviceProps($manager, $devicePropDb);
+        //$this->users($manager);
     }
 }
