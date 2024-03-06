@@ -22,7 +22,6 @@ php bin/console cache:clear
 >crée une lignée ctrl+form+twig
 php bin/console make:crud
 
-
 >tout refaire
 php bin/console doctrine:database:drop --force
 php bin/console doctrine:database:create
@@ -64,6 +63,12 @@ DATABASE_URL="mysql://root:password@127.0.0.1:3306/oc7"
 
 >create database
 php bin/console doctrine:database:create
+
+>debug
+composer require symfony/debug-bundle
+
+> profiler
+composer require --dev symfony/profiler-pack
 
 >security component
 composer require security
@@ -109,5 +114,21 @@ composer require ext-iconv
 composer require willdurand/hateoas-bundle
 composer require zircote/swagger-php
 composer require lexik/jwt-authentication-bundle
+
+>fixtures
+composer require orm-fixtures --dev
+php bin/console make:fixtures
+
+>faker
+composer require fakerphp/faker
+
+>auth
+php bin/console make:auth
+
+>mobiles
+php bin/console make:entity
+
+>create api
+symfony composer req api
 
 
