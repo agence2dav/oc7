@@ -1,53 +1,41 @@
 <?php
 
-namespace App\Entity;
+declare(strict_types=1);
+
+namespace App\Model;
 
 use DateTime;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
-use App\Repository\UserRepository;
-use ApiPlatform\Metadata\ApiResource;
-use Symfony\UX\Turbo\Attribute\Broadcast;
+use App\Entity\Client;
+use Doctrine\Common\Collections\Collection;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ApiResource]
-#[Broadcast]
-class User
+class UserModel
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column(length: 180, unique: true)]
-    private ?string $username = null;
-
-    #[ORM\Column(length: 255)]
+    private ?string $clientname = null;
     private ?string $email = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $status = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?DateTime $createdAt = null;
-
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    private ?Client $client = null;
+    private Client $client;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserName(): ?string
+    public function setId(int $id): static
     {
-        return $this->username;
+        $this->id = $id;
+        return $this;
     }
 
-    public function setUserName(string $username): static
+    public function getUserName(): ?string
     {
-        $this->username = $username;
+        return $this->clientname;
+    }
 
+    public function setUserName(string $clientname): static
+    {
+        $this->clientname = $clientname;
         return $this;
     }
 
@@ -86,15 +74,12 @@ class User
         return $this;
     }
 
-    /*
-    //circular ref
-    */
-    public function getClient(): ?Client
+    public function getClient(): Client
     {
         return $this->client;
     }
 
-    public function setClient(?Client $client): static
+    public function setUsers(Client $client): UserModel
     {
         $this->client = $client;
         return $this;

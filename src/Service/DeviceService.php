@@ -28,13 +28,24 @@ class DeviceService
         return $this->deviceRepository->findAll();
     }
 
-    public function getById(int $id): DeviceModel
+    public function getByName(string $name): Device
+    {
+        return $this->deviceRepository->findOneByName($name);
+    }
+
+    public function getById(int $id): Device
+    {
+        //return $this->deviceRepository->findDevice($id);
+        return $this->deviceRepository->findOneById($id);
+    }
+
+    public function getModelById(int $id): DeviceModel
     {
         $deviceEntity = $this->deviceRepository->findOneById($id);
         return $this->deviceMapper->EntityToModel($deviceEntity);
     }
 
-    public function getByName(string $name): DeviceModel
+    public function getModelByName(string $name): DeviceModel
     {
         $deviceEntity = $this->deviceRepository->findOneByName($name);
         return $this->deviceMapper->EntityToModel($deviceEntity);
@@ -60,8 +71,6 @@ class DeviceService
 
     public function saveDevice(
         Device $device,
-        User $user,
-        string $video = null,
     ): void {
         if (!$device->getId()) {
             $device->setStatus(1);
@@ -69,7 +78,6 @@ class DeviceService
         $device->setUrl($device->getUrl());
         $this->deviceRepository->saveDevice($device);
     }
-
 
     public function deleteProp(Device $device, int $propId): void
     {

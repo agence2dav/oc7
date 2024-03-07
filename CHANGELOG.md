@@ -24,9 +24,14 @@ Start: 240301
 - make working a request through mappers (240306)
 - create Uml of usage, sequence and class
 
-### consultatiogit #8
+### consultation #8
 
-- todo: consult the details of a BileMo product;
+- consult the details of a BileMo product;
+- reset structure of tables
+- add mapping for Apis (avoid circular defs and displays url instead of datas)
+- mappers are unuseful
+- build set of tables for users
+- consult users of client
 
 ### consult list
 

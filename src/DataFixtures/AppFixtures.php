@@ -2,13 +2,12 @@
 
 namespace App\DataFixtures;
 
-use DateTime;
-use DateInterval;
 use Faker\Factory;
 use App\Entity\Attr;
 use App\Entity\Prop;
 use App\Entity\User;
 use Faker\Generator;
+use App\Entity\Client;
 use App\Entity\Device;
 use App\Entity\DeviceProps;
 use App\Service\FixturesService;
@@ -25,8 +24,8 @@ class AppFixtures extends Fixture
     private string $adminName = 'd';
     private string $adminMail = 'd@d.d';
     private string $password = 'd';
-    private int $numberOfUsers = 4;
-    private $month = 12;
+    private int $numberOfClients = 4;
+    private int $numberOfUsers = 44;
 
     public function __construct(
         private readonly UserPasswordHasherInterface $hasher,
@@ -91,17 +90,34 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
+    public function clients(ObjectManager $manager): void
+    {
+        for ($i = 0; $i < $this->numberOfClients; $i++) {
+            $client = new Client();
+            $password = $this->hasher->hashPassword($client, $this->password);
+            $client
+                ->setClientName($i == 0 ? $this->adminName : $this->faker->username)
+                ->setEmail($i == 0 ? $this->adminMail : $this->faker->email)
+                ->setPassword($password)
+                ->setRoles([$i == 0 ? 'ROLE_ADMIN' : 'ROLE_EDIT']);
+            ;
+            $this->objects['client'][] = $client;
+            $manager->persist($client);
+        }
+        $manager->flush();
+    }
+
     public function users(ObjectManager $manager): void
     {
         for ($i = 0; $i < $this->numberOfUsers; $i++) {
             $user = new User();
-            $password = $this->hasher->hashPassword($user, $this->password);
             $user
-                ->setUsername($i == 0 ? $this->adminName : $this->faker->username)
-                ->setEmail($i == 0 ? $this->adminName : $this->faker->email)
-                ->setPassword($password)
-                ->setRoles([$i == 0 ? 'ROLE_ADMIN' : 'ROLE_EDIT']);
-            $this->objects['user'][] = $user;
+                ->setUserName($i == 0 ? $this->adminName : $this->faker->username)
+                ->setClient($this->objects['client'][mt_rand(0, $this->numberOfClients - 1)])
+                ->setEmail($this->faker->email)
+                ->setStatus(mt_rand(0, 1))
+                ->setCreatedAt($this->fixturesService->generateDateInPast())
+            ;
             $manager->persist($user);
         }
         $manager->flush();
@@ -110,11 +126,11 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         [$deviceDb, $attrDb, $propDb, $devicePropDb] = $this->fixturesService->devicesTables();
-        //dd($deviceDb);
         $this->device($manager, $deviceDb);
         $this->attr($manager, $attrDb);
         $this->prop($manager, $propDb);
         $this->deviceProps($manager, $devicePropDb);
-        //$this->users($manager);
+        $this->clients($manager);
+        $this->users($manager);
     }
 }

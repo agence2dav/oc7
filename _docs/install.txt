@@ -131,4 +131,11 @@ php bin/console make:entity
 >create api
 symfony composer req api
 
+> ux-turbo
+composer require symfony/ux-turbo
+
+>mercure
+composer require mercure 
+
+
 

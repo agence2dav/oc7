@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use App\Repository\DevicePropsRepository;
 use App\Entity\Attr;
 use App\Entity\Prop;
+use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use Symfony\UX\Turbo\Attribute\Broadcast;
+use App\Repository\DevicePropsRepository;
 
 #[ORM\Entity(repositoryClass: DevicePropsRepository::class)]
+#[ApiResource]
+#[Broadcast]
 class DeviceProps
 {
     #[ORM\Id]
@@ -20,8 +24,6 @@ class DeviceProps
 
     #[ORM\ManyToOne(inversedBy: 'deviceProps')]
     private ?Prop $prop = null;
-
-    private ?Attr $attr = null;
 
     public function getId(): ?int
     {
@@ -50,14 +52,4 @@ class DeviceProps
         return $this;
     }
 
-    public function getAttr(): ?Attr
-    {
-        return $this->attr;
-    }
-
-    public function setAttr(?Attr $attr): static
-    {
-        $this->attr = $attr;
-        return $this;
-    }
 }

@@ -26,7 +26,8 @@ class DeviceMapper
         $deviceModel->setUrl($deviceEntity->getUrl());
         $deviceModel->setImage($deviceEntity->getImage());
         $deviceModel->setStatus($deviceEntity->getStatus());
-        $deviceModel->setDeviceProps($this->devicePropsMapper->EntitiesToModels($deviceEntity->getDeviceProps()));
+        $deviceModel->setDeviceProps($deviceEntity->getDeviceProps());
+        //$deviceModel->setDeviceProps($this->devicePropsMapper->EntitiesToModels($deviceEntity->getDeviceProps()));
         return $deviceModel;
     }
 

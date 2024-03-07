@@ -16,8 +16,8 @@ class AttrService
 
     public function __construct(
         private DeviceRepository $deviceRepo,
-        private AttrRepository $catRepo,
-        private AttrMapper $catMapper,
+        private AttrRepository $attrRepo,
+        private AttrMapper $attrMapper,
         private EntityManagerInterface $manager
     ) {
 
@@ -25,8 +25,8 @@ class AttrService
 
     public function getAll(): Collection|array
     {
-        $catModel = $this->catRepo->findAll();
-        return $this->catMapper->EntitiesToModels($catModel);
+        $attrModel = $this->attrRepo->findAll();
+        return $this->attrMapper->EntitiesToModels($attrModel);
     }
 
 }

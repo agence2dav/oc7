@@ -14,8 +14,8 @@ class DevicePropsModel
     private ?int $id = null;
     private ?Prop $prop = null;
     private ?Attr $attr = null;
-    private ?Device $device = null;
-    private ?DeviceProps $deviceProps = null;
+    //private ?Device $device = null;
+    //private ?DeviceProps $deviceProps = null;
 
     public function getId(): ?int
     {
@@ -39,6 +39,7 @@ class DevicePropsModel
         return $this;
     }
 
+    /* */
     public function getAttr(): ?Attr
     {
         return $this->attr;
@@ -50,6 +51,7 @@ class DevicePropsModel
         return $this;
     }
 
+    /* 
     public function getDevice(): ?Device
     {
         return $this->device;
@@ -59,8 +61,9 @@ class DevicePropsModel
     {
         $this->device = $device;
         return $this;
-    }
+    }*/
 
+    /* 
     public function getDeviceProps(): ?DeviceProps
     {
         return $this->deviceProps;
@@ -70,6 +73,6 @@ class DevicePropsModel
     {
         $this->deviceProps = $deviceProps;
         return $this;
-    }
+    }*/
 
 }

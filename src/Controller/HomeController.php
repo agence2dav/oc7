@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\ClientService;
 use App\Service\DeviceService;
 use App\Service\FixturesService;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,16 +15,37 @@ class HomeController extends AbstractController
     public function __construct(
         private FixturesService $fixturesService,
         private DeviceService $deviceService,
+        private ClientService $clientService,
 
     ) {
     }
 
     #[Route('/', name: 'app_root')]
     #[Route('/home', name: 'app_home')]
-    public function index(Request $request): Response
+    public function index(): Response
     {
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
+        ]);
+    }
+
+    #[Route('/users', name: 'app_users')]
+    public function users(Request $request): Response
+    {
+        $user = $this->clientService->getById(1);
+        //$user = $this->clientService->getModelById(1);
+        return $this->json([
+            'devices' => [$user],
+        ]);
+    }
+
+    #[Route('/consult', name: 'app_consult')]
+    public function consultation(Request $request): Response
+    {
+        $device = $this->deviceService->getByName('Apple iPhone 15');
+        //$device = $this->deviceService->getModelByName('Apple iPhone 15');
+        return $this->json([
+            'devices' => [$device],
         ]);
     }
 

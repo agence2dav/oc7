@@ -12,6 +12,7 @@ class DevicePropsMapper
 {
     public function __construct(
         private readonly PropMapper $propMapper,
+        private readonly AttrMapper $attrMapper,
     ) {
 
     }
@@ -21,7 +22,8 @@ class DevicePropsMapper
         $devicePropsModel = new DevicePropsModel();
         $devicePropsModel->setId($deviceProps->getId());
         $devicePropsModel->setProp($deviceProps->getProp());
-        $devicePropsModel->setAttr($deviceProps->getProp()->getAttr());
+        //$devicePropsModel->setProp($this->propMapper->EntityToModels($deviceProps->getProp()));
+        //$devicePropsModel->setAttr($deviceProps->getProp()->getAttr());
         //$devicePropsModel->setDevice($deviceProps->getDevice());
         return $devicePropsModel;
     }

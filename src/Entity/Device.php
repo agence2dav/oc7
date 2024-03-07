@@ -6,21 +6,18 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DeviceRepository;
+use ApiPlatform\Metadata\ApiResource;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: DeviceRepository::class)]
-//#[Broadcast]
+#[Broadcast]
+#[ApiResource]
 #[UniqueEntity(fields: ['name'], message: 'Ce modèle existe déjà')]
 class Device
 {
-
-    public function __construct()
-    {
-        $this->deviceProps = new ArrayCollection();
-    }
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -42,11 +39,10 @@ class Device
     #[ORM\OneToMany(targetEntity: DeviceProps::class, mappedBy: 'device')]
     private Collection $deviceProps;
 
-    private Collection $attrs;
-    private Collection $props;
-
-    private ?Attr $attr = null;
-    private ?Prop $prop = null;
+    public function __construct()
+    {
+        $this->deviceProps = new ArrayCollection();
+    }
 
     //get-set
 
@@ -122,26 +118,6 @@ class Device
             }
         }
         return $this;
-    }
-
-    public function getAttrs(): Collection
-    {
-        return $this->attrs;
-    }
-
-    public function getProps(): Collection
-    {
-        return $this->props;
-    }
-
-    public function getAttr(): ?Attr
-    {
-        return $this->attr;
-    }
-
-    public function getProp(): ?Prop
-    {
-        return $this->prop;
     }
 
 }

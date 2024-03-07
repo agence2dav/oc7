@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model;
 
+use Doctrine\Common\Collections\Collection;
+
 class DeviceModel
 {
     private int $id;
@@ -11,7 +13,7 @@ class DeviceModel
     private string $url;
     private string $image;
     private int $status;
-    private array $deviceProps;
+    private Collection $deviceProps;
 
     public function getId(): int
     {
@@ -68,12 +70,12 @@ class DeviceModel
         return $this;
     }
 
-    public function getDeviceProps(): array
+    public function getDeviceProps(): Collection
     {
         return $this->deviceProps;
     }
 
-    public function setDeviceProps(array $deviceProps): static
+    public function setDeviceProps(Collection $deviceProps): static
     {
         $this->deviceProps = $deviceProps;
         return $this;

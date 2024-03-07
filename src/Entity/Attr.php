@@ -2,13 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\PropRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Prop;
+use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PropRepository;
+use ApiPlatform\Metadata\ApiResource;
+use Symfony\UX\Turbo\Attribute\Broadcast;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: PropRepository::class)]
+#[ApiResource]
+#[Broadcast]
 class Attr
 {
     #[ORM\Id]
@@ -43,6 +47,9 @@ class Attr
         return $this;
     }
 
+    /*
+     */
+    //circular ref if mapping from deviceProps
     public function getProps(): Collection
     {
         return $this->props;
