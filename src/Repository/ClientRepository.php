@@ -28,6 +28,18 @@ class ClientRepository extends ServiceEntityRepository implements PasswordUpgrad
         ;
     }
 
+    public function findFirstClientId(): int
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.id')
+            ->orderBy('t.id', 'DESC')
+            ->setMaxResults(1)
+            ->setFirstResult(1)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!$user instanceof Client) {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Model;
 
 use Doctrine\Common\Collections\Collection;
-use App\Entity\DeviceProps;
+use App\Entity\DeviceProp;
 use App\Entity\Device;
 
 class ClientModel
@@ -89,7 +89,7 @@ class ClientModel
         return $this->users;
     }
 
-    public function setUsers(Collection $users): ClientModel
+    public function setUsers(Collection $users): static
     {
         $this->users = $users;
         return $this;

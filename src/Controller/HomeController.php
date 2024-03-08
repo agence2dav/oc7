@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Service\ClientService;
 use App\Service\DeviceService;
 use App\Service\FixturesService;
+use App\Service\SerializerService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
@@ -16,9 +18,11 @@ class HomeController extends AbstractController
         private FixturesService $fixturesService,
         private DeviceService $deviceService,
         private ClientService $clientService,
-
+        private SerializerService $serializerService,
     ) {
     }
+
+    /* */
 
     #[Route('/', name: 'app_root')]
     #[Route('/home', name: 'app_home')]
@@ -29,28 +33,28 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/users', name: 'app_users')]
-    public function users(Request $request): Response
+    #[Route('/users', name: 'test_users')]
+    public function users(Request $request): JsonResponse
     {
-        $user = $this->clientService->getById(1);
-        //$user = $this->clientService->getModelById(1);
-        return $this->json([
-            'devices' => [$user],
-        ]);
+        $firstClientId = $this->clientService->getFirstId();
+        $client = $this->clientService->getById($firstClientId);
+        //$client = $this->clientService->getModelById($firstClientId);
+        $json = $this->serializerService->arrayToJson($client);
+        return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
 
-    #[Route('/consult', name: 'app_consult')]
-    public function consultation(Request $request): Response
+    #[Route('/devices', name: 'test_devices')]
+    public function devices(Request $request): JsonResponse
     {
-        $device = $this->deviceService->getByName('Apple iPhone 15');
-        //$device = $this->deviceService->getModelByName('Apple iPhone 15');
+        //$device = $this->deviceService->getByName('Apple iPhone 15');
+        $device = $this->deviceService->getModelByName('Apple iPhone 15');
         return $this->json([
             'devices' => [$device],
         ]);
     }
 
     #[Route('/test', name: 'app_test')]
-    public function test(): Response
+    public function test(): JsonResponse
     {
         [$deviceDb, $attrDb, $propDb, $devicePropDb, $res] = $this->fixturesService->devicesTables(1);
         //dd($deviceDb, $attrDb, $propDb, $devicePropDb);

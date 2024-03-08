@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Entity\Client;
+use App\Mapper\ClientMapper;
+use App\Repository\ClientRepository;
+use App\Repository\DeviceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\Collection;
-use App\Repository\DeviceRepository;
-use App\Repository\ClientRepository;
-use App\Mapper\ClientMapper;
-use App\Entity\Device;
 
 class ClientService
 {
@@ -18,7 +18,6 @@ class ClientService
         private DeviceRepository $deviceRepo,
         private ClientRepository $clientRepo,
         private ClientMapper $clientMapper,
-        private EntityManagerInterface $manager
     ) {
 
     }
@@ -38,6 +37,11 @@ class ClientService
     {
         $clientModel = $this->clientRepo->findById($id);
         return $this->clientMapper->EntitiesToModels($clientModel);
+    }
+
+    public function getFirstId(): int|null
+    {
+        return $this->clientRepo->findFirstClientId();
     }
 
 }

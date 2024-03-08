@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-use DateTime;
+use DateTimeInterface;
 use App\Entity\Client;
 use Doctrine\Common\Collections\Collection;
 
@@ -14,7 +14,7 @@ class UserModel
     private ?string $clientname = null;
     private ?string $email = null;
     private ?string $status = null;
-    private ?DateTime $createdAt = null;
+    private ?DateTimeInterface $createdAt = null;
     private Client $client;
 
     public function getId(): ?int
@@ -63,12 +63,12 @@ class UserModel
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTime
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTime $createdAt): static
+    public function setCreatedAt(DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -79,7 +79,7 @@ class UserModel
         return $this->client;
     }
 
-    public function setUsers(Client $client): UserModel
+    public function setClient(Client $client): UserModel
     {
         $this->client = $client;
         return $this;

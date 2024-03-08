@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Attr;
-use App\Entity\DeviceProps;
+use App\Entity\DeviceProp;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PropRepository;
 use ApiPlatform\Metadata\ApiResource;
@@ -27,7 +27,7 @@ class Prop
     #[ORM\ManyToOne(inversedBy: 'props')]
     private ?Attr $attr = null;
 
-    #[ORM\OneToMany(targetEntity: DeviceProps::class, mappedBy: 'prop')]
+    #[ORM\OneToMany(targetEntity: DeviceProp::class, mappedBy: 'prop')]
     private Collection $deviceProps;
 
     public function __construct()
@@ -70,7 +70,7 @@ class Prop
         return $this->deviceProps;
     }
 
-    public function addDeviceProp(DeviceProps $deviceProp): static
+    public function addDeviceProp(DeviceProp $deviceProp): static
     {
         if (!$this->deviceProps->contains($deviceProp)) {
             $this->deviceProps->add($deviceProp);
@@ -79,7 +79,7 @@ class Prop
         return $this;
     }
 
-    public function removeDeviceProp(DeviceProps $deviceProp): static
+    public function removeDeviceProp(DeviceProp $deviceProp): static
     {
         if ($this->deviceProps->removeElement($deviceProp)) {
             // set the owning side to null (unless already changed)

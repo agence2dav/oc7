@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\DevicePropsRepository;
+use App\Repository\DevicePropRepository;
 use App\Repository\DeviceRepository;
 use App\Mapper\DeviceMapper;
 use App\Model\DeviceModel;
@@ -16,7 +16,7 @@ class DeviceService
 {
     public function __construct(
         private readonly EntityManagerInterface $manager,
-        private readonly DevicePropsRepository $devicePropsRepository,
+        private readonly DevicePropRepository $devicePropsRepository,
         private readonly DeviceRepository $deviceRepository,
         private readonly DeviceMapper $deviceMapper,
     ) {
@@ -61,6 +61,11 @@ class DeviceService
     {
         $deviceEntities = $this->deviceRepository->findAll();
         return $this->deviceMapper->EntitiesToModels($deviceEntities);
+    }
+
+    public function getFirstId(): Device|null
+    {
+        return $this->deviceRepository->findFirstDevice();
     }
 
     public function getLastsDevices(): array

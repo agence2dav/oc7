@@ -8,20 +8,20 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\DeviceRepository;
 use App\Repository\PropRepository;
 use App\Repository\AttrRepository;
-use App\Repository\DevicePropsRepository;
-use App\Mapper\DevicePropsMapper;
-use App\Entity\DeviceProps;
+use App\Repository\DevicePropRepository;
+use App\Mapper\DevicePropMapper;
+use App\Entity\DeviceProp;
 use App\Entity\Device;
 
-class DevicePropsService
+class DevicePropService
 {
 
     public function __construct(
         private DeviceRepository $DeviceRepo,
         private PropRepository $propRepo,
         private AttrRepository $catRepo,
-        private DevicePropsRepository $devicePropsRepo,
-        private DevicePropsMapper $devicePropsMapper,
+        private DevicePropRepository $devicePropsRepo,
+        private DevicePropMapper $devicePropsMapper,
         private EntityManagerInterface $manager
     ) {
 
@@ -31,14 +31,14 @@ class DevicePropsService
         Device $device,
         string $propId,
     ): void {
-        $deviceProps = new DeviceProps();
+        $deviceProps = new DeviceProp();
         $prop = $this->propRepo->findOneBy(['id' => $propId]);
         if ($prop) {
             $attr = $prop->getAttr();
             $deviceProps->setDevice($device);
-            $deviceProps->setAttr($attr);
+            //$deviceProps->setAttr($attr);
             $deviceProps->setProp($prop);
-            $this->devicePropsRepo->saveDeviceProps($deviceProps);
+            $this->devicePropsRepo->saveDeviceProp($deviceProps);
         }
     }
 

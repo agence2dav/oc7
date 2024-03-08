@@ -9,7 +9,7 @@ use App\Entity\User;
 use Faker\Generator;
 use App\Entity\Client;
 use App\Entity\Device;
-use App\Entity\DeviceProps;
+use App\Entity\DeviceProp;
 use App\Service\FixturesService;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Core\DateTime as FakeDatTime;
@@ -30,7 +30,6 @@ class AppFixtures extends Fixture
     public function __construct(
         private readonly UserPasswordHasherInterface $hasher,
         private FixturesService $fixturesService,
-
     ) {
         $this->faker = Factory::create('fr_FR');
     }
@@ -80,7 +79,7 @@ class AppFixtures extends Fixture
     public function deviceProps(ObjectManager $manager, array $devicePropDb): void
     {
         foreach ($devicePropDb as $dataSet) {
-            $deviceProps = new DeviceProps();
+            $deviceProps = new DeviceProp();
             $deviceProps
                 ->setDevice($this->objects['device'][$dataSet[0]])
                 ->setProp($this->objects['prop'][$dataSet[1]])
@@ -112,11 +111,12 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < $this->numberOfUsers; $i++) {
             $user = new User();
             $user
-                ->setUserName($i == 0 ? $this->adminName : $this->faker->username)
+                ->setUserName($this->faker->username)
                 ->setClient($this->objects['client'][mt_rand(0, $this->numberOfClients - 1)])
                 ->setEmail($this->faker->email)
                 ->setStatus(mt_rand(0, 1))
-                ->setCreatedAt($this->fixturesService->generateDateInPast())
+                //->setCreatedAt($this->fixturesService->generateDateInPast())
+                ->setCreatedAt($this->faker->dateTimeBetween('-1 year'))
             ;
             $manager->persist($user);
         }

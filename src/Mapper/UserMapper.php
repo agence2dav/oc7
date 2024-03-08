@@ -15,6 +15,8 @@ class UserMapper
         $clientModel->setId($clientEntity->getId());
         $clientModel->setUserName($clientEntity->getUserName());
         $clientModel->setEmail($clientEntity->getEmail());
+        $clientModel->setStatus($clientEntity->getStatus());
+        $clientModel->setCreatedAt($clientEntity->getCreatedAt());
         //$clientModel->setClient($clientEntity->getClient());
         return $clientModel;
     }

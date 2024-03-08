@@ -29,6 +29,18 @@ class DeviceRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findFirstDevice(): Device
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.id')
+            ->orderBy('t.id', 'DESC')
+            ->setMaxResults(1)
+            ->setFirstResult(1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function findDevices(): array
     {
         return $this->createQueryBuilder('t')

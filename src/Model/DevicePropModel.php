@@ -7,15 +7,15 @@ namespace App\Model;
 use App\Entity\Attr;
 use App\Entity\Prop;
 use App\Entity\Device;
-use App\Entity\DeviceProps;
+use App\Entity\DeviceProp;
 
-class DevicePropsModel
+class DevicePropModel
 {
     private ?int $id = null;
     private ?Prop $prop = null;
     private ?Attr $attr = null;
     //private ?Device $device = null;
-    //private ?DeviceProps $deviceProps = null;
+    //private ?DeviceProp $deviceProps = null;
 
     public function getId(): ?int
     {
@@ -64,12 +64,12 @@ class DevicePropsModel
     }*/
 
     /* 
-    public function getDeviceProps(): ?DeviceProps
+    public function getDeviceProp(): ?DeviceProp
     {
         return $this->deviceProps;
     }
 
-    public function setDeviceProps(?DeviceProps $deviceProps): static
+    public function setDeviceProp(?DeviceProp $deviceProps): static
     {
         $this->deviceProps = $deviceProps;
         return $this;

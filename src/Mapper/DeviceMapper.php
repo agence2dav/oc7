@@ -7,13 +7,13 @@ namespace App\Mapper;
 use App\Entity\Device;
 use App\Mapper\PropMapper;
 use App\Model\DeviceModel;
-use App\Mapper\DevicePropsMapper;
+use App\Mapper\DevicePropMapper;
 use Doctrine\Common\Collections\Collection;
 
 class DeviceMapper
 {
     public function __construct(
-        private DevicePropsMapper $devicePropsMapper,
+        private DevicePropMapper $devicePropsMapper,
         private PropMapper $propMapper,
     ) {
     }

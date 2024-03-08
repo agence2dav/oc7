@@ -7,12 +7,12 @@ use App\Entity\Prop;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use Symfony\UX\Turbo\Attribute\Broadcast;
-use App\Repository\DevicePropsRepository;
+use App\Repository\DevicePropRepository;
 
-#[ORM\Entity(repositoryClass: DevicePropsRepository::class)]
+#[ORM\Entity(repositoryClass: DevicePropRepository::class)]
 #[ApiResource]
 #[Broadcast]
-class DeviceProps
+class DeviceProp
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -9,6 +9,11 @@ use App\Model\ClientModel;
 
 class ClientMapper
 {
+    public function __construct(
+        private UserMapper $userMapper,
+    ) {
+    }
+
     public function EntityToModel(object $clientEntity): ClientModel
     {
         $clientModel = new ClientModel();
@@ -16,6 +21,7 @@ class ClientMapper
         $clientModel->setClientName($clientEntity->getClientName());
         $clientModel->setEmail($clientEntity->getEmail());
         $clientModel->setUsers($clientEntity->getUsers());
+        //$clientModel->setUsers($this->userMapper->EntitiesToModels($clientEntity->getUsers()));
         return $clientModel;
     }
 

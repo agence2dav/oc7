@@ -36,7 +36,7 @@ class Device
     #[ORM\Column]
     private ?int $status = null;
 
-    #[ORM\OneToMany(targetEntity: DeviceProps::class, mappedBy: 'device')]
+    #[ORM\OneToMany(targetEntity: DeviceProp::class, mappedBy: 'device')]
     private Collection $deviceProps;
 
     public function __construct()
@@ -100,7 +100,7 @@ class Device
         return $this->deviceProps;
     }
 
-    public function addDeviceProps(DeviceProps $deviceProps): static
+    public function addDeviceProps(DeviceProp $deviceProps): static
     {
         if (!$this->deviceProps->contains($deviceProps)) {
             $this->deviceProps->add($deviceProps);
@@ -109,7 +109,7 @@ class Device
         return $this;
     }
 
-    public function removeDeviceProps(DeviceProps $deviceProps): static
+    public function removeDeviceProps(DeviceProp $deviceProps): static
     {
         if ($this->deviceProps->removeElement($deviceProps)) {
             // set the owning side to null (unless already changed)

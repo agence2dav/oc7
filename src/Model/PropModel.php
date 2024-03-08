@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-use App\Entity\DeviceProps;
+use App\Entity\DeviceProp;
 use App\Entity\Device;
 use App\Entity\Attr;
 
@@ -12,7 +12,7 @@ class PropModel
 {
     private ?int $id = null;
     private ?string $name = null;
-    private ?DeviceProps $deviceProps = null;
+    private ?DeviceProp $deviceProps = null;
     private ?Device $device = null;
     private ?Attr $attr = null;
 
@@ -60,12 +60,12 @@ class PropModel
         return $this;
     }
 
-    public function getDeviceProps(): ?DeviceProps
+    public function getDeviceProps(): ?DeviceProp
     {
         return $this->deviceProps;
     }
 
-    public function setDeviceProps(?DeviceProps $deviceProps): static
+    public function setDeviceProps(?DeviceProp $deviceProps): static
     {
         $this->deviceProps = $deviceProps;
         return $this;
