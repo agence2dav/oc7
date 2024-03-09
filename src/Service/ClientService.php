@@ -6,47 +6,33 @@ namespace App\Service;
 
 use App\Entity\Client;
 use App\Model\ClientModel;
+use App\Model\ClientsModel;
 use App\Mapper\ClientMapper;
-use App\Model\ClientApiModel;
-use App\Mapper\ClientApiMapper;
+use App\Mapper\ClientsMapper;
 use App\Repository\ClientRepository;
-use App\Repository\DeviceRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\Collection;
 
 class ClientService
 {
 
     public function __construct(
-        private DeviceRepository $deviceRepo,
         private ClientRepository $clientRepo,
-        private ClientApiMapper $clientApiMapper,
         private ClientMapper $clientMapper,
+        private ClientsMapper $clientsMapper,
     ) {
 
     }
 
-    public function getAll(): Collection|array
+    public function getClients(): Collection|array
     {
-        $clientModel = $this->clientRepo->findAll();
-        return $this->clientMapper->EntitiesToModels($clientModel);
+        $clientsModel = $this->clientRepo->findAll();
+        return $this->clientsMapper->EntitiesToModels($clientsModel);
     }
 
-    public function getById(int $id): Collection|array
-    {
-        return $this->clientRepo->findById($id);
-    }
-
-    public function getModelById(int $id): ClientModel|null
+    public function getClient(int $id): ClientModel|null
     {
         $clientModel = $this->clientRepo->findOneById($id);
         return $this->clientMapper->EntityToModel($clientModel);
-    }
-
-    public function getApiModelById(int $id): ClientApiModel|null
-    {
-        $clientModel = $this->clientRepo->findOneById($id);
-        return $this->clientApiMapper->EntityToModel($clientModel);
     }
 
     public function getFirstId(): int|null

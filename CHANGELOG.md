@@ -40,7 +40,7 @@ Start: 240301
 
 ### cleanup #12
 
-- avoid unused files
+- delete unused files
 
 ### login 
 

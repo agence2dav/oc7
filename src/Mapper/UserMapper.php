@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Mapper;
 
 use App\Model\UserModel;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class UserMapper
 {
@@ -18,7 +16,6 @@ class UserMapper
         $userModel->setEmail($clientEntity->getEmail());
         $userModel->setStatus($clientEntity->getStatus());
         $userModel->setCreatedAt($clientEntity->getCreatedAt());
-        //$userModel->setClient($clientEntity->getClient());
         return $userModel;
     }
 
@@ -26,15 +23,6 @@ class UserMapper
     {
         $userModels = [];
         foreach ($clientEntities as $clientEntity) {
-            $userModels[] = $this->EntityToModel($clientEntity);
-        }
-        return $userModels;
-    }
-
-    public function CollectionToModels(Collection $clientCollection): Collection
-    {
-        $userModels = new ArrayCollection;
-        foreach ($clientCollection as $clientEntity) {
             $userModels[] = $this->EntityToModel($clientEntity);
         }
         return $userModels;

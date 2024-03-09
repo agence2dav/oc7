@@ -25,14 +25,14 @@ class SerializerService
         return $serializer->encode($datas, 'json');
     }
 
-    public function arrayToJson(array $datas): string
-    {
-        return $this->serializer->serialize($datas, 'json');
-    }
-
-    public function EntityToJson(object $object): string
+    public function entityToJson(object $object): string
     {
         return $this->serializer->serialize($object, 'json');
+    }
+
+    public function entitiesToJson(array $datas): string
+    {
+        return $this->serializer->serialize($datas, 'json');
     }
 
 }
