@@ -5,12 +5,10 @@ namespace App\Entity;
 use App\Entity\Attr;
 use App\Entity\Prop;
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Metadata\ApiResource;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use App\Repository\DevicePropRepository;
 
 #[ORM\Entity(repositoryClass: DevicePropRepository::class)]
-#[ApiResource]
 #[Broadcast]
 class DeviceProp
 {

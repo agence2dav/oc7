@@ -8,18 +8,18 @@ use Doctrine\Common\Collections\Collection;
 use App\Entity\DeviceProp;
 use App\Entity\Device;
 
-class AttrModel
+class ClientApiModel
 {
-    private ?string $name = null;
+    private ?string $url = null;
 
-    public function getName(): ?string
+    public function getUrl(): ?int
     {
-        return $this->name;
+        return $this->url;
     }
 
-    public function setName(?string $name): static
+    public function setUrl(int $id): static
     {
-        $this->name = $name;
+        $this->url = '/api/client/' . $id;
         return $this;
     }
 

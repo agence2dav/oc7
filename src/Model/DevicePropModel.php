@@ -11,68 +11,29 @@ use App\Entity\DeviceProp;
 
 class DevicePropModel
 {
-    private ?int $id = null;
-    private ?Prop $prop = null;
-    private ?Attr $attr = null;
-    //private ?Device $device = null;
-    //private ?DeviceProp $deviceProps = null;
+    private string $propName;
+    private string $attrUrl;
 
-    public function getId(): ?int
+    public function getPropName(): string
     {
-        return $this->id;
+        return $this->propName;
     }
 
-    public function setId(int $id): static
+    public function setPropName(string $propName): static
     {
-        $this->id = $id;
+        $this->propName = $propName;
         return $this;
     }
 
-    public function getProp(): ?Prop
+    public function getAttrUrl(): string
     {
-        return $this->prop;
+        return $this->attrUrl;
     }
 
-    public function setProp(?Prop $prop): static
+    public function setAttrUrl(int $id): static
     {
-        $this->prop = $prop;
+        $this->attrUrl = '/api/attr/' . $id;
         return $this;
     }
-
-    /* */
-    public function getAttr(): ?Attr
-    {
-        return $this->attr;
-    }
-
-    public function setAttr(?Attr $attr): static
-    {
-        $this->attr = $attr;
-        return $this;
-    }
-
-    /* 
-    public function getDevice(): ?Device
-    {
-        return $this->device;
-    }
-
-    public function setDevice(?Device $device): static
-    {
-        $this->device = $device;
-        return $this;
-    }*/
-
-    /* 
-    public function getDeviceProp(): ?DeviceProp
-    {
-        return $this->deviceProps;
-    }
-
-    public function setDeviceProp(?DeviceProp $deviceProps): static
-    {
-        $this->deviceProps = $deviceProps;
-        return $this;
-    }*/
 
 }

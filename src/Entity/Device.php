@@ -6,7 +6,6 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DeviceRepository;
-use ApiPlatform\Metadata\ApiResource;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,7 +13,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: DeviceRepository::class)]
 #[Broadcast]
-#[ApiResource]
 #[UniqueEntity(fields: ['name'], message: 'Ce modèle existe déjà')]
 class Device
 {

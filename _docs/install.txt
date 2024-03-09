@@ -111,6 +111,17 @@ composer require twig/extra-bundle
 composer require symfony/twig-bundle
 composer require ext-ctype
 composer require ext-iconv
+
+> ux-turbo
+composer require symfony/ux-turbo
+
+>serializer
+composer require symfony/serializer
+composer require symfony/serializer-pack
+
+>paramconverter (déduit la requête d'après l'url)
+composer require sensio/framework-extra-bundle
+
 **
 composer require willdurand/hateoas-bundle
 composer require zircote/swagger-php
@@ -131,14 +142,4 @@ php bin/console make:entity
 
 >create api (use notation to create links)
 symfony composer req api
-
-> ux-turbo
-composer require symfony/ux-turbo
-
->serializer
-composer require symfony/serializer
-composer require symfony/serializer-pack
-
->paramconverter (déduit la requête d'après l'url)
-composer require sensio/framework-extra-bundle
 

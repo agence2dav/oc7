@@ -5,13 +5,11 @@ namespace App\Entity;
 use App\Entity\Prop;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PropRepository;
-use ApiPlatform\Metadata\ApiResource;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: PropRepository::class)]
-#[ApiResource]
 #[Broadcast]
 class Attr
 {

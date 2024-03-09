@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Entity\Device;
+use App\Model\AttrModel;
+use App\Mapper\AttrMapper;
+use App\Repository\AttrRepository;
+use App\Repository\DeviceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\Collection;
-use App\Repository\DeviceRepository;
-use App\Repository\AttrRepository;
-use App\Mapper\AttrMapper;
-use App\Entity\Device;
 
 class AttrService
 {
@@ -27,6 +28,12 @@ class AttrService
     {
         $attrModel = $this->attrRepo->findAll();
         return $this->attrMapper->EntitiesToModels($attrModel);
+    }
+
+    public function getModelById(int $id): AttrModel
+    {
+        $deviceEntity = $this->attrRepo->findOneById($id);
+        return $this->attrMapper->EntityToModel($deviceEntity);
     }
 
 }

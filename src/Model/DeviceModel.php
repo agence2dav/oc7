@@ -15,6 +15,7 @@ class DeviceModel
     private int $status;
     private Collection $deviceProps;
 
+
     public function getId(): int
     {
         return $this->id;

@@ -12,9 +12,7 @@ class AttrMapper
     public function EntityToModel(object $attrEntity): AttrModel
     {
         $attrModel = new AttrModel();
-        $attrModel->setId($attrEntity->getId());
         $attrModel->setName($attrEntity->getName());
-        //$attrModel->setProps($attrEntity->getProps());
         return $attrModel;
     }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\User;
+use App\Model\UserModel;
 use App\Mapper\UserMapper;
 use App\Repository\UserRepository;
 use App\Repository\DeviceRepository;
@@ -33,10 +34,10 @@ class UserService
         return $this->userRepo->findById($id);
     }
 
-    public function getModelById(int $id): Collection|array
+    public function getModelById(int $id): UserModel|null
     {
-        $userModel = $this->userRepo->findById($id);
-        return $this->userMapper->EntitiesToModels($userModel);
+        $userModel = $this->userRepo->findOneById($id);
+        return $this->userMapper->EntityToModel($userModel);
     }
 
     public function getFirstId(): int|null

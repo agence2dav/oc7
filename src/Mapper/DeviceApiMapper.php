@@ -7,29 +7,25 @@ namespace App\Mapper;
 use App\Entity\Device;
 use App\Mapper\PropMapper;
 use App\Model\DeviceModel;
+use App\Model\DeviceApiModel;
 use App\Mapper\DevicePropMapper;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class DeviceMapper
+class DeviceApiMapper
 {
     public function __construct(
         private DevicePropMapper $devicePropMapper,
-        private DevicePropApiMapper $devicePropApiapper,
+        private DevicePropApiMapper $devicePropApiMapper,
         //private PropMapper $propMapper,
     ) {
     }
 
-    public function EntityToModel(Device $deviceEntity): DeviceModel
+    public function EntityToModel(Device $deviceEntity): DeviceApiModel
     {
-        $deviceModel = new DeviceModel();
-        $deviceModel->setId($deviceEntity->getId());
-        $deviceModel->setName($deviceEntity->getName());
-        $deviceModel->setUrl($deviceEntity->getUrl());
-        $deviceModel->setImage($deviceEntity->getImage());
-        $deviceModel->setStatus($deviceEntity->getStatus());
-        //$deviceModel->setdeviceProp($deviceEntity->getdeviceProp());
-        $deviceModel->setdeviceProps($this->devicePropMapper->CollectionToModels($deviceEntity->getdeviceProps()));
+        $deviceModel = new DeviceApiModel();
+        $deviceModel->setdeviceProps($this->devicePropApiMapper->CollectionToModels($deviceEntity->getdeviceProps()));
+
         return $deviceModel;
     }
 
