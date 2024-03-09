@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Mapper;
 
-use Doctrine\Common\Collections\Collection;
 use App\Model\ClientModel;
+use App\Mapper\UsersMapper;
 
 class ClientMapper
 {
     public function __construct(
-        private UserMapper $userMapper,
+        private UsersMapper $usersMapper,
     ) {
     }
 
@@ -20,8 +20,6 @@ class ClientMapper
         $clientModel->setId($clientEntity->getId());
         $clientModel->setClientName($clientEntity->getClientName());
         $clientModel->setEmail($clientEntity->getEmail());
-        //$clientModel->setUsers($clientEntity->getUsers());
-        $clientModel->setUsers($this->userMapper->CollectionToModels($clientEntity->getUsers()));
         return $clientModel;
     }
 

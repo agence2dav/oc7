@@ -13,10 +13,8 @@ class PropMapper
     public function EntityToModel(object $propEntity): PropModel
     {
         $propModel = new PropModel();
-        $propModel->setId($propEntity->getId());
         $propModel->setName($propEntity->getName());
-        //$propModel->setDevice($propEntity->getDevice());
-        $propModel->setAttr($propEntity->getAttr());
+        $propModel->setAttrUrl($propEntity->getAttr()->getId());
         return $propModel;
     }
 
@@ -31,11 +29,11 @@ class PropMapper
 
     public function CollectionToModels(Collection $propCollection): Collection
     {
-        $deviceModels = new ArrayCollection;
+        $propModels = new ArrayCollection;
         foreach ($propCollection as $deviceEntity) {
-            $deviceModels[] = $this->EntityToModel($deviceEntity);
+            $propModels[] = $this->EntityToModel($deviceEntity);
         }
-        return $deviceModels;
+        return $propModels;
     }
 
 }

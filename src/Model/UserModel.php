@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Model;
 
 use DateTimeInterface;
-use App\Entity\Client;
-use Doctrine\Common\Collections\Collection;
 
 class UserModel
 {
@@ -15,8 +13,6 @@ class UserModel
     private ?string $email = null;
     private ?string $status = null;
     private ?DateTimeInterface $createdAt = null;
-    private Client $client;
-    private ?string $userApiUrl = null;
 
     public function getId(): ?int
     {
@@ -72,28 +68,6 @@ class UserModel
     public function setCreatedAt(DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
-        return $this;
-    }
-
-    public function getClient(): Client
-    {
-        return $this->client;
-    }
-
-    public function setClient(Client $client): UserModel
-    {
-        $this->client = $client;
-        return $this;
-    }
-
-    public function getUserApiUrl(): string
-    {
-        return $this->userApiUrl;
-    }
-
-    public function setUserApiUrl(int $id): UserModel
-    {
-        $this->userApiUrl = '/api/user/' . $id;
         return $this;
     }
 

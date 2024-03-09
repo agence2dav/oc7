@@ -6,10 +6,10 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Entity\Device;
+use App\Model\DevicesModel;
+use App\Mapper\DevicesMapper;
 use App\Model\DeviceModel;
 use App\Mapper\DeviceMapper;
-use App\Model\DeviceApiModel;
-use App\Mapper\DeviceApiMapper;
 use App\Repository\DeviceRepository;
 use App\Repository\DevicePropRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,8 +20,8 @@ class DeviceService
         private readonly EntityManagerInterface $manager,
         private readonly DevicePropRepository $devicePropsRepository,
         private readonly DeviceRepository $deviceRepository,
-        private readonly DeviceApiMapper $deviceApiMapper,
         private readonly DeviceMapper $deviceMapper,
+        private readonly DevicesMapper $devicesMapper,
     ) {
 
     }
@@ -42,39 +42,22 @@ class DeviceService
         return $this->deviceRepository->findOneById($id);
     }
 
-    public function getModelById(int $id): DeviceModel
-    {
-        $deviceEntity = $this->deviceRepository->findOneById($id);
-        return $this->deviceMapper->EntityToModel($deviceEntity);
-    }
-
-    public function getApiModelById(int $id): DeviceApiModel
-    {
-        $deviceEntity = $this->deviceRepository->findOneById($id);
-        return $this->deviceApiMapper->EntityToModel($deviceEntity);
-    }
-
-    public function getModelByName(string $name): DeviceModel
-    {
-        $deviceEntity = $this->deviceRepository->findOneByName($name);
-        return $this->deviceMapper->EntityToModel($deviceEntity);
-    }
-
     public function getDevices(): array
     {
-        $deviceEntities = $this->deviceRepository->getDevices();
-        return $this->deviceApiMapper->EntitiesToModels($deviceEntities);
-    }
-
-    public function getAllDevices(): array
-    {
         $deviceEntities = $this->deviceRepository->findAll();
-        return $this->deviceApiMapper->EntitiesToModels($deviceEntities);
+        return $this->devicesMapper->EntitiesToModels($deviceEntities);
     }
 
-    public function getFirstId(): Device|null
+    public function getDevice(int $id): DeviceModel
     {
-        return $this->deviceRepository->findFirstDevice();
+        $deviceEntity = $this->deviceRepository->findOneById($id);
+        return $this->deviceMapper->EntityToModel($deviceEntity);
+    }
+
+    public function getModelByName(string $name): DevicesModel
+    {
+        $deviceEntity = $this->deviceRepository->findOneByName($name);
+        return $this->devicesMapper->EntityToModel($deviceEntity);
     }
 
 }

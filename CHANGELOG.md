@@ -34,13 +34,13 @@ Start: 240301
 - consult client then users
 - consult devices, then props, then attr
 
-### renew
+### renew #10
 
 - reset config without apiPlatform
 
-### cleanup
+### cleanup #12
 
-- avoid unused files
+- delete unused files
 
 ### login 
 

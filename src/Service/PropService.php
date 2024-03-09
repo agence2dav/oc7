@@ -6,8 +6,7 @@ namespace App\Service;
 
 use App\Entity\Device;
 use App\Mapper\PropMapper;
-use App\Model\PropApiModel;
-use App\Mapper\PropApiMapper;
+use App\Model\PropModel;
 use App\Repository\PropRepository;
 use App\Repository\DeviceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +18,6 @@ class PropService
         private DeviceRepository $DeviceRepo,
         private PropRepository $propRepo,
         private PropMapper $propMapper,
-        private PropApiMapper $propApiMapper,
         private EntityManagerInterface $manager
     ) {
 
@@ -30,16 +28,10 @@ class PropService
         return $this->propRepo->findAll();
     }
 
-    public function getDevicesByProp(int $id): Device|array
-    {
-        $propsModel = $this->propRepo->findByPropId($id);
-        return $this->propMapper->EntitiesToModels($propsModel);
-    }
-
-    public function getApiModelById(int $id): PropApiModel
+    public function getProps(int $id): PropModel
     {
         $deviceEntity = $this->propRepo->findOneById($id);
-        return $this->propApiMapper->EntityToModel($deviceEntity);
+        return $this->propMapper->EntityToModel($deviceEntity);
     }
 
 }

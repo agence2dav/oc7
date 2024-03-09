@@ -4,35 +4,18 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-use App\Entity\Attr;
-use App\Entity\Prop;
-use App\Entity\Device;
-use App\Entity\DeviceProp;
-
 class DevicePropModel
 {
-    private string $propName;
-    private string $attrUrl;
+    private string $propUrl;
 
-    public function getPropName(): string
+    public function getPropUrl(): string
     {
-        return $this->propName;
+        return $this->propUrl;
     }
 
-    public function setPropName(string $propName): static
+    public function setPropUrl(int $id): static
     {
-        $this->propName = $propName;
-        return $this;
-    }
-
-    public function getAttrUrl(): string
-    {
-        return $this->attrUrl;
-    }
-
-    public function setAttrUrl(int $id): static
-    {
-        $this->attrUrl = '/api/attr/' . $id;
+        $this->propUrl = '/api/prop/' . $id;
         return $this;
     }
 

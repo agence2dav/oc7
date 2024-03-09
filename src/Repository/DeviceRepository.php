@@ -18,60 +18,6 @@ class DeviceRepository extends ServiceEntityRepository
         parent::__construct($registry, Device::class);
     }
 
-    public function findDevice(int $id): Device
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.id = :id')
-            ->setParameter('id', $id)
-            ->orderBy('t.id', 'DESC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    public function findFirstDevice(): Device
-    {
-        return $this->createQueryBuilder('t')
-            ->select('t.id')
-            ->orderBy('t.id', 'DESC')
-            ->setMaxResults(1)
-            ->setFirstResult(1)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    public function findDevices(): array
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.status = 1')
-            ->orderBy('t.id', 'DESC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    public function countByStatus(): int
-    {
-        return $this->createQueryBuilder('t')
-            ->select('count(t.id)')
-            ->andWhere('t.status = 1')
-            ->getQuery()
-            ->getSingleScalarResult()
-        ;
-    }
-
-    public function findLastsByStatus(): array
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.status = 1')
-            ->orderBy('t.id', 'DESC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
     public function findAll(): array
     {
         return $this->createQueryBuilder('t')

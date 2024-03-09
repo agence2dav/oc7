@@ -4,37 +4,30 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\User;
 use App\Model\UserModel;
 use App\Mapper\UserMapper;
+use App\Mapper\UsersMapper;
 use App\Repository\UserRepository;
-use App\Repository\DeviceRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\Collection;
 
 class UserService
 {
 
     public function __construct(
-        private DeviceRepository $deviceRepo,
         private UserRepository $userRepo,
         private UserMapper $userMapper,
+        private UsersMapper $usersMapper,
     ) {
 
     }
 
-    public function getAll(): Collection|array
+    public function getUsers(): Collection|array
     {
-        $userModel = $this->userRepo->findAll();
-        return $this->userMapper->EntitiesToModels($userModel);
+        $usersModel = $this->userRepo->findAll();
+        return $this->usersMapper->EntitiesToModels($usersModel);
     }
 
-    public function getById(int $id): User|array
-    {
-        return $this->userRepo->findById($id);
-    }
-
-    public function getModelById(int $id): UserModel|null
+    public function getUser(int $id): UserModel|null
     {
         $userModel = $this->userRepo->findOneById($id);
         return $this->userMapper->EntityToModel($userModel);
