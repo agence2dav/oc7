@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-use Doctrine\Common\Collections\Collection;
 use App\Entity\DeviceProp;
 use App\Entity\Device;
+use App\Entity\Attr;
 
-class AttrModel
+class PropApiModel
 {
     private ?string $name = null;
+    private ?string $attrUrl = null;
 
     public function getName(): ?string
     {
@@ -20,6 +21,17 @@ class AttrModel
     public function setName(?string $name): static
     {
         $this->name = $name;
+        return $this;
+    }
+
+    public function getAttrUrl(): ?string
+    {
+        return $this->attrUrl;
+    }
+
+    public function setAttrUrl(int $id): static
+    {
+        $this->attrUrl = '/api/attr/' . $id;
         return $this;
     }
 

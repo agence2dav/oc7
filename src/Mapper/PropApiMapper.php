@@ -4,19 +4,17 @@ declare(strict_types=1);
 
 namespace App\Mapper;
 
-use App\Model\PropModel;
+use App\Model\PropApiModel;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class PropMapper
+class PropApiMapper
 {
-    public function EntityToModel(object $propEntity): PropModel
+    public function EntityToModel(object $propEntity): PropApiModel
     {
-        $propModel = new PropModel();
-        $propModel->setId($propEntity->getId());
+        $propModel = new PropApiModel();
         $propModel->setName($propEntity->getName());
-        //$propModel->setDevice($propEntity->getDevice());
-        $propModel->setAttr($propEntity->getAttr());
+        $propModel->setAttrUrl($propEntity->getAttr()->getId());
         return $propModel;
     }
 

@@ -16,6 +16,7 @@ class UserModel
     private ?string $status = null;
     private ?DateTimeInterface $createdAt = null;
     private Client $client;
+    private ?string $userApiUrl = null;
 
     public function getId(): ?int
     {
@@ -82,6 +83,17 @@ class UserModel
     public function setClient(Client $client): UserModel
     {
         $this->client = $client;
+        return $this;
+    }
+
+    public function getUserApiUrl(): string
+    {
+        return $this->userApiUrl;
+    }
+
+    public function setUserApiUrl(int $id): UserModel
+    {
+        $this->userApiUrl = '/api/user/' . $id;
         return $this;
     }
 

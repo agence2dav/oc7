@@ -20,8 +20,8 @@ class ClientMapper
         $clientModel->setId($clientEntity->getId());
         $clientModel->setClientName($clientEntity->getClientName());
         $clientModel->setEmail($clientEntity->getEmail());
-        $clientModel->setUsers($clientEntity->getUsers());
-        //$clientModel->setUsers($this->userMapper->EntitiesToModels($clientEntity->getUsers()));
+        //$clientModel->setUsers($clientEntity->getUsers());
+        $clientModel->setUsers($this->userMapper->CollectionToModels($clientEntity->getUsers()));
         return $clientModel;
     }
 

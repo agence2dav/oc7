@@ -4,30 +4,40 @@ declare(strict_types=1);
 
 namespace App\Mapper;
 
-use Doctrine\Common\Collections\Collection;
 use App\Model\UserModel;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class UserMapper
 {
     public function EntityToModel(object $clientEntity): UserModel
     {
-        $clientModel = new UserModel();
-        $clientModel->setId($clientEntity->getId());
-        $clientModel->setUserName($clientEntity->getUserName());
-        $clientModel->setEmail($clientEntity->getEmail());
-        $clientModel->setStatus($clientEntity->getStatus());
-        $clientModel->setCreatedAt($clientEntity->getCreatedAt());
-        //$clientModel->setClient($clientEntity->getClient());
-        return $clientModel;
+        $userModel = new UserModel();
+        $userModel->setId($clientEntity->getId());
+        $userModel->setUserName($clientEntity->getUserName());
+        $userModel->setEmail($clientEntity->getEmail());
+        $userModel->setStatus($clientEntity->getStatus());
+        $userModel->setCreatedAt($clientEntity->getCreatedAt());
+        //$userModel->setClient($clientEntity->getClient());
+        return $userModel;
     }
 
     public function EntitiesToModels(array $clientEntities): array
     {
-        $clientModels = [];
+        $userModels = [];
         foreach ($clientEntities as $clientEntity) {
-            $clientModels[] = $this->EntityToModel($clientEntity);
+            $userModels[] = $this->EntityToModel($clientEntity);
         }
-        return $clientModels;
+        return $userModels;
+    }
+
+    public function CollectionToModels(Collection $clientCollection): Collection
+    {
+        $userModels = new ArrayCollection;
+        foreach ($clientCollection as $clientEntity) {
+            $userModels[] = $this->EntityToModel($clientEntity);
+        }
+        return $userModels;
     }
 
 }
