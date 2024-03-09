@@ -31,19 +31,20 @@ Start: 240301
 - add mapping for Apis (avoid circular defs and displays url instead of datas)
 - mappers are unuseful
 - build set of tables for users
-- consult users of client
+- consult client then users
+- consult devices, then props, then attr
 
-### Renew
+### renew
 
 - reset config without apiPlatform
 
-### consult list
+### cleanup
 
-consult the list of registered users linked to a customer on the website;
+- avoid unused files
 
-### view details 
+### login 
 
-view the details of a registered user linked to a customer;
+use jwt
 
 ### new user 
 
