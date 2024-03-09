@@ -24,17 +24,27 @@ Start: 240301
 - make working a request through mappers (240306)
 - create Uml of usage, sequence and class
 
-### consultation 
+### consultation #8
 
-consult the details of a BileMo product;
+- consult the details of a BileMo product;
+- reset structure of tables
+- add mapping for Apis (avoid circular defs and displays url instead of datas)
+- mappers are unuseful
+- build set of tables for users
+- consult client then users
+- consult devices, then props, then attr
 
-### consult list
+### renew #10
 
-consult the list of registered users linked to a customer on the website;
+- reset config without apiPlatform
 
-### view details 
+### cleanup #12
 
-view the details of a registered user linked to a customer;
+- delete unused files
+
+### login 
+
+use jwt
 
 ### new user 
 

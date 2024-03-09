@@ -5,28 +5,21 @@ declare(strict_types=1);
 namespace App\Mapper;
 
 use App\Entity\Device;
-use App\Mapper\PropMapper;
 use App\Model\DeviceModel;
-use App\Mapper\DevicePropsMapper;
-use Doctrine\Common\Collections\Collection;
+use App\Mapper\DevicePropMapper;
 
 class DeviceMapper
 {
     public function __construct(
-        private DevicePropsMapper $devicePropsMapper,
-        private PropMapper $propMapper,
+        private DevicePropMapper $devicePropsMapper,
     ) {
     }
 
     public function EntityToModel(Device $deviceEntity): DeviceModel
     {
         $deviceModel = new DeviceModel();
-        $deviceModel->setId($deviceEntity->getId());
-        $deviceModel->setName($deviceEntity->getName());
-        $deviceModel->setUrl($deviceEntity->getUrl());
-        $deviceModel->setImage($deviceEntity->getImage());
-        $deviceModel->setStatus($deviceEntity->getStatus());
-        $deviceModel->setDeviceProps($this->devicePropsMapper->EntitiesToModels($deviceEntity->getDeviceProps()));
+        $deviceModel->setdeviceProps($this->devicePropsMapper->CollectionToModels($deviceEntity->getdeviceProps()));
+
         return $deviceModel;
     }
 

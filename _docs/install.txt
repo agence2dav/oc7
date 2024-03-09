@@ -1,5 +1,6 @@
 >useful
 symfony server:start -d
+symfony server:start --no-tls -d (for mercure)
 
 php bin/console make:user
 php bin/console make:auth
@@ -110,10 +111,21 @@ composer require twig/extra-bundle
 composer require symfony/twig-bundle
 composer require ext-ctype
 composer require ext-iconv
+
+> ux-turbo
+composer require symfony/ux-turbo
+
+>serializer
+composer require symfony/serializer
+composer require symfony/serializer-pack
+
+>paramconverter (déduit la requête d'après l'url)
+composer require sensio/framework-extra-bundle
+
 **
 composer require willdurand/hateoas-bundle
 composer require zircote/swagger-php
-composer require lexik/jwt-authentication-bundle
+composer require lexik/jwt-authentication-bundle --with-all-dependencies
 
 >fixtures
 composer require orm-fixtures --dev
@@ -128,7 +140,6 @@ php bin/console make:auth
 >mobiles
 php bin/console make:entity
 
->create api
+>create api (use notation to create links)
 symfony composer req api
-
 

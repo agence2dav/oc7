@@ -12,15 +12,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: DeviceRepository::class)]
-//#[Broadcast]
+#[Broadcast]
 #[UniqueEntity(fields: ['name'], message: 'Ce modèle existe déjà')]
 class Device
 {
-
-    public function __construct()
-    {
-        $this->deviceProps = new ArrayCollection();
-    }
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -39,14 +34,13 @@ class Device
     #[ORM\Column]
     private ?int $status = null;
 
-    #[ORM\OneToMany(targetEntity: DeviceProps::class, mappedBy: 'device')]
+    #[ORM\OneToMany(targetEntity: DeviceProp::class, mappedBy: 'device')]
     private Collection $deviceProps;
 
-    private Collection $attrs;
-    private Collection $props;
-
-    private ?Attr $attr = null;
-    private ?Prop $prop = null;
+    public function __construct()
+    {
+        $this->deviceProps = new ArrayCollection();
+    }
 
     //get-set
 
@@ -104,7 +98,7 @@ class Device
         return $this->deviceProps;
     }
 
-    public function addDeviceProps(DeviceProps $deviceProps): static
+    public function addDeviceProps(DeviceProp $deviceProps): static
     {
         if (!$this->deviceProps->contains($deviceProps)) {
             $this->deviceProps->add($deviceProps);
@@ -113,7 +107,7 @@ class Device
         return $this;
     }
 
-    public function removeDeviceProps(DeviceProps $deviceProps): static
+    public function removeDeviceProps(DeviceProp $deviceProps): static
     {
         if ($this->deviceProps->removeElement($deviceProps)) {
             // set the owning side to null (unless already changed)
@@ -122,26 +116,6 @@ class Device
             }
         }
         return $this;
-    }
-
-    public function getAttrs(): Collection
-    {
-        return $this->attrs;
-    }
-
-    public function getProps(): Collection
-    {
-        return $this->props;
-    }
-
-    public function getAttr(): ?Attr
-    {
-        return $this->attr;
-    }
-
-    public function getProp(): ?Prop
-    {
-        return $this->prop;
     }
 
 }
