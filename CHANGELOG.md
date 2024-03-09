@@ -33,6 +33,10 @@ Start: 240301
 - build set of tables for users
 - consult users of client
 
+### Renew
+
+- reset config without apiPlatform
+
 ### consult list
 
 consult the list of registered users linked to a customer on the website;
