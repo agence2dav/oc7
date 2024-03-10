@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use DateTime;
+use Assert\NotBlank;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[Broadcast]
@@ -21,14 +23,17 @@ class User
 
     #[ORM\Column(length: 180, unique: true)]
     #[Groups(['getUser'])]
+    #[Assert\NotBlank(message: "must be specified")]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['getUser'])]
+    #[Assert\NotBlank(message: "must be specified")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['getUser'])]
+    #[Assert\NotBlank(message: "must be specified")]
     private ?string $status = null;
 
     #[ORM\Column(type: "datetime")]

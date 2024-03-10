@@ -141,5 +141,11 @@ php bin/console make:auth
 php bin/console make:entity
 
 >create api (use notation to create links)
-symfony composer req api
+symfony composer req api !!!do not use that!!!
+
+>exceptions
+php bin/console make:subscriber
+
+
+
 

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -19,6 +20,7 @@ class UserCreateController extends AbstractController
         private UserService $userService,
         private SerializerService $serializerService,
         private UrlGeneratorInterface $urlGenerator,
+        private ValidatorInterface $validator,
     ) {
     }
 
@@ -27,6 +29,10 @@ class UserCreateController extends AbstractController
     {
         $user = $this->serializerService->deserialize($request->getContent(), USER::class);
         $clientId = $request->toArray()['clientId'] ?? -1;
+        $errors = $this->validator->validate($user);
+        if ($errors->count() > 0) {
+            return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
+        }
         $this->userService->addUser($user, $clientId);
         $json = $this->serializerService->serialize($user, ['groups' => 'getuser']);
         $location = $this->urlGenerator->generate('api_user', ['id' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
