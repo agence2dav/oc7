@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
@@ -16,6 +17,7 @@ class UserController extends AbstractController
     public function __construct(
         private UserService $userService,
         private SerializerService $serializerService,
+        private ValidatorInterface $validator,
     ) {
     }
 
@@ -23,6 +25,10 @@ class UserController extends AbstractController
     public function user(User $user, int $id, Request $request): JsonResponse
     {
         //$user = $this->userService->getUser($id);
+        $errors = $this->validator->validate($user);
+        if ($errors->count() > 0) {
+            return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
+        }
         $json = $this->serializerService->serialize($user, ['groups' => 'getUser']);
         return new JsonResponse($json, Response::HTTP_OK, [], true);
     }

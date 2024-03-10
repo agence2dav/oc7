@@ -71,9 +71,6 @@ composer require symfony/debug-bundle
 > profiler
 composer require --dev symfony/profiler-pack
 
->security component
-composer require security
-
 >users
 php bin/console make:user
 set: username as unique
@@ -145,6 +142,9 @@ symfony composer req api !!!do not use that!!!
 
 >exceptions
 php bin/console make:subscriber
+
+>jwt
+composer require security
 
 
 

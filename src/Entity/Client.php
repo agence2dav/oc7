@@ -50,13 +50,12 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getClientName(): ?string
     {
-        return $this->clientname;
+        return $this->getUserIdentifier();
     }
 
     public function setClientName(string $clientname): static
     {
         $this->clientname = $clientname;
-
         return $this;
     }
 
