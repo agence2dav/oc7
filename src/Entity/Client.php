@@ -7,6 +7,7 @@ use App\Repository\ClientRepository;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
@@ -17,12 +18,15 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['getClient'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['getClient'])]
     private ?string $clientname = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getClient'])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -103,8 +107,6 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /* */
-    //circular ref
     public function getUsers(): Collection
     {
         return $this->users;

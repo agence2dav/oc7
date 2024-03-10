@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-use DateTimeInterface;
+use DateTime;
 
 class UserModel
 {
@@ -12,7 +12,7 @@ class UserModel
     private ?string $clientname = null;
     private ?string $email = null;
     private ?string $status = null;
-    private ?DateTimeInterface $createdAt = null;
+    private ?DateTime $createdAt = null;
 
     public function getId(): ?int
     {
@@ -60,12 +60,12 @@ class UserModel
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeInterface
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt): static
+    public function setCreatedAt(DateTime $createdAt): static
     {
         $this->createdAt = $createdAt;
         return $this;

@@ -19,10 +19,4 @@ class DevicePropRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
-    public function delete(DeviceProp $deviceProp): void
-    {
-        $this->getEntityManager()->remove($deviceProp);
-        $this->getEntityManager()->flush();
-    }
-
 }
