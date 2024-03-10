@@ -42,14 +42,17 @@ Start: 240301
 
 - delete unused files
 
-### login #14
+### auth #14
 
-use jwt
+todo: use jwt
 
-### new user 
+### crud #16 
 
-add a new user linked to a customer;
+- add a new user linked to a customer
+- del user
+- update user
 
-### delete user 
+### exceptions #18
 
-delete a user added by a customer.
+- display errors in json
+
