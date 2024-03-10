@@ -6,7 +6,6 @@ namespace App\Service;
 
 use App\Entity\Client;
 use App\Model\ClientModel;
-use App\Model\ClientsModel;
 use App\Mapper\ClientMapper;
 use App\Mapper\ClientsMapper;
 use App\Repository\ClientRepository;
@@ -33,6 +32,11 @@ class ClientService
     {
         $clientModel = $this->clientRepo->findOneById($id);
         return $this->clientMapper->EntityToModel($clientModel);
+    }
+
+    public function getById(int $id): Client|null
+    {
+        return $this->clientRepo->findOneById($id);
     }
 
     public function getFirstId(): int|null

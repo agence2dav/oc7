@@ -60,9 +60,6 @@ class Prop
         return $this;
     }
 
-    /* 
-     */
-    //circular ref if mapping prop from deviceProps
     public function getDeviceProps(): Collection
     {
         return $this->deviceProps;

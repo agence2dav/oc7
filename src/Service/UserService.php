@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use DateTime;
+use App\Entity\User;
 use App\Model\UserModel;
 use App\Mapper\UserMapper;
 use App\Mapper\UsersMapper;
+use App\Service\ClientService;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 
@@ -17,6 +20,7 @@ class UserService
         private UserRepository $userRepo,
         private UserMapper $userMapper,
         private UsersMapper $usersMapper,
+        private ClientService $clientService,
     ) {
 
     }
@@ -33,9 +37,21 @@ class UserService
         return $this->userMapper->EntityToModel($userModel);
     }
 
-    public function getFirstId(): int|null
+    public function addUser(User $user, int $clientId): void
     {
-        return $this->userRepo->findFirstUserId();
+        $user->setCreatedAt(new DateTime);
+        $user->setClient($this->clientService->getById($clientId));
+        $this->userRepo->save($user);
+    }
+
+    public function updateUser(User $user): void
+    {
+        $this->userRepo->save($user);
+    }
+
+    public function delUser(User $user): void
+    {
+        $this->userRepo->delete($user);
     }
 
 }

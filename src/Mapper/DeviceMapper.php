@@ -11,14 +11,14 @@ use App\Mapper\DevicePropMapper;
 class DeviceMapper
 {
     public function __construct(
-        private DevicePropMapper $devicePropsMapper,
+        private DevicePropMapper $devicePropMapper,
     ) {
     }
 
     public function EntityToModel(Device $deviceEntity): DeviceModel
     {
         $deviceModel = new DeviceModel();
-        $deviceModel->setdeviceProps($this->devicePropsMapper->CollectionToModels($deviceEntity->getdeviceProps()));
+        $deviceModel->setdeviceProps($this->devicePropMapper->CollectionToModels($deviceEntity->getdeviceProps()));
 
         return $deviceModel;
     }
