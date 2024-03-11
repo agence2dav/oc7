@@ -9,7 +9,7 @@ use DateTime;
 class UserModel
 {
     private ?int $id = null;
-    private ?string $clientname = null;
+    private ?string $corporation = null;
     private ?string $email = null;
     private ?string $status = null;
     private ?DateTime $createdAt = null;
@@ -27,12 +27,12 @@ class UserModel
 
     public function getUserName(): ?string
     {
-        return $this->clientname;
+        return $this->corporation;
     }
 
-    public function setUserName(string $clientname): static
+    public function setUserName(string $corporation): static
     {
-        $this->clientname = $clientname;
+        $this->corporation = $corporation;
         return $this;
     }
 

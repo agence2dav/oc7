@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,12 +22,15 @@ class UserCreateController extends AbstractController
         private SerializerService $serializerService,
         private UrlGeneratorInterface $urlGenerator,
         private ValidatorInterface $validator,
+        private TagAwareCacheInterface $cachePool,
     ) {
     }
 
     #[Route('/api/user', name: 'api_adduser', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN', message: 'Invalid credentials to edit this user')]
     public function user(Request $request): JsonResponse
     {
+        $this->cachePool->invalidateTags(['usersCache']);
         $user = $this->serializerService->deserialize($request->getContent(), USER::class);
         $clientId = $request->toArray()['clientId'] ?? -1;
         $errors = $this->validator->validate($user);

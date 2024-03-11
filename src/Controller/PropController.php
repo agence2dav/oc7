@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Prop;
 use App\Service\PropService;
 use App\Service\SerializerService;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,7 +21,7 @@ class PropController extends AbstractController
     }
 
     #[Route('/api/prop/{id}', name: 'api_prop', methods: ['GET'])]
-    public function prop(Prop $prop, int $id, Request $request): JsonResponse
+    public function prop(int $id): JsonResponse
     {
         $prop = $this->propService->getProps($id);
         $errors = $this->validator->validate($prop);

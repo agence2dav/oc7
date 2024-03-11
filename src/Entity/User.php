@@ -18,7 +18,7 @@ class User
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['getUsers'])]
+    #[Groups(['getUser'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]

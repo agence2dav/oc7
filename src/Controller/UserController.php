@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Service\UserService;
 use App\Service\SerializerService;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,7 +21,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/api/user/{id}', name: 'api_user', methods: ['GET'])]
-    public function user(User $user, int $id, Request $request): JsonResponse
+    public function user(User $user, int $id): JsonResponse
     {
         //$user = $this->userService->getUser($id);
         $errors = $this->validator->validate($user);

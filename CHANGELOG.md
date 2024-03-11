@@ -44,7 +44,9 @@ Start: 240301
 
 ### auth #14
 
-todo: use jwt
+- token-auth using jwt
+- config jwt
+- add cache system to devices and users
 
 ### crud #16 
 

@@ -25,6 +25,11 @@ class UserService
 
     }
 
+    public function getUserById(int $id): User|null
+    {
+        return $this->userRepo->findOneById($id);
+    }
+
     public function getUsers(): Collection|array
     {
         $usersModel = $this->userRepo->findAll();

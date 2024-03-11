@@ -21,7 +21,7 @@ class AttrController extends AbstractController
     }
 
     #[Route('/api/attr/{id}', name: 'api_attr', methods: ['GET'])]
-    public function attr(int $id, Request $request): JsonResponse//Attr $attr is reserved
+    public function attr(int $id): JsonResponse//Attr $attr is reserved
     {
         $attr = $this->attrService->getAttr($id);
         $errors = $this->validator->validate($attr);

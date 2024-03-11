@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Service\ClientService;
 use App\Service\SerializerService;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,7 +20,7 @@ class ClientsController extends AbstractController
     }
 
     #[Route('/api/clients', name: 'api_clients', methods: ['GET'])]
-    public function clients(Request $request): JsonResponse
+    public function clients(): JsonResponse
     {
         $clients = $this->clientService->getClients();
         $errors = $this->validator->validate($clients);

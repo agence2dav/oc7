@@ -13,8 +13,11 @@
 
     This friendly message is coming from:
     <ul>
-        <li>Your controller at <code>C:/Users/dav/Documents/srv/gits/oc7/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>C:/Users/dav/Documents/srv/gits/oc7/templates/home/index.html.twig</code></li>
+        {% if app.user %}
+        <li>Logged as: {{ app.user.corporation }}</li>
+        {% endif %}
+        <li>Your controller at <code>C:/Users/dav/Documents/srv/gits/oc7c/src/Controller/HomeController.php</code></li>
+        <li>Your template at <code>C:/Users/dav/Documents/srv/gits/oc7c/templates/home/index.html.twig</code></li>
     </ul>
 </div>
 {% endblock %}

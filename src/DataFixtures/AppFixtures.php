@@ -12,13 +12,11 @@ use App\Entity\Device;
 use App\Entity\DeviceProp;
 use App\Service\FixturesService;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Core\DateTime as FakeDatTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
-
     public Generator $faker;
     private array $objects = [];
     private string $adminName = 'd';
@@ -33,7 +31,6 @@ class AppFixtures extends Fixture
     ) {
         $this->faker = Factory::create('fr_FR');
     }
-
     public function device(ObjectManager $manager, array $deviceDb): void
     {
         foreach ($deviceDb as $dataSet) {
@@ -95,10 +92,10 @@ class AppFixtures extends Fixture
             $client = new Client();
             $password = $this->hasher->hashPassword($client, $this->password);
             $client
-                ->setClientName($i == 0 ? $this->adminName : $this->faker->username)
                 ->setEmail($i == 0 ? $this->adminMail : $this->faker->email)
+                ->setRoles([$i == 0 ? 'ROLE_ADMIN' : 'ROLE_ADMIN'])
                 ->setPassword($password)
-                ->setRoles([$i == 0 ? 'ROLE_ADMIN' : 'ROLE_EDIT']);
+                ->setCorporation($i == 0 ? $this->adminName : $this->faker->username)
             ;
             $this->objects['client'][] = $client;
             $manager->persist($client);
@@ -115,7 +112,6 @@ class AppFixtures extends Fixture
                 ->setClient($this->objects['client'][mt_rand(0, $this->numberOfClients - 1)])
                 ->setEmail($this->faker->email)
                 ->setStatus(mt_rand(0, 1))
-                //->setCreatedAt($this->fixturesService->generateDateInPast())
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 year'))
             ;
             $manager->persist($user);
