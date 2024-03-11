@@ -58,3 +58,7 @@ Start: 240301
 
 - display errors in json
 
+### hateoas #20
+
+- display errors in json
+
