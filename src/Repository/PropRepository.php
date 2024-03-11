@@ -13,10 +13,4 @@ class PropRepository extends ServiceEntityRepository
         parent::__construct($registry, Prop::class);
     }
 
-    public function saveProp(Prop $device): void
-    {
-        $this->getEntityManager()->persist($device);
-        $this->getEntityManager()->flush();
-    }
-
 }

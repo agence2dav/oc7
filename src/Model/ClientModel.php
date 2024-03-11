@@ -11,7 +11,7 @@ use App\Entity\Device;
 class ClientModel
 {
     private ?int $id = null;
-    private ?string $clientname = null;
+    private ?string $corporation = null;
     private ?string $email = null;
 
     public function getId(): ?int
@@ -25,14 +25,14 @@ class ClientModel
         return $this;
     }
 
-    public function getClientName(): ?string
+    public function getCorporation(): ?string
     {
-        return $this->clientname;
+        return $this->corporation;
     }
 
-    public function setClientName(string $clientname): static
+    public function setCorporation(string $corporation): static
     {
-        $this->clientname = $clientname;
+        $this->corporation = $corporation;
         return $this;
     }
 

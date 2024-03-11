@@ -7,10 +7,14 @@ use App\Repository\ClientRepository;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'This email already exists')]
 #[Broadcast]
 class Client implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -19,17 +23,25 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180, unique: true)]
-    private ?string $clientname = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 180)]
+    #[Groups(['getClient'])]
     private ?string $email = null;
 
+    /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column]
-    private array $roles = [];
+    #[ORM\Column(length: 255)]
+    #[Groups(['getClient'])]
+    private ?string $corporation = null;
 
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'client')]
     private Collection $users;
@@ -44,54 +56,6 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getClientName(): ?string
-    {
-        return $this->clientname;
-    }
-
-    public function setClientName(string $clientname): static
-    {
-        $this->clientname = $clientname;
-
-        return $this;
-    }
-
-    public function getUserIdentifier(): string
-    {
-        return (string) $this->clientname;
-    }
-
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-        return $this;
-    }
-
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): static
-    {
-        $this->password = $password;
-        return $this;
-    }
-
-    public function eraseCredentials(): void
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -100,11 +64,81 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
         return $this;
     }
 
-    /* */
-    //circular ref
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     *
+     * @return list<string>
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param list<string> $roles
+     */
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getCorporation(): ?string
+    {
+        return $this->corporation;
+    }
+
+    public function setCorporation(string $corporation): static
+    {
+        $this->corporation = $corporation;
+
+        return $this;
+    }
+
+
     public function getUsers(): Collection
     {
         return $this->users;

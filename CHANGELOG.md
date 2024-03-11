@@ -42,14 +42,19 @@ Start: 240301
 
 - delete unused files
 
-### login 
+### auth #14
 
-use jwt
+- token-auth using jwt
+- config jwt
+- add cache system to devices and users
 
-### new user 
+### crud #16 
 
-add a new user linked to a customer;
+- add a new user linked to a customer
+- del user
+- update user
 
-### delete user 
+### exceptions #18
 
-delete a user added by a customer.
+- display errors in json
+

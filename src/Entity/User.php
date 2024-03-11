@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
-use DateTimeInterface;
+use DateTime;
+use Assert\NotBlank;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\UX\Turbo\Attribute\Broadcast;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[Broadcast]
@@ -15,19 +18,27 @@ class User
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['getUser'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['getUser'])]
+    #[Assert\NotBlank(message: "must be specified")]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getUser'])]
+    #[Assert\NotBlank(message: "must be specified")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getUser'])]
+    #[Assert\NotBlank(message: "must be specified")]
     private ?string $status = null;
 
     #[ORM\Column(type: "datetime")]
-    private ?DateTimeInterface $createdAt = null;
+    #[Groups(['getUser'])]
+    private ?DateTime $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Client $client = null;
@@ -73,20 +84,17 @@ class User
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeInterface
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt): static
+    public function setCreatedAt(DateTime $createdAt): static
     {
         $this->createdAt = $createdAt;
         return $this;
     }
 
-    /*
-     */
-    //circular ref
     public function getClient(): ?Client
     {
         return $this->client;

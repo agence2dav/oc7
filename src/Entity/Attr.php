@@ -45,9 +45,6 @@ class Attr
         return $this;
     }
 
-    /*
-     */
-    //circular ref if mapping from deviceProps
     public function getProps(): Collection
     {
         return $this->props;

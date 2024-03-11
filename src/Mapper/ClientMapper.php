@@ -18,7 +18,7 @@ class ClientMapper
     {
         $clientModel = new ClientModel();
         $clientModel->setId($clientEntity->getId());
-        $clientModel->setClientName($clientEntity->getClientName());
+        $clientModel->setCorporation($clientEntity->getCorporation());
         $clientModel->setEmail($clientEntity->getEmail());
         return $clientModel;
     }
