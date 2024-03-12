@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Prop;
 use App\Service\PropService;
 use App\Service\SerializerService;
 use Symfony\Component\HttpFoundation\Response;

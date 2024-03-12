@@ -25,10 +25,10 @@ class UserUpdateController extends AbstractController
 
     #[Route('/api/user/{id}', name: 'api_updateuser', methods: ['PUT'])]
     #[IsGranted('ROLE_ADMIN', message: 'Invalid credentials to edit this user')]
-    public function user(int $id, Request $request): JsonResponse
+    public function user(User $user, int $id, Request $request): JsonResponse
     {
         $this->cachePool->invalidateTags(['usersCache']);
-        $user = $this->userService->getUserById($id);
+        //$user = $this->userService->getUserById($id);
         $user = $this->serializerService->deserialize($request->getContent(), USER::class, [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
         $this->userService->updateUser($user);
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);

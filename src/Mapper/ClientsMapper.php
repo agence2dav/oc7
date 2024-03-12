@@ -16,7 +16,7 @@ class ClientsMapper
     public function EntityToModel(object $clientEntity): ClientsModel
     {
         $clientsModel = new ClientsModel();
-        $clientsModel->setClientUrl($clientEntity->getId());
+        $clientsModel->setLinks($clientEntity->getId());
         return $clientsModel;
     }
 

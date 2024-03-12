@@ -9,16 +9,18 @@ use Doctrine\Common\Collections\Collection;
 
 class ClientsModel
 {
-    private ?string $clientUrl = null;
+    private array $links;
 
-    public function getClientUrl(): string
+    public function getLinks(): array
     {
-        return $this->clientUrl;
+        return $this->links;
     }
 
-    public function setClientUrl(int $id): static
+    public function setLinks(int $id): static
     {
-        $this->clientUrl = '/api/client/' . $id;
+        $this->links = [
+            'href' => '/api/client/' . $id
+        ];
         return $this;
     }
 
