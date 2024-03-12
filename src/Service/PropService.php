@@ -28,10 +28,15 @@ class PropService
         return $this->propRepo->findAll();
     }
 
+    public function getProp(int $id): PropModel
+    {
+        return $this->propRepo->findOneById($id);
+    }
+
     public function getProps(int $id): PropModel
     {
         $deviceEntity = $this->propRepo->findOneById($id);
-        return $this->propMapper->EntityToModel($deviceEntity);
+        return $this->propMapper->entityToModel($deviceEntity);
     }
 
 }

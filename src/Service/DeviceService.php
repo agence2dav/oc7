@@ -45,19 +45,19 @@ class DeviceService
     public function getDevices(): array
     {
         $deviceEntities = $this->deviceRepository->findAll();
-        return $this->devicesMapper->EntitiesToModels($deviceEntities);
+        return $this->devicesMapper->entitiesToModels($deviceEntities);
     }
 
     public function getDevice(int $id): DeviceModel
     {
         $deviceEntity = $this->deviceRepository->findOneById($id);
-        return $this->deviceMapper->EntityToModel($deviceEntity);
+        return $this->deviceMapper->entityToModel($deviceEntity);
     }
 
     public function getModelByName(string $name): DevicesModel
     {
         $deviceEntity = $this->deviceRepository->findOneByName($name);
-        return $this->devicesMapper->EntityToModel($deviceEntity);
+        return $this->devicesMapper->entityToModel($deviceEntity);
     }
 
 }

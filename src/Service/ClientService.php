@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\Client;
-use App\Model\ClientModel;
-use App\Mapper\ClientMapper;
-use App\Mapper\ClientsMapper;
+use App\Model\ClientDetailsModel;
+use App\Model\ClientSummaryModel;
+use App\Mapper\ClientDetailsMapper;
+use App\Mapper\ClientSummaryMapper;
 use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\Collection;
 
@@ -16,32 +17,40 @@ class ClientService
 
     public function __construct(
         private ClientRepository $clientRepo,
-        private ClientMapper $clientMapper,
-        private ClientsMapper $clientsMapper,
+        private ClientDetailsMapper $clientDetailsMapper,
+        private ClientSummaryMapper $clientSummaryMapper,
     ) {
 
     }
 
-    public function getClients(): Collection|array
+    public function getAll(): array|null
     {
-        $clientsModel = $this->clientRepo->findAll();
-        return $this->clientsMapper->EntitiesToModels($clientsModel);
+        return $this->clientRepo->findAll();
     }
 
-    public function getClient(int $id): ClientModel|null
+    public function getClientsList(): Collection|array
     {
-        $clientModel = $this->clientRepo->findOneById($id);
-        return $this->clientMapper->EntityToModel($clientModel);
+        return $this->clientSummaryMapper->entitiesToModels($this->getAll());
+    }
+
+    public function getClientById(int $id): Client|null
+    {
+        return $this->clientRepo->findOneById($id);
+    }
+
+    public function getClientSummary(int $id): ClientSummaryModel|null
+    {
+        return $this->clientSummaryMapper->entityToModel($this->getClientById($id));
+    }
+
+    public function getClientDetails(Client $client): ClientDetailsModel|null
+    {
+        return $this->clientDetailsMapper->entityToModel($client);
     }
 
     public function getById(int $id): Client|null
     {
         return $this->clientRepo->findOneById($id);
-    }
-
-    public function getFirstId(): int|null
-    {
-        return $this->clientRepo->findFirstClientId();
     }
 
 }

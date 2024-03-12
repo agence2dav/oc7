@@ -15,19 +15,18 @@ class DeviceMapper
     ) {
     }
 
-    public function EntityToModel(Device $deviceEntity): DeviceModel
+    public function entityToModel(Device $deviceEntity): DeviceModel
     {
         $deviceModel = new DeviceModel();
         $deviceModel->setdeviceProps($this->devicePropMapper->CollectionToModels($deviceEntity->getdeviceProps()));
-
         return $deviceModel;
     }
 
-    public function EntitiesToModels(array $deviceEntities): array
+    public function entitiesToModels(array $deviceEntities): array
     {
         $deviceModels = [];
         foreach ($deviceEntities as $deviceEntity) {
-            $deviceModels[] = $this->EntityToModel($deviceEntity);
+            $deviceModels[] = $this->entityToModel($deviceEntity);
         }
         return $deviceModels;
     }

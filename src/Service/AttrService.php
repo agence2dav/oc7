@@ -27,13 +27,19 @@ class AttrService
     public function getAll(): Collection|array
     {
         $attrModel = $this->attrRepo->findAll();
-        return $this->attrMapper->EntitiesToModels($attrModel);
+        return $this->attrMapper->entitiesToModels($attrModel);
     }
 
     public function getAttr(int $id): AttrModel
     {
         $deviceEntity = $this->attrRepo->findOneById($id);
-        return $this->attrMapper->EntityToModel($deviceEntity);
+        return $this->attrMapper->entityToModel($deviceEntity);
+    }
+
+    public function getAttrByPropId(int $id): AttrModel
+    {
+        $deviceEntity = $this->attrRepo->findOneByProp($id);
+        return $this->attrMapper->entityToModel($deviceEntity);
     }
 
 }

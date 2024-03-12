@@ -21,21 +21,9 @@ class ClientRepository extends ServiceEntityRepository implements PasswordUpgrad
         return $this->createQueryBuilder('t')
             ->andWhere('t.id = :id')
             ->setParameter('id', $id)
-            ->orderBy('t.id', 'DESC')
+            ->orderBy('t.id', 'ASC')
             ->getQuery()
             ->getResult()
-        ;
-    }
-
-    public function findFirstClientId(): int
-    {
-        return $this->createQueryBuilder('t')
-            ->select('t.id')
-            ->orderBy('t.id', 'DESC')
-            ->setMaxResults(1)
-            ->setFirstResult(1)
-            ->getQuery()
-            ->getSingleScalarResult()
         ;
     }
 

@@ -14,18 +14,18 @@ class DevicePropMapper
     ) {
     }
 
-    public function EntityToModel(object $deviceProps): DevicePropModel
+    public function entityToModel(object $deviceProps): DevicePropModel
     {
         $devicePropsModel = new DevicePropModel();
         $devicePropsModel->setPropUrl($deviceProps->getProp()->getid());
         return $devicePropsModel;
     }
 
-    public function EntitiesToModels(array $devicePropsEntities): array
+    public function entitiesToModels(array $devicePropsEntities): array
     {
         $devicePropsModels = [];
         foreach ($devicePropsEntities as $deviceProps) {
-            $devicePropsModels[] = $this->EntityToModel($deviceProps);
+            $devicePropsModels[] = $this->entityToModel($deviceProps);
         }
         return $devicePropsModels;
     }
@@ -34,7 +34,7 @@ class DevicePropMapper
     {
         $devicePropsModels = new ArrayCollection;
         foreach ($deviceCollection as $deviceEntity) {
-            $devicePropsModels[] = $this->EntityToModel($deviceEntity);
+            $devicePropsModels[] = $this->entityToModel($deviceEntity);
         }
         return $devicePropsModels;
     }

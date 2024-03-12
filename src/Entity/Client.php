@@ -21,7 +21,8 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    #[Groups(['getClient'])]
+    public ?int $id = null;
 
     #[ORM\Column(length: 180)]
     #[Groups(['getClient'])]
@@ -41,6 +42,7 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     #[Groups(['getClient'])]
+    //#[Groups(['clientCorp'])]
     private ?string $corporation = null;
 
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'client')]

@@ -8,6 +8,7 @@ use App\Repository\PropRepository;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PropRepository::class)]
 #[Broadcast]
@@ -19,6 +20,7 @@ class Attr
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getAttr'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(targetEntity: Prop::class, mappedBy: 'attr')]

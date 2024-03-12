@@ -9,6 +9,7 @@ use App\Repository\PropRepository;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PropRepository::class)]
 #[Broadcast]
@@ -20,9 +21,11 @@ class Prop
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getProp'])]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'props')]
+    #[Groups(['getProp'])]
     private ?Attr $attr = null;
 
     #[ORM\OneToMany(targetEntity: DeviceProp::class, mappedBy: 'prop')]
