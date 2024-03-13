@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-use App\Entity\Attr;
-use App\Entity\Device;
-use App\Entity\DeviceProp;
 use Doctrine\Common\Collections\Collection;
 
-class AttrModel
+class DeviceSummaryModel
 {
-    private int $id;
+    private ?int $id = null;
     private ?string $name = null;
-    private ?array $link;
+    private array $links;
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -31,7 +28,7 @@ class AttrModel
         return $this->name;
     }
 
-    public function setName(?string $name): static
+    public function setName(string $name): static
     {
         $this->name = $name;
         return $this;
@@ -39,13 +36,13 @@ class AttrModel
 
     public function getLinks(): ?array
     {
-        return $this->link;
+        return $this->links;
     }
 
-    public function setLinks(): static
+    public function setLinks(int $id): static
     {
-        $this->link = [
-            'self' => (string) '/api/devices/property/attribut/' . $this->getId()
+        $this->links = [
+            'href' => (string) '/api/devices/' . $id
         ];
         return $this;
     }

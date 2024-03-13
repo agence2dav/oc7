@@ -4,24 +4,21 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\User;
 use App\Entity\Device;
-use App\Model\DevicesModel;
-use App\Mapper\DevicesMapper;
-use App\Model\DeviceModel;
-use App\Mapper\DeviceMapper;
+use App\Model\DeviceSummaryModel;
+use App\Model\DeviceDetailsModel;
+use App\Mapper\DeviceSummaryMapper;
+use App\Mapper\DeviceDetailsMapper;
 use App\Repository\DeviceRepository;
-use App\Repository\DevicePropRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class DeviceService
 {
     public function __construct(
         private readonly EntityManagerInterface $manager,
-        private readonly DevicePropRepository $devicePropsRepository,
         private readonly DeviceRepository $deviceRepository,
-        private readonly DeviceMapper $deviceMapper,
-        private readonly DevicesMapper $devicesMapper,
+        private readonly DeviceSummaryMapper $deviceSummaryMapper,
+        private readonly DeviceDetailsMapper $deviceDetailsMapper,
     ) {
 
     }
@@ -38,26 +35,24 @@ class DeviceService
 
     public function getById(int $id): Device
     {
-        //return $this->deviceRepository->findDevice($id);
         return $this->deviceRepository->findOneById($id);
     }
 
+    //
+
     public function getDevices(): array
     {
-        $deviceEntities = $this->deviceRepository->findAll();
-        return $this->devicesMapper->entitiesToModels($deviceEntities);
+        return $this->deviceSummaryMapper->entitiesToModels($this->getAll());
     }
 
-    public function getDevice(int $id): DeviceModel
+    public function getDevice(int $id): DeviceDetailsModel
     {
-        $deviceEntity = $this->deviceRepository->findOneById($id);
-        return $this->deviceMapper->entityToModel($deviceEntity);
+        return $this->deviceDetailsMapper->entityToModel($this->getById($id));
     }
 
-    public function getModelByName(string $name): DevicesModel
+    public function getModelByName(string $name): DeviceSummaryModel
     {
-        $deviceEntity = $this->deviceRepository->findOneByName($name);
-        return $this->devicesMapper->entityToModel($deviceEntity);
+        return $this->deviceSummaryMapper->entityToModel($this->getByName($name));
     }
 
 }

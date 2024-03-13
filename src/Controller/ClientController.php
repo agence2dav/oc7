@@ -105,7 +105,7 @@ class ClientController extends AbstractController
             $item->tag('usersCache');
             return $this->userService->getUser($userId);
         });
-        $this->cachePool->invalidateTags(['userdetails']);
+        $this->cachePool->invalidateTags(['userdetails']);//
 
         $errors = $this->validator->validate($user);
         if ($errors->count() > 0) {

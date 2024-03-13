@@ -5,19 +5,21 @@ declare(strict_types=1);
 namespace App\Mapper;
 
 use App\Entity\Device;
-use App\Model\DevicesModel;
+use App\Model\DeviceSummaryModel;
 
-class DevicesMapper
+class DeviceSummaryMapper
 {
     public function __construct(
     ) {
     }
 
-    public function entityToModel(Device $deviceEntity): DevicesModel
+    public function entityToModel(Device $deviceEntity): DeviceSummaryModel
     {
-        $devicesModel = new DevicesModel();
-        $devicesModel->setDeviceUrl($deviceEntity->getId());
-        return $devicesModel;
+        $deviceModel = new DeviceSummaryModel();
+        $deviceModel->setId($deviceEntity->getId());
+        $deviceModel->setName($deviceEntity->getName());
+        $deviceModel->setLinks($deviceEntity->getId());
+        return $deviceModel;
     }
 
     public function entitiesToModels(array $deviceEntities): array

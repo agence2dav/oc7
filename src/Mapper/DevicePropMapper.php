@@ -17,7 +17,8 @@ class DevicePropMapper
     public function entityToModel(object $deviceProps): DevicePropModel
     {
         $devicePropsModel = new DevicePropModel();
-        $devicePropsModel->setPropUrl($deviceProps->getProp()->getid());
+        $devicePropsModel->setDeviceId($deviceProps->getDevice()->getid());
+        $devicePropsModel->setProperties($deviceProps->getProp());
         return $devicePropsModel;
     }
 

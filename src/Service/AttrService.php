@@ -30,7 +30,7 @@ class AttrService
         return $this->attrMapper->entitiesToModels($attrModel);
     }
 
-    public function getAttr(int $id): AttrModel
+    public function getAttrById(int $id): AttrModel
     {
         $deviceEntity = $this->attrRepo->findOneById($id);
         return $this->attrMapper->entityToModel($deviceEntity);

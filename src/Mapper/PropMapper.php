@@ -13,8 +13,10 @@ class PropMapper
     public function entityToModel(object $propEntity): PropModel
     {
         $propModel = new PropModel();
+        $propModel->setId($propEntity->getId());
         $propModel->setName($propEntity->getName());
-        $propModel->setAttrUrl($propEntity->getAttr()->getId());
+        //$propModel->setDeviceId($propEntity->getDeviceProps()->getDevice()->getId());
+        $propModel->setLinks($propEntity->getAttr());
         return $propModel;
     }
 

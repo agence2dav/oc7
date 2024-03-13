@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Entity\Prop;
 use App\Entity\Device;
-use App\Mapper\PropMapper;
 use App\Model\PropModel;
+use App\Mapper\PropMapper;
 use App\Repository\PropRepository;
 use App\Repository\DeviceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,20 +24,19 @@ class PropService
 
     }
 
-    public function getAll(): Device|array
+    public function getAll(): Prop|array
     {
         return $this->propRepo->findAll();
     }
 
-    public function getProp(int $id): PropModel
+    public function getProp(int $id): Prop
     {
         return $this->propRepo->findOneById($id);
     }
 
     public function getProps(int $id): PropModel
     {
-        $deviceEntity = $this->propRepo->findOneById($id);
-        return $this->propMapper->entityToModel($deviceEntity);
+        return $this->propMapper->entityToModel($this->getProp($id));
     }
 
 }
