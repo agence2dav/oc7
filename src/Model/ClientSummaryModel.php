@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Model;
 
 use Doctrine\Common\Collections\Collection;
-use App\Entity\DeviceProp;
-use App\Entity\Device;
 
-class ClientModel
+
+class ClientSummaryModel
 {
     private ?int $id = null;
     private ?string $corporation = null;
     private ?string $email = null;
+    private array $links;
 
     public function getId(): ?int
     {
@@ -44,6 +44,23 @@ class ClientModel
     public function setEmail(string $email): static
     {
         $this->email = $email;
+        return $this;
+    }
+
+    public function getLinks(): array
+    {
+        return $this->links;
+    }
+
+    public function setLinks(int $id): static
+    {
+        $this->links = [
+            '_links' => [
+                'self' => (string) '/api/clients',
+                'href' => (string) '/api/clients/' . $id,
+            ],
+            'title' => 'H.A.T.E.O.A.S & Resource Linking'
+        ];
         return $this;
     }
 

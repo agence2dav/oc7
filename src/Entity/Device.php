@@ -9,6 +9,7 @@ use App\Repository\DeviceRepository;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: DeviceRepository::class)]
@@ -23,15 +24,19 @@ class Device
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getDevice'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getDevice'])]
     private ?string $url = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getDevice'])]
     private ?string $image = null;
 
     #[ORM\Column]
+    #[Groups(['getDevice'])]
     private ?int $status = null;
 
     #[ORM\OneToMany(targetEntity: DeviceProp::class, mappedBy: 'device')]

@@ -93,7 +93,7 @@ class AppFixtures extends Fixture
             $password = $this->hasher->hashPassword($client, $this->password);
             $client
                 ->setEmail($i == 0 ? $this->adminMail : $this->faker->email)
-                ->setRoles([$i == 0 ? 'ROLE_ADMIN' : 'ROLE_ADMIN'])
+                ->setRoles([$i == 0 ? 'ROLE_ADMIN' : 'ROLE_CLIENT'])
                 ->setPassword($password)
                 ->setCorporation($i == 0 ? $this->adminName : $this->faker->username)
             ;

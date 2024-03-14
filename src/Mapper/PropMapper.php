@@ -10,19 +10,21 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class PropMapper
 {
-    public function EntityToModel(object $propEntity): PropModel
+    public function entityToModel(object $propEntity): PropModel
     {
         $propModel = new PropModel();
+        $propModel->setId($propEntity->getId());
         $propModel->setName($propEntity->getName());
-        $propModel->setAttrUrl($propEntity->getAttr()->getId());
+        //$propModel->setDeviceId($propEntity->getDeviceProps()->getDevice()->getId());
+        $propModel->setLinks($propEntity->getAttr());
         return $propModel;
     }
 
-    public function EntitiesToModels(array $propEntities): array
+    public function entitiesToModels(array $propEntities): array
     {
         $propModels = [];
         foreach ($propEntities as $propEntity) {
-            $propModels[] = $this->EntityToModel($propEntity);
+            $propModels[] = $this->entityToModel($propEntity);
         }
         return $propModels;
     }
@@ -31,7 +33,7 @@ class PropMapper
     {
         $propModels = new ArrayCollection;
         foreach ($propCollection as $deviceEntity) {
-            $propModels[] = $this->EntityToModel($deviceEntity);
+            $propModels[] = $this->entityToModel($deviceEntity);
         }
         return $propModels;
     }

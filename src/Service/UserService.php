@@ -6,10 +6,10 @@ namespace App\Service;
 
 use DateTime;
 use App\Entity\User;
-use App\Model\UserModel;
-use App\Mapper\UserMapper;
-use App\Mapper\UsersMapper;
 use App\Service\ClientService;
+use App\Model\UserDetailsModel;
+use App\Mapper\UserDetailsMapper;
+use App\Mapper\UserSummaryMapper;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 
@@ -18,11 +18,21 @@ class UserService
 
     public function __construct(
         private UserRepository $userRepo,
-        private UserMapper $userMapper,
-        private UsersMapper $usersMapper,
+        private UserDetailsMapper $userDetailsMapper,
+        private UserSummaryMapper $userSummaryMapper,
         private ClientService $clientService,
     ) {
 
+    }
+
+    public function getUsersByCientId(int $id): Collection|array
+    {
+        return $this->userRepo->findUsersByClientId($id);
+    }
+
+    public function getUsers(int $id): Collection|array
+    {
+        return $this->userSummaryMapper->entitiesToModels($this->getUsersByCientId($id));
     }
 
     public function getUserById(int $id): User|null
@@ -30,16 +40,14 @@ class UserService
         return $this->userRepo->findOneById($id);
     }
 
-    public function getUsers(): Collection|array
+    public function getUser(int $id): UserDetailsModel|null
     {
-        $usersModel = $this->userRepo->findAll();
-        return $this->usersMapper->EntitiesToModels($usersModel);
+        return $this->userDetailsMapper->entityToModel($this->getUserById($id));
     }
 
-    public function getUser(int $id): UserModel|null
+    public function getUserDetails(User $user): UserDetailsModel|null
     {
-        $userModel = $this->userRepo->findOneById($id);
-        return $this->userMapper->EntityToModel($userModel);
+        return $this->userDetailsMapper->entityToModel($user);
     }
 
     public function addUser(User $user, int $clientId): void
