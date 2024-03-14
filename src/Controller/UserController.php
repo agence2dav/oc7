@@ -28,31 +28,23 @@ class UserController extends AbstractController
     ) {
     }
 
-    //details of users
-    /* 
-    
-    #[Route('/api/users/{id}', name: 'userdetails', methods: ['GET'])]
-    //#[IsGranted('ROLE_CLIENT', message: 'Invalid credentials to edit this user')]
-    public function userDetails(User $user, int $id): JsonResponse
-    {
-        //$user = $this->userService->getUser($id);
-        $errors = $this->validator->validate($user);
-        if ($errors->count() > 0) {
-            return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
-        }
-        $json = $this->serializerService->serialize($user, ['groups' => 'getUser']);
-        return new JsonResponse($json, Response::HTTP_OK, [], true);
-    }*/
-
     //update user
     #[Route('/api/users/{id}', name: 'updateuser', methods: ['PUT'])]
     //#[IsGranted('ROLE_CLIENT', message: 'Invalid credentials to edit this user')]
     public function updateUser(User $user, int $id, Request $request): JsonResponse
     {
+        //clear cache
         $this->cachePool->invalidateTags(['usersCache']);
+
+        //alternative source of datas
         //$user = $this->userService->getUserById($id);
+
         $user = $this->serializerService->deserialize($request->getContent(), USER::class, [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
+
+        //update user
         $this->userService->updateUser($user);
+
+        //render
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
 
@@ -61,9 +53,16 @@ class UserController extends AbstractController
     //#[IsGranted('ROLE_CLIENT', message: 'Invalid credentials to edit this user')]
     public function deleteUser(User $user, int $id): JsonResponse
     {
+        //clear cache
         $this->cachePool->invalidateTags(['usersCache']);
+
+        //alternative source of datas
         //$user = $this->userService->getUserById($id);
+
+        //del user
         $this->userService->delUser($user);
+
+        //render
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
 
@@ -72,17 +71,37 @@ class UserController extends AbstractController
     //#[IsGranted('ROLE_CLIENT', message: 'Invalid credentials to edit this user')]
     public function createUser(Request $request): JsonResponse
     {
+        //clear cache
         $this->cachePool->invalidateTags(['usersCache']);
         $user = $this->serializerService->deserialize($request->getContent(), USER::class);
         $clientId = $request->toArray()['clientId'] ?? -1;
+
+        //verif user exists
         $errors = $this->validator->validate($user);
         if ($errors->count() > 0) {
             return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
         }
+
+        //verif relation with host client
+        $logedId = $this->getUser()->id;
+        if ($logedId != $clientId) {
+            $json = $this->serializerService->serialize(['error_intrusion' => 'Access granted']);
+            return new JsonResponse($json, Response::HTTP_OK, [], true);
+        }
+
+        //add user
         $this->userService->addUser($user, $clientId);
+
+        //catch error...
+        $errors = $this->validator->validate($user);
+        if ($errors->count() > 0) {
+            return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
+        }
+
+        //render
         $json = $this->serializerService->serialize($user, ['groups' => 'getuser']);
-        $location = $this->urlGenerator->generate('api_user', ['id' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        return new JsonResponse($json, Response::HTTP_CREATED, ["Location" => $location], true);
+        $location = $this->urlGenerator->generate('userdetails', ['clientId' => $user->getClient()->getId(), 'userId' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        return new JsonResponse($json, Response::HTTP_CREATED, ['Location' => $location], true);
     }
 
 }

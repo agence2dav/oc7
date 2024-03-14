@@ -48,10 +48,16 @@ class DeviceController extends AbstractController
     }
 
     //details of device
-    #[Route('/api/devices/{id}/details', name: 'devicedetails', methods: ['GET'])]
+    #[Route('/api/devices/{id}', name: 'devicedetails', methods: ['GET'])]
     public function device(int $id): JsonResponse
     {
-        $device = $this->deviceService->getDevice($id);
+        $idCache = 'deviceCache' . $id;
+        $this->cachePool->invalidateTags(['devicesCache']);//
+        $device = $this->cache->get($idCache, function (ItemInterface $item) use ($id) {
+            $item->tag('devicesCache');//invalidateTags
+            return $this->deviceService->getDevice($id);
+        });
+
         $errors = $this->validator->validate($device);
         if ($errors->count() > 0) {
             return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);

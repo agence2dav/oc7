@@ -48,12 +48,17 @@ class ClientController extends AbstractController
     #[IsGranted('ROLE_CLIENT', message: 'Invalid credentials to watch this')]
     public function clientSummary(): JsonResponse
     {
+        //deduce client
         $logedId = $this->getUser()->id;
         $clients = $this->clientService->getClientSummary($logedId);
         $errors = $this->validator->validate($clients);
+
+        //error bad client
         if ($errors->count() > 0) {
             return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
         }
+
+        //render
         $json = $this->serializerService->serialize($clients);
         return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
@@ -68,50 +73,58 @@ class ClientController extends AbstractController
     #[IsGranted('ROLE_CLIENT', message: 'Invalid credentials to watch this')]
     public function clientDetails(Client $client, int $id): JsonResponse
     {
+        //verif granted client
         $logedId = $this->getUser()->id;
         if ($logedId != $id) {
             $json = $this->serializerService->serialize(['error_intrusion' => 'Access granted']);
             return new JsonResponse($json, Response::HTTP_OK, [], true);
         }
 
-        $idCache = 'clientsdetails';
+        //cache
+        $idCache = 'clientsdetails' . $id;
         $users = $this->cache->get($idCache, function (ItemInterface $item) use ($client) {
             $item->tag('usersCache');
             return $this->clientService->getClientDetails($client);
         });
 
+        //verif users exists
         $errors = $this->validator->validate($users);
         if ($errors->count() > 0) {
             return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
         }
 
+        //render
         $json = $this->serializerService->serialize($users);
         return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
 
     //user of client
-    #[Route('/api/clients/{id}/users/{userId}', name: 'userdetails', methods: ['GET'])]
+    #[Route('/api/clients/{clientId}/users/{userId}', name: 'userdetails', methods: ['GET'])]
     #[IsGranted('ROLE_CLIENT', message: 'Invalid credentials to watch this')]
-    public function clientUsers(int $id, int $userId): JsonResponse
+    public function clientUsers(int $clientId, int $userId): JsonResponse
     {
+        //verif granted client
         $logedId = $this->getUser()->id;
-        if ($logedId != $id) {
+        if ($logedId != $clientId) {
             $json = $this->serializerService->serialize(['error_intrusion' => 'Access granted']);
             return new JsonResponse($json, Response::HTTP_OK, [], true);
         }
 
-        $idCache = 'userdetails';
+        //cache
+        $idCache = 'userdetails' . $userId;
+        $this->cachePool->invalidateTags(['usersCache']);//
         $user = $this->cache->get($idCache, function (ItemInterface $item) use ($userId) {
             $item->tag('usersCache');
             return $this->userService->getUser($userId);
         });
-        $this->cachePool->invalidateTags(['userdetails']);//
 
+        //verif user exists
         $errors = $this->validator->validate($user);
         if ($errors->count() > 0) {
             return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
         }
 
+        //render
         $json = $this->serializerService->serialize($user);
         return new JsonResponse($json, Response::HTTP_OK, [], true);
     }

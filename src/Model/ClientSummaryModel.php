@@ -57,7 +57,7 @@ class ClientSummaryModel
         $this->links = [
             '_links' => [
                 'self' => (string) '/api/clients',
-                'clientDetails' => (string) '/api/clients/' . $id,
+                'href' => (string) '/api/clients/' . $id,
             ],
             'title' => 'H.A.T.E.O.A.S & Resource Linking'
         ];
