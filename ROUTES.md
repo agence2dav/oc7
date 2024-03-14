@@ -108,7 +108,7 @@ GET
     ]
 
 GET
-/api/devices/{id}/details
+/api/devices/{id}
 
     {
     "id": 1,
