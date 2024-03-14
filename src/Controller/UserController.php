@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Service\UserService;
 use App\Service\SerializerService;
+use App\Service\SerializerJmsService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,7 +21,7 @@ class UserController extends AbstractController
 {
     public function __construct(
         private UserService $userService,
-        private SerializerService $serializerService,
+        private SerializerJmsService $serializerService,
         private UrlGeneratorInterface $urlGenerator,
         private ValidatorInterface $validator,
         private TagAwareCacheInterface $cache,

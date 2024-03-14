@@ -12,6 +12,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 //use Symfony\Component\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Groups;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Hateoas\Configuration\Annotation as Hateoas;
+
+/**
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "deviceDetails",
+ *          parameters = { "id" = "expr(object.getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getDevice")
+ * )
+ *
+ */
 
 #[ORM\Entity(repositoryClass: DeviceRepository::class)]
 #[Broadcast]

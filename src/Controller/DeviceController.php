@@ -6,6 +6,7 @@ use App\Service\AttrService;
 use App\Service\PropService;
 use App\Service\DeviceService;
 use App\Service\SerializerService;
+use App\Service\SerializerJmsService;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,7 +21,7 @@ class DeviceController extends AbstractController
         private AttrService $attrService,
         private PropService $propService,
         private DeviceService $deviceService,
-        private SerializerService $serializerService,
+        private SerializerJmsService $serializerService,
         private ValidatorInterface $validator,
         private TagAwareCacheInterface $cache,
         private TagAwareCacheInterface $cachePool,

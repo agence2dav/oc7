@@ -70,6 +70,7 @@ Start: 240301
 
 - reshape all urls
 
-### jwt #26
+### jms #26 (called jwt but ok)
 
-- todo: use jwt
+- use jms
+- installe hateoas correctly
