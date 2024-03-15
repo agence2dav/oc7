@@ -25,6 +25,11 @@ class UserService
 
     }
 
+    public function getUserById(int $id): User|null
+    {
+        return $this->userRepo->findOneById($id);
+    }
+
     public function getUsersByCientId(int $id): Collection|array
     {
         return $this->userRepo->findUsersByClientId($id);
@@ -33,11 +38,6 @@ class UserService
     public function getUsers(int $id): Collection|array
     {
         return $this->userSummaryMapper->entitiesToModels($this->getUsersByCientId($id));
-    }
-
-    public function getUserById(int $id): User|null
-    {
-        return $this->userRepo->findOneById($id);
     }
 
     public function getUser(int $id): UserDetailsModel|null

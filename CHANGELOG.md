@@ -73,4 +73,5 @@ Start: 240301
 ### jms #26 (called jwt but ok)
 
 - use jms
-- installe hateoas correctly
+- install hateoas correctly
+- make it works (but hateoas)

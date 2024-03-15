@@ -34,6 +34,7 @@ class DeviceSummaryModel
         return $this;
     }
 
+    /* 
     public function getLinks(): ?array
     {
         return $this->links;
@@ -45,6 +46,6 @@ class DeviceSummaryModel
             'href' => (string) '/api/devices/' . $id
         ];
         return $this;
-    }
+    }*/
 
 }

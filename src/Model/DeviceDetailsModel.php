@@ -13,7 +13,6 @@ class DeviceDetailsModel
     private ?string $url = null;
     private ?string $image = null;
     private ?int $status = null;
-    private array $links;
     private Collection $deviceProps;
 
 
@@ -69,14 +68,6 @@ class DeviceDetailsModel
     public function setStatus(int $status): static
     {
         $this->status = $status;
-        return $this;
-    }
-
-    public function setDeviceUrl(int $id): static
-    {
-        $this->links = [
-            'href' => (string) '/api/devices/' . $id . '/details'
-        ];
         return $this;
     }
 

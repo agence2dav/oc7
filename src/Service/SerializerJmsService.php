@@ -20,7 +20,7 @@ class SerializerJmsService
 
     public function __construct(
         //private Serializer $serializer,
-        //private SerializerInterface $interface,
+        private SerializerInterface $serializer,
         //private SerializationContext $context,
         //private DeserializationContext $deserializationContext,
     ) {
@@ -30,29 +30,25 @@ class SerializerJmsService
     public function serialize(
         array|object $datas,
         array $groups = [],
-        SerializerInterface $serializer = null
     ): string {
         $context = SerializationContext::create()->setGroups($groups);
-        //return $this->serializer->serialize($datas, 'json', $context);
-        return $serializer->serialize($datas, 'json', $context);
+        return $this->serializer->serialize($datas, 'json', $context);
     }
 
     public function deserialize(
         string $content,
         string $class,
         array $options = [],
-        SerializerInterface $serializer = null
     ): object {
         $context = DeserializationContext::create()->setGroups($options);
-        //return $this->serializer->deserialize($content, $class, 'json', $context);
-        return $serializer->deserialize($content, $class, 'json', $context);
+        return $this->serializer->deserialize($content, $class, 'json', $context);
     }
 
     /* */
+    //$datas = new User(42, 'Adrien', 'Brault', new User(23, 'Will', 'Durand'));
     public function hateoasSerialize(array|object $datas): string
     {
         $hateoas = HateoasBuilder::create()->build();
-        //$user = new User(42, 'Adrien', 'Brault', new User(23, 'Will', 'Durand'));
         return $hateoas->serialize($datas, 'json');
     }
 

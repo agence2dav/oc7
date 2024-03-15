@@ -72,6 +72,7 @@ class UserDetailsModel
         return $this;
     }
 
+    /* 
     public function getUserUrl(): array
     {
         return $this->links;
@@ -86,6 +87,6 @@ class UserDetailsModel
             ]
         ];
         return $this;
-    }
+    }*/
 
 }

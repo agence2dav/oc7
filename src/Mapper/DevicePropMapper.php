@@ -18,7 +18,7 @@ class DevicePropMapper
     {
         $devicePropsModel = new DevicePropModel();
         $devicePropsModel->setDeviceId($deviceProps->getDevice()->getid());
-        $devicePropsModel->setProperties($deviceProps->getProp());
+        //$devicePropsModel->setProperties($deviceProps->getProp());
         return $devicePropsModel;
     }
 

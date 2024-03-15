@@ -46,6 +46,7 @@ class PropModel
         return $this;
     }
 
+    /* 
     public function getLinks(): ?array
     {
         return $this->link;
@@ -58,6 +59,6 @@ class PropModel
             'href' => (string) '/api/devices/property/attribut/' . $attr->getId()
         ];
         return $this;
-    }
+    }*/
 
 }

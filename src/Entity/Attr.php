@@ -10,6 +10,43 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 //use Symfony\Component\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Groups;
+use Hateoas\Configuration\Annotation as Hateoas;
+
+/**
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "deviceAttr",
+ *          parameters = { "id" = "expr(object.getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getDevice")
+ * )
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "deviceDetails",
+ *          parameters = { "id" = "expr(object.getId())" }
+ *      ),
+ * )
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "deviceProps",
+ *          parameters = { "id" = "expr(object.getDevice()->getId())" }
+ *      ),
+ * )
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "devicePropAttr",
+ *          parameters = { "id" = "expr(object.getId())" }
+ *      ),
+ * )
+ *
+ */
 
 #[ORM\Entity(repositoryClass: PropRepository::class)]
 #[Broadcast]
@@ -18,10 +55,11 @@ class Attr
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['getDevicesDetails', 'getProps', 'getAttr'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['getAttr'])]
+    #[Groups(['getDevicesDetails', 'getProps', 'getAttr'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(targetEntity: Prop::class, mappedBy: 'attr')]

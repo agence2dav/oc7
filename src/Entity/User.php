@@ -17,28 +17,46 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
- *          "userDetails",
+ *          "userSummary",
  *          parameters = { "id" = "expr(object.getId())" }
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getUser")
+ *      exclusion = @Hateoas\Exclusion(groups="getUserSummary")
+ * )
+ * 
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "userDetails",
+ *          parameters = { "clientId" = "expr(object.getClient()->getId())", "id" = "expr(object.getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserSummary")
  * )
  *
  * @Hateoas\Relation(
  *      "delete",
  *      href = @Hateoas\Route(
- *          "deleteUser",
+ *          "delUser",
  *          parameters = { "id" = "expr(object.getId())" },
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getUser", excludeIf = "expr(not is_granted('ROLE_ADMIN'))"),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserDetails", excludeIf = "expr(not is_granted('ROLE_CLIENT'))"),
  * )
  *
  * @Hateoas\Relation(
  *      "update",
  *      href = @Hateoas\Route(
  *          "updateUser",
- *          parameters = { "id" = "expr(object.getId())" },
+ *          parameters = { "userId" = "expr(object.getId())" },
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getUser", excludeIf = "expr(not is_granted('ROLE_ADMIN'))"),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserDetails", excludeIf = "expr(not is_granted('ROLE_CLIENT'))"),
+ * )
+ *
+ * @Hateoas\Relation(
+ *      "create",
+ *      href = @Hateoas\Route(
+ *          "addUser",
+ *          parameters = { },
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserDetails", excludeIf = "expr(not is_granted('ROLE_CLIENT'))"),
  * )
  *
  */
@@ -50,26 +68,26 @@ class User
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['getUser'])]
+    #[Groups(['getClientSummary', 'getClientDetails', 'getUserSummary', 'getUserDetails'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['getUser'])]
+    #[Groups(['getClientSummary', 'getUserSummary', 'getUserDetails'])]
     #[Assert\NotBlank(message: "must be specified")]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['getUser'])]
+    #[Groups(['getClientDetails', 'getUserDetails'])]
     #[Assert\NotBlank(message: "must be specified")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['getUser'])]
+    #[Groups(['getClientDetails', 'getUserDetails'])]
     #[Assert\NotBlank(message: "must be specified")]
     private ?string $status = null;
 
     #[ORM\Column(type: "datetime")]
-    #[Groups(['getUser'])]
+    #[Groups(['getClientDetails', 'getUserDetails'])]
     private ?DateTime $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
