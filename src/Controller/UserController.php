@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Service\UserService;
 use App\Service\SerializerService;
+use App\Service\SerializerJmsService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,7 +21,7 @@ class UserController extends AbstractController
 {
     public function __construct(
         private UserService $userService,
-        private SerializerService $serializerService,
+        private SerializerJmsService $serializerService,
         private UrlGeneratorInterface $urlGenerator,
         private ValidatorInterface $validator,
         private TagAwareCacheInterface $cache,
@@ -29,7 +30,7 @@ class UserController extends AbstractController
     }
 
     //update user
-    #[Route('/api/users/{id}', name: 'updateuser', methods: ['PUT'])]
+    #[Route('/api/users/{id}', name: 'updateUser', methods: ['PUT'])]
     //#[IsGranted('ROLE_CLIENT', message: 'Invalid credentials to edit this user')]
     public function updateUser(User $user, int $id, Request $request): JsonResponse
     {
@@ -49,7 +50,7 @@ class UserController extends AbstractController
     }
 
     //delete user
-    #[Route('/api/users/{id}', name: 'deluser', methods: ['DELETE'])]
+    #[Route('/api/users/{id}', name: 'delUser', methods: ['DELETE'])]
     //#[IsGranted('ROLE_CLIENT', message: 'Invalid credentials to edit this user')]
     public function deleteUser(User $user, int $id): JsonResponse
     {
@@ -67,7 +68,7 @@ class UserController extends AbstractController
     }
 
     //create
-    #[Route('/api/users', name: 'adduser', methods: ['POST'])]
+    #[Route('/api/users', name: 'addUser', methods: ['POST'])]
     //#[IsGranted('ROLE_CLIENT', message: 'Invalid credentials to edit this user')]
     public function createUser(Request $request): JsonResponse
     {

@@ -22,6 +22,7 @@ class DevicePropModel
         return $this;
     }
 
+    /* 
     public function getProperties(): array
     {
         return $this->properties;
@@ -40,6 +41,6 @@ class DevicePropModel
             ]
         ];
         return $this;
-    }
+    }*/
 
 }

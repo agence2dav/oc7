@@ -16,7 +16,7 @@ class PropMapper
         $propModel->setId($propEntity->getId());
         $propModel->setName($propEntity->getName());
         //$propModel->setDeviceId($propEntity->getDeviceProps()->getDevice()->getId());
-        $propModel->setLinks($propEntity->getAttr());
+        //$propModel->setLinks($propEntity->getAttr());
         return $propModel;
     }
 

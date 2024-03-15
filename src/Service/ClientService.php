@@ -23,19 +23,29 @@ class ClientService
 
     }
 
+    public function getById(int $id): Client|null
+    {
+        return $this->clientRepo->findOneById($id);
+    }
+
     public function getAll(): array|null
     {
         return $this->clientRepo->findAll();
     }
 
-    public function getClientsList(): Collection|array
-    {
-        return $this->clientSummaryMapper->entitiesToModels($this->getAll());
-    }
-
     public function getClientById(int $id): Client|null
     {
         return $this->clientRepo->findOneById($id);
+    }
+
+    public function getUsersByClientId(int $id): Collection|array
+    {
+        return $this->clientRepo->findByClientId($id);
+    }
+
+    public function getClientsList(): Collection|array
+    {
+        return $this->clientSummaryMapper->entitiesToModels($this->getAll());
     }
 
     public function getClientSummary(int $id): ClientSummaryModel|null
@@ -46,11 +56,6 @@ class ClientService
     public function getClientDetails(Client $client): ClientDetailsModel|null
     {
         return $this->clientDetailsMapper->entityToModel($client);
-    }
-
-    public function getById(int $id): Client|null
-    {
-        return $this->clientRepo->findOneById($id);
     }
 
 }

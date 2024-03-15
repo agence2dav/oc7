@@ -19,7 +19,7 @@ class ClientSummaryMapper
         $clientModel->setId($clientEntity->getId());
         $clientModel->setCorporation($clientEntity->getCorporation());
         $clientModel->setEmail($clientEntity->getEmail());
-        $clientModel->setLinks($clientEntity->getId());
+        //$clientModel->setLinks($clientEntity->getId());
         return $clientModel;
     }
 

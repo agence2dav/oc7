@@ -18,7 +18,7 @@ class DeviceSummaryMapper
         $deviceModel = new DeviceSummaryModel();
         $deviceModel->setId($deviceEntity->getId());
         $deviceModel->setName($deviceEntity->getName());
-        $deviceModel->setLinks($deviceEntity->getId());
+        //$deviceModel->setLinks($deviceEntity->getId());
         return $deviceModel;
     }
 

@@ -18,7 +18,7 @@ class UserDetailsMapper
         $userModel->setEmail($clientEntity->getEmail());
         $userModel->setStatus($clientEntity->getStatus());
         $userModel->setCreatedAt($clientEntity->getCreatedAt());
-        $userModel->setUserUrl($clientEntity->getClient()->getId());
+        //$userModel->setUserUrl($clientEntity->getClient()->getId());
         return $userModel;
     }
 

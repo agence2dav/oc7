@@ -4,13 +4,39 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-use Doctrine\Common\Collections\Collection;
+use Hateoas\Configuration\Annotation as Hateoas;
+use JMS\Serializer\Annotation\Groups;
 
+/**
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "clientSummary",
+ *          parameters = {}
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getClients"),
+ * )
+ * 
+ * @Hateoas\Relation(
+ *      "details",
+ *      href = @Hateoas\Route(
+ *          "clientDetails",
+ *          parameters = { "id" = "expr(object.getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getClient"),
+ * )
+ *
+ */
 
 class ClientSummaryModel
 {
+    #[Groups(['getClients', 'getClient'])]
     private ?int $id = null;
+
+    #[Groups(['getClients', 'getClient'])]
     private ?string $corporation = null;
+
+    #[Groups(['getClient'])]
     private ?string $email = null;
     private array $links;
 
@@ -52,6 +78,7 @@ class ClientSummaryModel
         return $this->links;
     }
 
+    /* 
     public function setLinks(int $id): static
     {
         $this->links = [
@@ -62,6 +89,6 @@ class ClientSummaryModel
             'title' => 'H.A.T.E.O.A.S & Resource Linking'
         ];
         return $this;
-    }
+    }*/
 
 }

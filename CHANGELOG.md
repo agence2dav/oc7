@@ -66,6 +66,12 @@ Start: 240301
 
 - tools for build doc
 
-### goodurls
+### goodurls #24
 
 - reshape all urls
+
+### jms #26 (called jwt but ok)
+
+- use jms
+- install hateoas correctly
+- make it works (but hateoas)
