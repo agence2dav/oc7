@@ -11,6 +11,7 @@ use App\Service\DeviceService;
 use App\Service\SerializerService;
 use App\Service\SerializerJmsService;
 use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,14 +35,17 @@ class DeviceController extends AbstractController
 
     //list of devices
     #[Route('/api/devices', name: 'devicesList', methods: ['GET'])]
-    public function devices(): JsonResponse
+    public function devices(Request $request): JsonResponse
     {
+        $page = $request->get('page', 1);
+        $limit = $request->get('limit', 10);
         //cache
         $idCache = 'devicesCache';
         $this->cachePool->invalidateTags(['devicesCache']);//
-        $devices = $this->cache->get($idCache, function (ItemInterface $item) {
+        $devices = $this->cache->get($idCache, function (ItemInterface $item) use ($page, $limit) {
             $item->tag('devicesCache');//invalidateTags
             return $this->deviceService->getAll();
+            //return $this->deviceService->getAllByPage($page, $limit);
         });
 
         //error
@@ -52,6 +56,8 @@ class DeviceController extends AbstractController
 
         //render
         $json = $this->serializerJmsService->serialize($devices, ['getDevicesSummary']);
+        //$json = $hateoas->serialize($paginatedCollection, 'json');
+        //$json = $this->serializerJmsService->hateoasSerializePaginated($devices, 'devicesList', $page, $limit);
         return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
 

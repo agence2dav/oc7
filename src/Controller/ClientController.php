@@ -6,16 +6,21 @@ use OA\Items;
 use OA\RequestBody;
 use App\Entity\Client;
 use App\Service\UserService;
+use OpenApi\Attributes as OA;
 use App\Service\ClientService;
 use App\Service\SerializerService;
 use App\Service\SerializerJmsService;
+use JMS\Serializer\SerializerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ClientController extends AbstractController
@@ -28,26 +33,45 @@ class ClientController extends AbstractController
         private ValidatorInterface $validator,
         private TagAwareCacheInterface $cache,
         private TagAwareCacheInterface $cachePool,
+        private UrlGeneratorInterface $urlGen,
     ) {
     }
 
     //list of clients
-    #[Route('/api/clients/list', name: 'clientslist', methods: ['GET'])]
+    #[Route('/api/clients/list', name: 'clientsList', methods: ['GET'])]
     #[IsGranted('ROLE_ADMIN', message: 'Invalid credentials to watch this')]
-    public function clients(): JsonResponse
+    #[OA\Response(
+        response: 200,
+        description: 'list of clients',
+        content: new OA\JsonContent(
+            type: 'array',
+            items: new OA\Items(ref: new Model(type: Client::class))
+        )
+    )]
+    public function clients(Request $request): JsonResponse
     {
         $clients = $this->clientService->getAll();
         $errors = $this->validator->validate($clients);
         if ($errors->count() > 0) {
             return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
         }
-        $json = $this->serializerJmsService->serialize($clients, ['getClientSummary']);
+        //$json = $this->serializerJmsService->serialize($clients, ['getClientSummary']);
+        $json = $this->serializerJmsService->hateoasSerialize($clients, $this->urlGen, 'clientsList');
         return new JsonResponse($json, Response::HTTP_OK, [], true);
+
     }
 
     //summary of client
     #[Route('/api/clients', name: 'clientsSummary', methods: ['GET'])]
     #[IsGranted('ROLE_CLIENT', message: 'Invalid credentials to watch this')]
+    #[OA\Response(
+        response: 200,
+        description: 'summary of client',
+        content: new OA\JsonContent(
+            type: 'array',
+            items: new OA\Items(ref: new Model(type: Client::class))
+        )
+    )]
     public function clientSummary(): JsonResponse
     {
         //deduce client
@@ -61,7 +85,8 @@ class ClientController extends AbstractController
         }
 
         //render
-        $json = $this->serializerJmsService->serialize($clients, ['getClientSummary']);
+        //$json = $this->serializerJmsService->serialize($clients, ['getClientSummary']);
+        $json = $this->serializerJmsService->hateoasSerialize($clients, $this->urlGen, 'clientsSummary');
         return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
 

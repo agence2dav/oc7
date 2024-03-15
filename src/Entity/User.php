@@ -14,20 +14,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
- * @Hateoas\Relation(
- *      "self",
- *      href = @Hateoas\Route(
- *          "userSummary",
- *          parameters = { "id" = "expr(object.getId())" }
- *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getUserSummary")
- * )
  * 
  * @Hateoas\Relation(
- *      "self",
+ *      "userDetails",
  *      href = @Hateoas\Route(
  *          "userDetails",
- *          parameters = { "clientId" = "expr(object.getClient()->getId())", "id" = "expr(object.getId())" }
+ *          parameters = { "clientId" = "expr(object.getClient().getId())", "userId" = "expr(object.getId())" }
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups="getUserSummary")
  * )
@@ -38,16 +30,16 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          "delUser",
  *          parameters = { "id" = "expr(object.getId())" },
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getUserDetails", excludeIf = "expr(not is_granted('ROLE_CLIENT'))"),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserDetails"),
  * )
  *
  * @Hateoas\Relation(
  *      "update",
  *      href = @Hateoas\Route(
  *          "updateUser",
- *          parameters = { "userId" = "expr(object.getId())" },
+ *          parameters = { "id" = "expr(object.getId())" },
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getUserDetails", excludeIf = "expr(not is_granted('ROLE_CLIENT'))"),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserDetails"),
  * )
  *
  * @Hateoas\Relation(
@@ -56,7 +48,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          "addUser",
  *          parameters = { },
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getUserDetails", excludeIf = "expr(not is_granted('ROLE_CLIENT'))"),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserDetails"),
  * )
  *
  */
@@ -68,16 +60,16 @@ class User
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['getClientSummary', 'getClientDetails', 'getUserSummary', 'getUserDetails'])]
+    #[Groups(['getClientDetails', 'getUserSummary', 'getUserDetails'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['getClientSummary', 'getUserSummary', 'getUserDetails'])]
+    #[Groups(['getClientDetails', 'getUserSummary', 'getUserDetails'])]
     #[Assert\NotBlank(message: "must be specified")]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['getClientDetails', 'getUserDetails'])]
+    #[Groups(['getUserDetails'])]
     #[Assert\NotBlank(message: "must be specified")]
     private ?string $email = null;
 

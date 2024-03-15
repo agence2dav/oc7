@@ -20,6 +20,11 @@ class DeviceService
         return $this->deviceRepository->findAll();
     }
 
+    public function getAllByPage(int $page, int $limit): array
+    {
+        return $this->deviceRepository->findAllByPage($page, $limit);
+    }
+
     public function getById(int $id): Device
     {
         return $this->deviceRepository->findOneById($id);

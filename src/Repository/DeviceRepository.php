@@ -27,4 +27,14 @@ class DeviceRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findAllByPage(int $page, int $limit): array
+    {
+        return $this->createQueryBuilder('t')
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 }

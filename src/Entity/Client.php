@@ -15,30 +15,41 @@ use Hateoas\Configuration\Annotation as Hateoas;
 use JMS\Serializer\Annotation\Groups;
 
 /**
+ * 
  * @Hateoas\Relation(
- *      "self",
+ *      "clientsList",
  *      href = @Hateoas\Route(
- *          "clientslist",
+ *          "clientsList",
  *          parameters = {}
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups="getClientDetails"),
  * )
  *
  * @Hateoas\Relation(
- *      "_links",
+ *      "clientsSummary",
  *      href = @Hateoas\Route(
  *          "clientsSummary",
  *          parameters = { "id" = "expr(object.getId())" }
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups="getClientDetails"),
  * )
+ * 
+ * @Hateoas\Relation(
+ *      "clientsList",
+ *      href = @Hateoas\Route(
+ *          "clientsList",
+ *          parameters = { }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getClientDetails")
+ * )
  *
  * @Hateoas\Relation(
- *      "_links",
+ *      "clientsDetails",
  *      href = @Hateoas\Route(
  *          "clientsDetails",
  *          parameters = { "id" = "expr(object.getId())" }
  *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserSummary")
  * )
  *
  */
@@ -52,7 +63,7 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['getClientSummary', 'getClientDetails'])]
+    #[Groups(['getClientSummary', 'getClientDetails', 'notit'])]
     public ?int $id = null;
 
     #[ORM\Column(length: 180)]

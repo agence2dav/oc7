@@ -17,12 +17,6 @@ class SerializerService
 
     }
 
-    public function json(array $datas): string
-    {
-        $serializer = new Serializer([], [new JsonEncoder()]);
-        return $serializer->encode($datas, 'json');
-    }
-
     public function serialize(array|object $datas, array $groups = []): string
     {
         return $this->serializer->serialize($datas, 'json', $groups);
