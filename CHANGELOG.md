@@ -75,3 +75,7 @@ Start: 240301
 - use jms
 - install hateoas correctly
 - make it works (but hateoas)
+
+### hateoas #28
+
+- make it works
