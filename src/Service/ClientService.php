@@ -40,11 +40,6 @@ class ClientService
         return $this->clientRepo->findByClientId($id);
     }
 
-    public function getClientsList(): Collection|array
-    {
-        return $this->clientMapper->entitiesToModels($this->getAll());
-    }
-
     public function getClientSummary(int $id): ClientModel|null
     {
         return $this->clientMapper->entityToModel($this->getClientById($id));
