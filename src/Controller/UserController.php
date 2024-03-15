@@ -5,13 +5,11 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Service\UserService;
 use App\Service\SerializerService;
-use App\Service\SerializerJmsService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -21,7 +19,7 @@ class UserController extends AbstractController
 {
     public function __construct(
         private UserService $userService,
-        private SerializerJmsService $serializerService,
+        private SerializerService $serializerService,
         private UrlGeneratorInterface $urlGenerator,
         private ValidatorInterface $validator,
         private TagAwareCacheInterface $cache,

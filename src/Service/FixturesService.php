@@ -2,34 +2,18 @@
 
 namespace App\Service;
 
-use DateTime;
-use DateInterval;
 use Faker\Factory;
-use App\Entity\User;
 use Faker\Generator;
-use Faker\Core\DateTime as FakeDatTime;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class FixturesService
 {
-
     public Generator $faker;
-    private $month = 12;
 
     public function __construct(
         private readonly UserPasswordHasherInterface $hasher,
     ) {
         $this->faker = Factory::create('fr_FR');
-    }
-
-    public function generateDateInPast(): DateTime
-    {
-        $this->month = mt_rand(1, 24);
-        $now = new DateTime();
-        $dist = DateInterval::createFromDateString($this->month . ' months');
-        $now->sub($dist);
-        $now->format('Y-m-d H:i:s');
-        return $now;
     }
 
     public function devicesTables($test = 0): array
@@ -87,13 +71,10 @@ class FixturesService
         $res = [];
         foreach ($devicePropDb as $k => $v) {
             if ($v[0] == 0) {//each prop of device
-                //pr($v);
-                $res[0] = $deviceDb[$v[0]] ?? 0; //pr($device);
-                $propDevice = $propDb[$v[1]] ?? []; //pr($propDevice );
+                $res[0] = $deviceDb[$v[0]] ?? 0;
+                $propDevice = $propDb[$v[1]] ?? [];
                 $attrId = $propDevice[0];
                 $propDevice[0] = $attrDb[$attrId] ?? [];
-                //pr($propDevice);
-                //$props = array_combine($attrDb, $propDevice);
                 $res[] = $propDevice;
 
             }

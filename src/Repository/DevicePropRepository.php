@@ -13,10 +13,4 @@ class DevicePropRepository extends ServiceEntityRepository
         parent::__construct($registry, DeviceProp::class);
     }
 
-    public function saveDeviceProps(DeviceProp $deviceProp): void
-    {
-        $this->getEntityManager()->persist($deviceProp);
-        $this->getEntityManager()->flush();
-    }
-
 }

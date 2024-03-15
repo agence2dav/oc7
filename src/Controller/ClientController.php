@@ -4,14 +4,11 @@ namespace App\Controller;
 
 use OA\Items;
 use OA\RequestBody;
-use App\Entity\User;
 use App\Entity\Client;
 use App\Service\UserService;
 use App\Service\ClientService;
 use App\Service\SerializerService;
-use OpenApi\Annotations\JsonContent;
 use App\Service\SerializerJmsService;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,7 +16,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Bridge\Doctrine\ArgumentResolver\EntityValueResolver;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ClientController extends AbstractController

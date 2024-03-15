@@ -20,7 +20,7 @@ class PropService
         return $this->propRepo->findAll();
     }
 
-    public function getProp(int $id): Prop
+    public function getPropById(int $id): Prop
     {
         return $this->propRepo->findOneById($id);
     }

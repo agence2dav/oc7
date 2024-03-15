@@ -6,7 +6,6 @@ namespace App\Service;
 
 use App\Entity\Client;
 use App\Repository\ClientRepository;
-use Doctrine\Common\Collections\Collection;
 
 class ClientService
 {
@@ -30,11 +29,6 @@ class ClientService
     public function getClientById(int $id): Client|null
     {
         return $this->clientRepo->findOneById($id);
-    }
-
-    public function getUsersByClientId(int $id): Collection|array
-    {
-        return $this->clientRepo->findByClientId($id);
     }
 
 }

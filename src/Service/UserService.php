@@ -8,7 +8,6 @@ use DateTime;
 use App\Entity\User;
 use App\Service\ClientService;
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\Collection;
 
 class UserService
 {
@@ -23,11 +22,6 @@ class UserService
     public function getUserById(int $id): User|null
     {
         return $this->userRepo->findOneById($id);
-    }
-
-    public function getUsersByCientId(int $id): Collection|array
-    {
-        return $this->userRepo->findUsersByClientId($id);
     }
 
     public function addUser(User $user, int $clientId): void
