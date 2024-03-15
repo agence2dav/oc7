@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\Client;
-use App\Model\ClientDetailsModel;
-use App\Model\ClientSummaryModel;
-use App\Mapper\ClientDetailsMapper;
-use App\Mapper\ClientSummaryMapper;
+use App\Model\ClientModel;
+use App\Mapper\ClientMapper;
 use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\Collection;
 
@@ -17,8 +15,7 @@ class ClientService
 
     public function __construct(
         private ClientRepository $clientRepo,
-        private ClientDetailsMapper $clientDetailsMapper,
-        private ClientSummaryMapper $clientSummaryMapper,
+        private ClientMapper $clientMapper,
     ) {
 
     }
@@ -45,17 +42,17 @@ class ClientService
 
     public function getClientsList(): Collection|array
     {
-        return $this->clientSummaryMapper->entitiesToModels($this->getAll());
+        return $this->clientMapper->entitiesToModels($this->getAll());
     }
 
-    public function getClientSummary(int $id): ClientSummaryModel|null
+    public function getClientSummary(int $id): ClientModel|null
     {
-        return $this->clientSummaryMapper->entityToModel($this->getClientById($id));
+        return $this->clientMapper->entityToModel($this->getClientById($id));
     }
 
-    public function getClientDetails(Client $client): ClientDetailsModel|null
+    public function getClientDetails(Client $client): ClientModel|null
     {
-        return $this->clientDetailsMapper->entityToModel($client);
+        return $this->clientMapper->entityToModel($client);
     }
 
 }

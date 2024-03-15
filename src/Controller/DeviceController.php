@@ -59,14 +59,6 @@ class DeviceController extends AbstractController
     #[Route('/api/devices/{id}', name: 'deviceDetails', methods: ['GET'])]
     public function device(Device $device, int $id): JsonResponse
     {
-        //cache
-        /* 
-        $idCache = 'deviceCache' . $id;
-        $this->cachePool->invalidateTags(['devicesCache']);//
-        $device = $this->cache->get($idCache, function (ItemInterface $item) use ($id) {
-            $item->tag('devicesCache');//invalidateTags
-            return $this->deviceService->getDevice($id);
-        });*/
 
         //error
         $errors = $this->validator->validate($device);
@@ -85,7 +77,7 @@ class DeviceController extends AbstractController
     {
         //get
         //$prop = $this->propService->getProp($id);
-        //dd($prop);
+
         //error
         $errors = $this->validator->validate($prop);
         if ($errors->count() > 0) {

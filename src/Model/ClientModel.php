@@ -28,7 +28,7 @@ use JMS\Serializer\Annotation\Groups;
  *
  */
 
-class ClientSummaryModel
+class ClientModel
 {
     #[Groups(['getClients', 'getClient'])]
     private ?int $id = null;

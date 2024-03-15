@@ -69,11 +69,6 @@ class ClientController extends AbstractController
         return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
 
-    // shows `clientId` as `required` in the OpenAPI schema (not nullable)
-    //#[OA\Response(response: 200, content: new Model(type: Client::class, groups: ["clientId"]))]
-    // Similarly, this will make the username `required` in the create schema
-    //#[RequestBody(new Model(type: Client::class, groups: ["clientCorp"]))]
-
     //details of client
     #[Route('/api/clients/{id}/users', name: 'clientsDetails', methods: ['GET'])]
     #[IsGranted('ROLE_CLIENT', message: 'Invalid credentials to watch this')]

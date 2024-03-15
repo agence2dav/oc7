@@ -6,7 +6,7 @@ namespace App\Model;
 
 use DateTime;
 
-class UserSummaryModel
+class UserModel
 {
 
     private ?int $id = null;

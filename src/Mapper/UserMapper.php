@@ -4,21 +4,16 @@ declare(strict_types=1);
 
 namespace App\Mapper;
 
-use App\Model\UserDetailsModel;
+use App\Model\UserModel;
 use Doctrine\Common\Collections\Collection;
 
-class UserDetailsMapper
+class UserMapper
 {
-
-    public function entityToModel(object $clientEntity): UserDetailsModel
+    public function entityToModel(object $clientEntity): UserModel
     {
-        $userModel = new UserDetailsModel();
+        $userModel = new UserModel();
         $userModel->setId($clientEntity->getId());
         $userModel->setUserName($clientEntity->getUserName());
-        $userModel->setEmail($clientEntity->getEmail());
-        $userModel->setStatus($clientEntity->getStatus());
-        $userModel->setCreatedAt($clientEntity->getCreatedAt());
-        //$userModel->setUserUrl($clientEntity->getClient()->getId());
         return $userModel;
     }
 
