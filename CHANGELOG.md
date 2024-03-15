@@ -62,3 +62,16 @@ Start: 240301
 
 - display errors in json
 
+### documentator #22
+
+- tools for build doc
+
+### goodurls #24
+
+- reshape all urls
+
+### jms #26 (called jwt but ok)
+
+- use jms
+- install hateoas correctly
+- make it works (but hateoas)

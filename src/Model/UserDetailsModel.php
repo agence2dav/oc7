@@ -6,13 +6,14 @@ namespace App\Model;
 
 use DateTime;
 
-class UserModel
+class UserDetailsModel
 {
     private ?int $id = null;
-    private ?string $corporation = null;
+    private ?string $username = null;
     private ?string $email = null;
     private ?string $status = null;
     private ?DateTime $createdAt = null;
+    private ?array $links;
 
     public function getId(): ?int
     {
@@ -27,12 +28,12 @@ class UserModel
 
     public function getUserName(): ?string
     {
-        return $this->corporation;
+        return $this->username;
     }
 
-    public function setUserName(string $corporation): static
+    public function setUserName(string $username): static
     {
-        $this->corporation = $corporation;
+        $this->username = $username;
         return $this;
     }
 
@@ -70,5 +71,22 @@ class UserModel
         $this->createdAt = $createdAt;
         return $this;
     }
+
+    /* 
+    public function getUserUrl(): array
+    {
+        return $this->links;
+    }
+
+    public function setUserUrl(int $clientId): static
+    {
+        $this->links = [
+            '_links' => [
+                'userid' => (string) $this->getId(),
+                'self' => (string) '/api/clients/' . $clientId . '/users/' . $this->id
+            ]
+        ];
+        return $this;
+    }*/
 
 }

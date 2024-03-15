@@ -9,7 +9,48 @@ use App\Repository\DeviceRepository;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+//use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use JMS\Serializer\Annotation\Groups;
+use Hateoas\Configuration\Annotation as Hateoas;
+
+/**
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "devicesList",
+ *          parameters = { }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getDevicesDetails")
+ * )
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "deviceDetails",
+ *          parameters = { "id" = "expr(object.getId())" }
+ *      ),
+ * )
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "deviceProps",
+ *          parameters = { "id" = "expr(object.getDeviceProp()->getProp()->getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getDevicesDetails")
+ * )
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "devicePropAttr",
+ *          parameters = { "id" = "expr(object.getDeviceProp()->getProp()->getAttr()->Id())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getDevicesDetails")
+ * )
+ *
+ */
 
 #[ORM\Entity(repositoryClass: DeviceRepository::class)]
 #[Broadcast]
@@ -20,21 +61,27 @@ class Device
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['getDevicesSummary'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getDevicesSummary'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getDevicesDetails'])]
     private ?string $url = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getDevicesDetails'])]
     private ?string $image = null;
 
     #[ORM\Column]
+    #[Groups(['getDevicesDetails'])]
     private ?int $status = null;
 
     #[ORM\OneToMany(targetEntity: DeviceProp::class, mappedBy: 'device')]
+    #[Groups(['getDevicesDetails'])]
     private Collection $deviceProps;
 
     public function __construct()

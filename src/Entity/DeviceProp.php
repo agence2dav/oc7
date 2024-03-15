@@ -5,8 +5,22 @@ namespace App\Entity;
 use App\Entity\Attr;
 use App\Entity\Prop;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\UX\Turbo\Attribute\Broadcast;
+use JMS\Serializer\Annotation\Groups;
 use App\Repository\DevicePropRepository;
+use Symfony\UX\Turbo\Attribute\Broadcast;
+use Hateoas\Configuration\Annotation as Hateoas;
+
+/**
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "DeviceDetails",
+ *          parameters = { "id" = "expr(object.getDevice()->getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="deviceProps")
+ * )
+ *
+ */
 
 #[ORM\Entity(repositoryClass: DevicePropRepository::class)]
 #[Broadcast]
@@ -21,6 +35,7 @@ class DeviceProp
     private ?Device $device = null;
 
     #[ORM\ManyToOne(inversedBy: 'deviceProps')]
+    #[Groups(['getDevicesDetails'])]
     private ?Prop $prop = null;
 
     public function getId(): ?int

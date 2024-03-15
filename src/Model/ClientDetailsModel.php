@@ -8,11 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use App\Entity\DeviceProp;
 use App\Entity\Device;
 
-class ClientModel
+class ClientDetailsModel
 {
     private ?int $id = null;
     private ?string $corporation = null;
     private ?string $email = null;
+    private array $links;
 
     public function getId(): ?int
     {
@@ -44,6 +45,25 @@ class ClientModel
     public function setEmail(string $email): static
     {
         $this->email = $email;
+        return $this;
+    }
+
+    public function getClientUsers(): array
+    {
+        return $this->links;
+    }
+
+    public function setClientUsers(array $users): static
+    {
+        $links = [];
+        foreach ($users as $user) {
+            $links[] = [
+                'userid' => (string) $user->getId(),
+                'username' => (string) $user->getUsername(),
+                'href' => (string) '/api/clients/' . $this->id . '/users/' . $user->getId()
+            ];
+        }
+        $this->links = ['_links' => $links];
         return $this;
     }
 

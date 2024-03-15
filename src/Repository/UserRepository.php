@@ -13,15 +13,14 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function findFirstUserId(): int
+    public function findUsersByClientId(int $id): array|null
     {
         return $this->createQueryBuilder('t')
-            ->select('t.id')
-            ->orderBy('t.id', 'DESC')
-            ->setMaxResults(1)
-            ->setFirstResult(1)
+            ->andWhere('t.clienId = :id')
+            ->setParameter('id', $id)
+            ->orderBy('t.id', 'ASC')
             ->getQuery()
-            ->getSingleScalarResult()
+            ->getResult()
         ;
     }
 

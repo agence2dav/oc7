@@ -9,18 +9,20 @@ use App\Model\AttrModel;
 
 class AttrMapper
 {
-    public function EntityToModel(object $attrEntity): AttrModel
+    public function entityToModel(object $attrEntity): AttrModel
     {
         $attrModel = new AttrModel();
+        $attrModel->setId($attrEntity->getId());
         $attrModel->setName($attrEntity->getName());
+        $attrModel->setLinks();
         return $attrModel;
     }
 
-    public function EntitiesToModels(array $attrEntities): array
+    public function entitiesToModels(array $attrEntities): array
     {
         $attrModels = [];
         foreach ($attrEntities as $attrEntity) {
-            $attrModels[] = $this->EntityToModel($attrEntity);
+            $attrModels[] = $this->entityToModel($attrEntity);
         }
         return $attrModels;
     }
