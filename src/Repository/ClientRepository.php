@@ -16,29 +16,6 @@ class ClientRepository extends ServiceEntityRepository implements PasswordUpgrad
         parent::__construct($registry, Client::class);
     }
 
-    public function findUserById(int $id): Client
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.id = :id')
-            ->setParameter('id', $id)
-            ->orderBy('t.id', 'DESC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    public function findFirstClientId(): int
-    {
-        return $this->createQueryBuilder('t')
-            ->select('t.id')
-            ->orderBy('t.id', 'DESC')
-            ->setMaxResults(1)
-            ->setFirstResult(1)
-            ->getQuery()
-            ->getSingleScalarResult()
-        ;
-    }
-
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!$user instanceof Client) {

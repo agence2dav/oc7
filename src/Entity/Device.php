@@ -1,40 +1,84 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DeviceRepository;
+use JMS\Serializer\Annotation\Since;
+use JMS\Serializer\Annotation\Groups;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+//use Symfony\Component\Serializer\Annotation\Groups;
+use Hateoas\Configuration\Annotation as Hateoas;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+/**
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route("devicesList",),
+ *      exclusion = @Hateoas\Exclusion(groups="getDevicesSummary")
+ * )
+ *
+ * @Hateoas\Relation(
+ *      "deviceDetails",
+ *      href = @Hateoas\Route(
+ *          "deviceDetails",
+ *          parameters = { "id" = "expr(object.getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getDevicesSummary")
+ * )
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "deviceDetails",
+ *          parameters = { "id" = "expr(object.getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getDevicesDetails")
+ * )
+ *
+ * @Hateoas\Relation(
+ *      "devicePropAttr",
+ *      href = @Hateoas\Route(
+ *          "devicePropAttr",
+ *          parameters = { "id" = "expr(object.getDeviceProp().getProp().getAttr().getId())" }
+ *      ),
+ * )
+ *
+ */
 
 #[ORM\Entity(repositoryClass: DeviceRepository::class)]
 #[Broadcast]
-#[UniqueEntity(fields: ['name'], message: 'Ce modèle existe déjà')]
+#[UniqueEntity(fields: ['name'], message: 'This device already exists')]
 class Device
 {
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['getDevicesSummary', 'getDevicesDetails'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getDevicesSummary', 'getDevicesDetails'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getDevicesDetails'])]
     private ?string $url = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getDevicesDetails'])]
     private ?string $image = null;
 
     #[ORM\Column]
+    #[Groups(['getDevicesDetails'])]
+    #[Since("2.0")]
     private ?int $status = null;
 
     #[ORM\OneToMany(targetEntity: DeviceProp::class, mappedBy: 'device')]
+    #[Groups(['getDevicesDetails'])]
     private Collection $deviceProps;
 
     public function __construct()
@@ -117,5 +161,4 @@ class Device
         }
         return $this;
     }
-
 }

@@ -3,13 +3,72 @@
 namespace App\Entity;
 
 use DateTime;
-use Assert\NotBlank;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use JMS\Serializer\Annotation\Since;
+use JMS\Serializer\Annotation\Groups;
 use Symfony\UX\Turbo\Attribute\Broadcast;
-use Symfony\Component\Serializer\Annotation\Groups;
+//use Symfony\Component\Serializer\Annotation\Groups;
+use Hateoas\Configuration\Annotation as Hateoas;
 use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * 
+ * @Hateoas\Relation(
+ *      "clientDetails",
+ *      href = @Hateoas\Route(
+ *          "clientDetails",
+ *          parameters = { "id" = "expr(object.getClient().getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserSummary")
+ * )
+ * 
+ * @Hateoas\Relation(
+ *      "userDetails",
+ *      href = @Hateoas\Route(
+ *          "userDetails",
+ *          parameters = { "clientId" = "expr(object.getClient().getId())", "userId" = "expr(object.getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getClientDetails")
+ * )
+ * 
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "userDetails",
+ *          parameters = { "clientId" = "expr(object.getClient().getId())", "userId" = "expr(object.getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserDetails")
+ * )
+ *
+ * @Hateoas\Relation(
+ *      "delete",
+ *      href = @Hateoas\Route(
+ *          "delUser",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserDetails"),
+ * )
+ *
+ * @Hateoas\Relation(
+ *      "update",
+ *      href = @Hateoas\Route(
+ *          "updateUser",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserDetails"),
+ * )
+ *
+ * @Hateoas\Relation(
+ *      "create",
+ *      href = @Hateoas\Route(
+ *          "addUser",
+ *          parameters = { },
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserDetails"),
+ * )
+ *
+ */
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[Broadcast]
@@ -18,26 +77,27 @@ class User
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['getUser'])]
+    #[Groups(['getClientDetails', 'getUserSummary', 'getUserDetails'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['getUser'])]
+    #[Groups(['getClientDetails', 'getUserSummary', 'getUserDetails'])]
     #[Assert\NotBlank(message: "must be specified")]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['getUser'])]
+    #[Groups(['getUserDetails'])]
     #[Assert\NotBlank(message: "must be specified")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['getUser'])]
+    #[Groups(['getUserDetails'])]
     #[Assert\NotBlank(message: "must be specified")]
     private ?string $status = null;
 
     #[ORM\Column(type: "datetime")]
-    #[Groups(['getUser'])]
+    #[Groups(['getUserDetails'])]
+    #[Since("2.0")]
     private ?DateTime $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
@@ -105,5 +165,4 @@ class User
         $this->client = $client;
         return $this;
     }
-
 }

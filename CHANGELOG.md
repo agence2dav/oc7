@@ -58,3 +58,26 @@ Start: 240301
 
 - display errors in json
 
+### hateoas #20
+
+- display errors in json
+
+### documentator #22
+
+- tools for build doc
+
+### goodurls #24
+
+- reshape all urls
+
+### jms #26 (called jwt but ok)
+
+- use jms instead of symfony serializer
+
+### hateoas #28
+
+- use OpenApi
+- put the attributs and annotations required
+- use the hateoas extends of Jms
+- paginate the results
+- obtain and control links for each route

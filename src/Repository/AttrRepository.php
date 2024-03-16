@@ -13,10 +13,4 @@ class AttrRepository extends ServiceEntityRepository
         parent::__construct($registry, Attr::class);
     }
 
-    public function saveAttr(Attr $device): void
-    {
-        $this->getEntityManager()->persist($device);
-        $this->getEntityManager()->flush();
-    }
-
 }

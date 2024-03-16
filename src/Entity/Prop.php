@@ -6,9 +6,34 @@ use App\Entity\Attr;
 use App\Entity\DeviceProp;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PropRepository;
+use JMS\Serializer\Annotation\Groups;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Hateoas\Configuration\Annotation as Hateoas;
+
+//use Symfony\Component\Serializer\Annotation\Groups;
+
+/**
+ *
+ * @Hateoas\Relation(
+ *      "properties",
+ *      href = @Hateoas\Route(
+ *          "deviceProps",
+ *          parameters = { "id" = "expr(object.getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getDevicesDetails")
+ * )
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "deviceProps",
+ *          parameters = { "id" = "expr(object.getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getProps")
+ * )
+ * 
+ */
 
 #[ORM\Entity(repositoryClass: PropRepository::class)]
 #[Broadcast]
@@ -17,15 +42,19 @@ class Prop
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['getDevicesDetails', 'getProps', 'getAttr'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['getDevicesDetails', 'getProps'])]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'props')]
+    #[Groups(['getDevicesDetails', 'getProps'])]
     private ?Attr $attr = null;
 
     #[ORM\OneToMany(targetEntity: DeviceProp::class, mappedBy: 'prop')]
+    #[Groups(['getDevicesProps'])]
     private Collection $deviceProps;
 
     public function __construct()

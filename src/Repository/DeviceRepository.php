@@ -21,10 +21,33 @@ class DeviceRepository extends ServiceEntityRepository
     public function findAll(): array
     {
         return $this->createQueryBuilder('t')
-            ->orderBy('t.id', 'DESC')
+            ->orderBy('t.id', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
+    public function findAllByPage(int $page, int $limit): array
+    {
+        return $this->createQueryBuilder('t')
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllId(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->addSelect('t.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countAll(): int
+    {
+        return $this->createQueryBuilder('t')
+            ->addSelect('count(t.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

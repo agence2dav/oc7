@@ -171,8 +171,33 @@ openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
 >passphrase private
 dddd
 
->token
+hateoas
+composer require willdurand/hateoas-bundle
+- pour avoir le annotation reader, il faut (déprécié)
+composer require sensio/framework-extra-bundle
 
+>serializer
+composer require symfony/serializer
+>jms
+composer require jms/serializer
 
+>downgrad orm 3->2.4
+move composer.json and let just this to composer install:
+{
+    "name": "test/test",
+    "description": "test",
+    "license": "no",
+    "require": {
+        "doctrine/common": "2.4.*",
+        "doctrine/dbal": "2.4.*",
+        "doctrine/orm": "2.4.*"
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "stable"
+}
 
+>nelmio
+composer require nelmio/api-doc-bundle
 
