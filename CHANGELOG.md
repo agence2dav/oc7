@@ -74,10 +74,14 @@ Start: 240301
 
 - use jms instead of symfony serializer
 
-### hateoas #28
+### hateoas #26
 
 - use OpenApi
 - put the attributs and annotations required
 - use the hateoas extends of Jms
 - paginate the results
 - obtain and control links for each route
+
+### versions #28
+
+- versioning
