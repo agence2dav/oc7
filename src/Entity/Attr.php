@@ -5,16 +5,27 @@ namespace App\Entity;
 use App\Entity\Prop;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PropRepository;
+use JMS\Serializer\Annotation\Groups;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-//use Symfony\Component\Serializer\Annotation\Groups;
-use JMS\Serializer\Annotation\Groups;
 use Hateoas\Configuration\Annotation as Hateoas;
 
+//use Symfony\Component\Serializer\Annotation\Groups;
+
 /**
+ *
  * @Hateoas\Relation(
- *      "self",
+ *      "attribute",
+ *      href = @Hateoas\Route(
+ *          "devicePropAttr",
+ *          parameters = { "id" = "expr(object.getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getDevicesDetails")
+ * )
+ * 
+ * @Hateoas\Relation(
+ *      "attribute",
  *      href = @Hateoas\Route(
  *          "deviceAttr",
  *          parameters = { "id" = "expr(object.getId())" }
@@ -23,19 +34,12 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * )
  *
  * @Hateoas\Relation(
- *      "self",
+ *      "attribute",
  *      href = @Hateoas\Route(
- *          "deviceDetails",
+ *          "devicePropAttr",
  *          parameters = { "id" = "expr(object.getId())" }
  *      ),
- * )
- *
- * @Hateoas\Relation(
- *      "self",
- *      href = @Hateoas\Route(
- *          "deviceProps",
- *          parameters = { "id" = "expr(object.getDevice()->getId())" }
- *      ),
+ *      exclusion = @Hateoas\Exclusion(groups={"getProps"})
  * )
  *
  * @Hateoas\Relation(
@@ -44,6 +48,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          "devicePropAttr",
  *          parameters = { "id" = "expr(object.getId())" }
  *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getAttr")
  * )
  *
  */

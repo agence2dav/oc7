@@ -23,8 +23,7 @@ class DeviceRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t')
             ->orderBy('t.id', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function findAllByPage(int $page, int $limit): array
@@ -33,8 +32,22 @@ class DeviceRepository extends ServiceEntityRepository
             ->setFirstResult(($page - 1) * $limit)
             ->setMaxResults($limit)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
+    public function findAllId(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->addSelect('t.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countAll(): int
+    {
+        return $this->createQueryBuilder('t')
+            ->addSelect('count(t.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

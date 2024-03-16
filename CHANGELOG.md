@@ -72,10 +72,12 @@ Start: 240301
 
 ### jms #26 (called jwt but ok)
 
-- use jms
-- install hateoas correctly
-- make it works (but hateoas)
+- use jms instead of symfony serializer
 
 ### hateoas #28
 
-- make it works
+- use OpenApi
+- put the attributs and annotations required
+- use the hateoas extends of Jms
+- paginate the results
+- obtain and control links for each route

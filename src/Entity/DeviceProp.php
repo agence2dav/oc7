@@ -15,7 +15,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *      "self",
  *      href = @Hateoas\Route(
  *          "DeviceDetails",
- *          parameters = { "id" = "expr(object.getDevice()->getId())" }
+ *          parameters = { "id" = "expr(object.getDevice().getId())" }
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups="deviceProps")
  * )

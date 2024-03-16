@@ -4,52 +4,38 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ClientRepository;
+use JMS\Serializer\Annotation\Since;
+use JMS\Serializer\Annotation\Groups;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 //use Symfony\Component\Serializer\Annotation\Groups;
+use Hateoas\Configuration\Annotation as Hateoas;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Hateoas\Configuration\Annotation as Hateoas;
-use JMS\Serializer\Annotation\Groups;
 
 /**
  * 
  * @Hateoas\Relation(
- *      "clientsList",
- *      href = @Hateoas\Route(
- *          "clientsList",
- *          parameters = {}
- *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getClientDetails"),
+ *      "self",
+ *      href = @Hateoas\Route("clientsList"),
+ *      exclusion = @Hateoas\Exclusion(groups="getClientsList"),
  * )
  *
  * @Hateoas\Relation(
- *      "clientsSummary",
- *      href = @Hateoas\Route(
- *          "clientsSummary",
- *          parameters = { "id" = "expr(object.getId())" }
- *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getClientDetails"),
+ *      "self",
+ *      href = @Hateoas\Route("clientSummary"),
+ *      exclusion = @Hateoas\Exclusion(groups="getClientSummary"),
  * )
- * 
+ *
  * @Hateoas\Relation(
- *      "clientsList",
+ *      "self",
  *      href = @Hateoas\Route(
- *          "clientsList",
- *          parameters = { }
+ *          "clientDetails",
+ *          parameters = { "id" = "expr(object.getId())" }
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups="getClientDetails")
- * )
- *
- * @Hateoas\Relation(
- *      "clientsDetails",
- *      href = @Hateoas\Route(
- *          "clientsDetails",
- *          parameters = { "id" = "expr(object.getId())" }
- *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getUserSummary")
  * )
  *
  */
@@ -63,7 +49,7 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['getClientSummary', 'getClientDetails', 'notit'])]
+    #[Groups(['getClientsList', 'getClientSummary', 'getClientDetails', 'notit'])]
     public ?int $id = null;
 
     #[ORM\Column(length: 180)]
@@ -71,13 +57,15 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups(['getClientDetails'])]
+    #[Since("2.0")]
     private array $roles = [];
 
     #[ORM\Column]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['getClientSummary', 'getClientDetails'])]
+    #[Groups(['getClientsList', 'getClientSummary', 'getClientDetails'])]
     private ?string $corporation = null;
 
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'client')]
@@ -181,5 +169,4 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
         }
         return $this;
     }
-
 }

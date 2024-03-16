@@ -3,17 +3,25 @@
 namespace App\Entity;
 
 use DateTime;
-use Assert\NotBlank;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use JMS\Serializer\Annotation\Since;
+use JMS\Serializer\Annotation\Groups;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 //use Symfony\Component\Serializer\Annotation\Groups;
-use JMS\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * 
+ * @Hateoas\Relation(
+ *      "clientDetails",
+ *      href = @Hateoas\Route(
+ *          "clientDetails",
+ *          parameters = { "id" = "expr(object.getClient().getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserSummary")
+ * )
  * 
  * @Hateoas\Relation(
  *      "userDetails",
@@ -21,7 +29,16 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          "userDetails",
  *          parameters = { "clientId" = "expr(object.getClient().getId())", "userId" = "expr(object.getId())" }
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getUserSummary")
+ *      exclusion = @Hateoas\Exclusion(groups="getClientDetails")
+ * )
+ * 
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "userDetails",
+ *          parameters = { "clientId" = "expr(object.getClient().getId())", "userId" = "expr(object.getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getUserDetails")
  * )
  *
  * @Hateoas\Relation(
@@ -74,12 +91,13 @@ class User
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['getClientDetails', 'getUserDetails'])]
+    #[Groups(['getUserDetails'])]
     #[Assert\NotBlank(message: "must be specified")]
     private ?string $status = null;
 
     #[ORM\Column(type: "datetime")]
-    #[Groups(['getClientDetails', 'getUserDetails'])]
+    #[Groups(['getUserDetails'])]
+    #[Since("2.0")]
     private ?DateTime $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
@@ -147,5 +165,4 @@ class User
         $this->client = $client;
         return $this;
     }
-
 }
