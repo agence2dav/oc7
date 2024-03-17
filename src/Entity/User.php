@@ -38,7 +38,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "userDetails",
  *          parameters = { "clientId" = "expr(object.getClient().getId())", "userId" = "expr(object.getId())" }
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getUserDetails")
+ *      exclusion = @Hateoas\Exclusion(groups={"getUserDetails"})
  * )
  *
  * @Hateoas\Relation(
@@ -68,6 +68,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      exclusion = @Hateoas\Exclusion(groups="getUserDetails"),
  * )
  *
+ * @Hateoas\Relation(
+ *      "viewNewUser",
+ *      href = @Hateoas\Route(
+ *          "userDetails",
+ *          parameters = { "clientId" = "expr(object.getClient().getId())", "userId" = "expr(object.getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="newCustomer"),
+ * )
+ *
  */
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -77,21 +86,21 @@ class User
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['getClientDetails', 'getUserSummary', 'getUserDetails'])]
+    #[Groups(['getClientDetails', 'getUserSummary', 'getUserDetails', 'addUser'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['getClientDetails', 'getUserSummary', 'getUserDetails'])]
+    #[Groups(['getClientDetails', 'getUserSummary', 'getUserDetails', 'addUser', 'editUser'])]
     #[Assert\NotBlank(message: "must be specified")]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['getUserDetails'])]
+    #[Groups(['getUserDetails', 'addUser', 'editUser'])]
     #[Assert\NotBlank(message: "must be specified")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['getUserDetails'])]
+    #[Groups(['getUserDetails', 'addUser', 'editUser'])]
     #[Assert\NotBlank(message: "must be specified")]
     private ?string $status = null;
 

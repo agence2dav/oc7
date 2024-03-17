@@ -54,13 +54,15 @@ class DeviceController extends AbstractController
         name: 'page',
         in: 'query',
         description: 'Number of the page',
-        schema: new OA\Schema(type: 'int')
+        schema: new OA\Schema(type: 'int'),
+        example: '1',
     )]
     #[OA\Parameter(
         name: 'limit',
         in: 'query',
         description: 'Number of elements by page',
-        schema: new OA\Schema(type: 'int')
+        schema: new OA\Schema(type: 'int'),
+        example: '10',
     )]
     #[Tag(name: 'Device')]
     public function devicesList(Request $request): JsonResponse
@@ -96,7 +98,7 @@ class DeviceController extends AbstractController
         description: 'details of devices',
         content: new JsonContent(
             type: 'array',
-            items: new OA\Items(ref: new Model(type: Device::class))
+            items: new OA\Items(ref: new Model(type: Device::class)),
         )
     )]
     #[Tag(name: 'Device')]
