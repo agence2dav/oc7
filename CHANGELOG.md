@@ -2,28 +2,86 @@
 
 ## Issues
 
-### 1. consultation 
+Start: 240301
 
-consult the list of BileMo products (name of the factice provider of service, certainly a joke);
+### 1. install symfony #4 (240302)
 
-### 1. installation
+- create repository
+- create project symfony for api
+- connect it to the repo
+- install builder for makes
+- install orm-pack
+- install database
+- create user
+- migrate database
 
-### consultation 
+###  fixtures #6
 
-consult the details of a BileMo product;
+- create database.json of references for the project (240303)
+- create the Uml model of datas
+- create set of related entities Device, Prop, Attr, DeviceProp (240304)
+- create the transformer of simple json to 4 linked tables for fixtures (240305)
+- make working a request through mappers (240306)
+- create Uml of usage, sequence and class
 
-### consult list
+### consultation #8
 
-consult the list of registered users linked to a customer on the website;
+- consult the details of a BileMo product;
+- reset structure of tables
+- add mapping for Apis (avoid circular defs and displays url instead of datas)
+- mappers are unuseful
+- build set of tables for users
+- consult client then users
+- consult devices, then props, then attr
 
-### view details 
+### renew #10
 
-view the details of a registered user linked to a customer;
+- reset config without apiPlatform
 
-### new user 
+### cleanup #12
 
-add a new user linked to a customer;
+- delete unused files
 
-### delete user 
+### auth #14
 
-delete a user added by a customer.
+- token-auth using jwt
+- config jwt
+- add cache system to devices and users
+
+### crud #16 
+
+- add a new user linked to a customer
+- del user
+- update user
+
+### exceptions #18
+
+- display errors in json
+
+### hateoas #20
+
+- display errors in json
+
+### documentator #22
+
+- tools for build doc
+
+### goodurls #24
+
+- reshape all urls
+
+### jms #26 (called jwt but ok)
+
+- use jms instead of symfony serializer
+
+### hateoas #26
+
+- use OpenApi
+- put the attributs and annotations required
+- use the hateoas extends of Jms
+- paginate the results
+- obtain and control links for each route
+
+### versions #28
+
+- versioning
