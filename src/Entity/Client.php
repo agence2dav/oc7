@@ -30,6 +30,15 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
  * )
  *
  * @Hateoas\Relation(
+ *      "clientSummary",
+ *      href = @Hateoas\Route(
+ *          "clientDetails",
+ *          parameters = { "id" = "expr(object.getId())" }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getClientSummary")
+ * )
+ *
+ * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
  *          "clientDetails",
@@ -53,7 +62,8 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     public ?int $id = null;
 
     #[ORM\Column(length: 180)]
-    #[Groups(['getClientDetails'])]
+    #[Groups(['getClientSummary', 'getClientDetails'])]
+    #[Since("2.0")]
     private ?string $email = null;
 
     #[ORM\Column]

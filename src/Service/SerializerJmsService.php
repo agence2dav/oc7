@@ -6,6 +6,7 @@ namespace App\Service;
 
 use Hateoas\HateoasBuilder;
 use Hateoas\Configuration\Route;
+use App\Service\VersioningService;
 use JMS\Serializer\SerializerInterface;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\DeserializationContext;
@@ -22,6 +23,7 @@ class SerializerJmsService
 
     public function __construct(
         private SerializerInterface $serializer,
+        private VersioningService $versionService,
     ) {
     }
 
@@ -45,7 +47,7 @@ class SerializerJmsService
     public function hateoasSerialize(array|object $datas, UrlGeneratorInterface $request, array $groups = []): string
     {
         $context = SerializationContext::create()->setGroups($groups);
-        //$hateoas = HateoasBuilder::create()->build();
+        $context->setVersion($this->versionService->getVersion());
         $hateoas = HateoasBuilder::create()
             ->setUrlGenerator(null, new SymfonyUrlGenerator($request))
             ->build();
@@ -74,24 +76,5 @@ class SerializerJmsService
     {
         $paginatedCollection = $this->paginatedCollection($collection, $route, $page, $limit, $total);
         return $this->hateoasSerialize($collection, $request, $groups);
-    }
-
-    /* 
-    static function fantaPaginated(array $collection, string $route, int $page, int $limit): string
-    {
-        $nbObjects = count($collection);
-        $nbPages = (int) ceil($nbObjects / $limit);
-        $pagerfantaFactory   = new PagerfantaFactory(); // you can pass the page,                                              // and limit parameters name
-        $paginatedCollection = $pagerfantaFactory->createRepresentation(
-            $pager,
-            new Route($route, [])
-        );
-        $hateoas = HateoasBuilder::create()->build();
-        return $hateoas->serialize($paginatedCollection, 'json');
-    }*/
-
-    public function serializeok($data, string $format, ?SerializationContext $context = null, ?string $type = null): string
-    {
-        return $this->serializer->serialize($data, $format, $context, $type);
     }
 }
