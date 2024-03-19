@@ -40,6 +40,9 @@ class DeviceController extends AbstractController
     ) {
     }
 
+    /* 
+    */
+
     //list of devices
     #[Route('/api/devices', name: 'devicesList', methods: ['GET'])]
     #[OA\Response(
@@ -47,7 +50,12 @@ class DeviceController extends AbstractController
         description: 'list of all devices',
         content: new JsonContent(
             type: 'array',
-            items: new OA\Items(ref: new Model(type: Device::class))
+            items: new OA\Items(
+                ref: new Model(
+                    type: Device::class,
+                    groups: ['getDevicesSummary']
+                )
+            )
         )
     )]
     #[OA\Parameter(
@@ -91,6 +99,9 @@ class DeviceController extends AbstractController
         return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
 
+    /* 
+    */
+
     //details of device
     #[Route('/api/devices/{id}', name: 'deviceDetails', methods: ['GET'])]
     #[OA\Response(
@@ -98,7 +109,12 @@ class DeviceController extends AbstractController
         description: 'details of devices',
         content: new JsonContent(
             type: 'array',
-            items: new OA\Items(ref: new Model(type: Device::class)),
+            items: new OA\Items(
+                ref: new Model(
+                    type: Device::class,
+                    groups: ['getDevicesDetails']
+                )
+            ),
         )
     )]
     #[Tag(name: 'Device')]
@@ -110,10 +126,12 @@ class DeviceController extends AbstractController
             return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
         }
         //render
-        //$json = $this->serializerJmsService->serialize($device, ['getDevicesDetails']);
         $json = $this->serializerJmsService->hateoasSerialize($device, $this->urlGen, ['getDevicesDetails']);
         return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
+
+    /* 
+    */
 
     //props of device
     #[Route('/api/devices/property/{id}', name: 'deviceProps', methods: ['GET'])]
@@ -122,7 +140,12 @@ class DeviceController extends AbstractController
         description: 'property of devices',
         content: new JsonContent(
             type: 'array',
-            items: new OA\Items(ref: new Model(type: Device::class))
+            items: new OA\Items(
+                ref: new Model(
+                    type: Prop::class,
+                    groups: ['getProps']
+                )
+            )
         )
     )]
     #[Tag(name: 'Device')]
@@ -136,10 +159,12 @@ class DeviceController extends AbstractController
             return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
         }
         //render
-        //$json = $this->serializerJmsService->serialize($prop, ['getProps']);
         $json = $this->serializerJmsService->hateoasSerialize($prop, $this->urlGen, ['getProps']);
         return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
+
+    /* 
+    */
 
     //attribut of prop
     #[Route('/api/devices/property/attribut/{id}', name: 'devicePropAttr', methods: ['GET'])]
@@ -148,7 +173,12 @@ class DeviceController extends AbstractController
         description: 'attribut for property',
         content: new JsonContent(
             type: 'array',
-            items: new OA\Items(ref: new Model(type: Device::class))
+            items: new OA\Items(
+                ref: new Model(
+                    type: Attr::class,
+                    groups: ['getAttr']
+                )
+            )
         )
     )]
     #[Tag(name: 'Device')]
@@ -163,7 +193,6 @@ class DeviceController extends AbstractController
             return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
         }
         //render
-        //$json = $this->serializerJmsService->serialize($attr, ['getAttr']);
         $json = $this->serializerJmsService->hateoasSerialize($attr, $this->urlGen, ['getAttr']);
         return new JsonResponse($json, Response::HTTP_OK, [], true);
     }

@@ -9,7 +9,6 @@ use JMS\Serializer\Annotation\Groups;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-//use Symfony\Component\Serializer\Annotation\Groups;
 use Hateoas\Configuration\Annotation as Hateoas;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -19,13 +18,13 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
  * 
  * @Hateoas\Relation(
  *      "self",
- *      href = @Hateoas\Route("clientsList"),
+ *      href = @Hateoas\Route("clientsList", absolute = true,),
  *      exclusion = @Hateoas\Exclusion(groups="getClientsList"),
  * )
  *
  * @Hateoas\Relation(
  *      "self",
- *      href = @Hateoas\Route("clientSummary"),
+ *      href = @Hateoas\Route("clientSummary", absolute = true,),
  *      exclusion = @Hateoas\Exclusion(groups="getClientSummary"),
  * )
  *
@@ -33,18 +32,20 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
  *      "clientSummary",
  *      href = @Hateoas\Route(
  *          "clientDetails",
+ *          absolute = true,
  *          parameters = { "id" = "expr(object.getId())" }
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getClientSummary")
+ *      exclusion = @Hateoas\Exclusion(groups="getClientSummary"),
  * )
  *
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
  *          "clientDetails",
+ *          absolute = true,
  *          parameters = { "id" = "expr(object.getId())" }
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getClientDetails")
+ *      exclusion = @Hateoas\Exclusion(groups="getClientDetails"),
  * )
  *
  */
@@ -67,8 +68,6 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(['getClientDetails'])]
-    #[Since("2.0")]
     private array $roles = [];
 
     #[ORM\Column]

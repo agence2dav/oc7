@@ -16,7 +16,6 @@ class UserService
         private UserRepository $userRepo,
         private ClientService $clientService,
     ) {
-
     }
 
     public function getUserById(int $id): User|null
@@ -40,5 +39,4 @@ class UserService
     {
         $this->userRepo->delete($user);
     }
-
 }

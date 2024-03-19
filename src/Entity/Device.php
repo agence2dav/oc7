@@ -9,14 +9,13 @@ use JMS\Serializer\Annotation\Groups;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-//use Symfony\Component\Serializer\Annotation\Groups;
 use Hateoas\Configuration\Annotation as Hateoas;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @Hateoas\Relation(
  *      "self",
- *      href = @Hateoas\Route("devicesList",),
+ *      href = @Hateoas\Route("devicesList", absolute = true,),
  *      exclusion = @Hateoas\Exclusion(groups="getDevicesSummary")
  * )
  *
@@ -24,6 +23,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      "deviceDetails",
  *      href = @Hateoas\Route(
  *          "deviceDetails",
+ *          absolute = true,
  *          parameters = { "id" = "expr(object.getId())" }
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups="getDevicesSummary")
@@ -33,6 +33,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      "self",
  *      href = @Hateoas\Route(
  *          "deviceDetails",
+ *          absolute = true,
  *          parameters = { "id" = "expr(object.getId())" }
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups="getDevicesDetails")
@@ -42,6 +43,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      "devicePropAttr",
  *      href = @Hateoas\Route(
  *          "devicePropAttr",
+ *          absolute = true,
  *          parameters = { "id" = "expr(object.getDeviceProp().getProp().getAttr().getId())" }
  *      ),
  * )

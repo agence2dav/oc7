@@ -45,7 +45,12 @@ class UserController extends AbstractController
         description: 'add user',
         content: new OA\JsonContent(
             type: 'array',
-            items: new OA\Items(ref: new Model(type: User::class, groups: ['getUserDetails']))
+            items: new OA\Items(
+                ref: new Model(
+                    type: User::class,
+                    groups: ['getUserDetails']
+                )
+            )
         )
     )]
 
@@ -101,7 +106,12 @@ class UserController extends AbstractController
         description: 'update user',
         content: new OA\JsonContent(
             type: 'array',
-            items: new OA\Items(ref: new Model(type: User::class, groups: ['getUserDetails']))
+            items: new OA\Items(
+                ref: new Model(
+                    type: User::class,
+                    groups: ['getUserDetails']
+                )
+            )
         )
     )]
 
@@ -139,7 +149,11 @@ class UserController extends AbstractController
         description: 'delete user',
         content: new OA\JsonContent(
             type: 'array',
-            items: new OA\Items(ref: new Model(type: User::class))
+            items: new OA\Items(
+                ref: new Model(
+                    type: User::class
+                )
+            )
         )
     )]
     #[OA\Tag(name: 'User')]

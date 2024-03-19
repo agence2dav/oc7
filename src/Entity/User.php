@@ -8,7 +8,6 @@ use App\Repository\UserRepository;
 use JMS\Serializer\Annotation\Since;
 use JMS\Serializer\Annotation\Groups;
 use Symfony\UX\Turbo\Attribute\Broadcast;
-//use Symfony\Component\Serializer\Annotation\Groups;
 use Hateoas\Configuration\Annotation as Hateoas;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -18,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "clientDetails",
  *      href = @Hateoas\Route(
  *          "clientDetails",
+ *          absolute = true,
  *          parameters = { "id" = "expr(object.getClient().getId())" }
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups="getUserSummary")
@@ -27,6 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "userDetails",
  *      href = @Hateoas\Route(
  *          "userDetails",
+ *          absolute = true,
  *          parameters = { "clientId" = "expr(object.getClient().getId())", "userId" = "expr(object.getId())" }
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups="getClientDetails")
@@ -36,6 +37,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "self",
  *      href = @Hateoas\Route(
  *          "userDetails",
+ *          absolute = true,
  *          parameters = { "clientId" = "expr(object.getClient().getId())", "userId" = "expr(object.getId())" }
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups={"getUserDetails"})
@@ -45,6 +47,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "delete",
  *      href = @Hateoas\Route(
  *          "delUser",
+ *          absolute = true,
  *          parameters = { "id" = "expr(object.getId())" },
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups="getUserDetails"),
@@ -54,6 +57,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "update",
  *      href = @Hateoas\Route(
  *          "updateUser",
+ *          absolute = true,
  *          parameters = { "id" = "expr(object.getId())" },
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups="getUserDetails"),
@@ -63,6 +67,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "create",
  *      href = @Hateoas\Route(
  *          "addUser",
+ *          absolute = true,
  *          parameters = { },
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups="getUserDetails"),
@@ -72,6 +77,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "viewNewUser",
  *      href = @Hateoas\Route(
  *          "userDetails",
+ *          absolute = true,
  *          parameters = { "clientId" = "expr(object.getClient().getId())", "userId" = "expr(object.getId())" }
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups="newCustomer"),

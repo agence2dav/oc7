@@ -5,17 +5,13 @@ declare(strict_types=1);
 namespace App\Service;
 
 use Hateoas\HateoasBuilder;
-use Hateoas\Configuration\Route;
 use App\Service\VersioningService;
 use JMS\Serializer\SerializerInterface;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\DeserializationContext;
-use Doctrine\Common\Collections\Collection;
 use Hateoas\UrlGenerator\SymfonyUrlGenerator;
-use Hateoas\UrlGenerator\CallableUrlGenerator;
 use Hateoas\Representation\PaginatedRepresentation;
 use Hateoas\Representation\CollectionRepresentation;
-use Hateoas\Representation\Factory\PagerfantaFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SerializerJmsService
@@ -52,7 +48,6 @@ class SerializerJmsService
             ->setUrlGenerator(null, new SymfonyUrlGenerator($request))
             ->build();
         return $hateoas->serialize($datas, 'json', $context);
-        //return $this->get('serializer')->serialize($datas, 'json');
     }
 
     public function paginatedCollection(array $collection, string $route, int $page, int $limit, int $total): PaginatedRepresentation

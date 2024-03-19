@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Entity\Attr;
 use App\Entity\Prop;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
@@ -15,6 +14,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *      "self",
  *      href = @Hateoas\Route(
  *          "DeviceDetails",
+ *          absolute = true,
  *          parameters = { "id" = "expr(object.getDevice().getId())" }
  *      ),
  *      exclusion = @Hateoas\Exclusion(groups="deviceProps")
@@ -64,5 +64,4 @@ class DeviceProp
         $this->prop = $prop;
         return $this;
     }
-
 }
