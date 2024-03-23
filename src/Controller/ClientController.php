@@ -165,7 +165,7 @@ class ClientController extends AbstractController
     {
         //cache
         $idCache = 'userdetails' . $userId;
-        $this->cachePool->invalidateTags(['usersCache']); //
+        //$this->cachePool->invalidateTags(['usersCache']);
         $user = $this->cache->get($idCache, function (ItemInterface $item) use ($userId) {
             $item->tag('usersCache');
             return $this->userService->getUserById($userId);

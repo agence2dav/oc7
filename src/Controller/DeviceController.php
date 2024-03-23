@@ -81,7 +81,7 @@ class DeviceController extends AbstractController
         $total = count($this->deviceService->getAllId());
         //cache
         $idCache = 'devicesCache';
-        $this->cachePool->invalidateTags(['devicesCache']); //
+        //$this->cachePool->invalidateTags(['devicesCache']); //
         $devices = $this->cache->get($idCache, function (ItemInterface $item) use ($page, $limit) {
             $item->tag('devicesCache'); //invalidateTags
             //return $this->deviceService->getAll();
