@@ -83,7 +83,7 @@ class UserController extends AbstractController
             return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
         }
         //render
-        $json = $this->serializerService->serialize($user, ['groups' => 'getuser']);
+        $json = $this->serializerService->serialize($user, ['groups' => 'addUser']);
         $location = $this->urlGenerator->generate('userDetails', ['clientId' => $user->getClient()->getId(), 'userId' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         return new JsonResponse($json, Response::HTTP_CREATED, ['Location' => $location], true);
     }
@@ -109,7 +109,7 @@ class UserController extends AbstractController
         required: true,
         content: new OA\JsonContent(
             type: 'array',
-            example: '{"clientId":"9", "username":"azerty", "email":"b@b.b", "status":"1" }',
+            example: '{"username":"azerty", "email":"b@b.b", "status":"1" }',
             items: new OA\Items(ref: new Model(type: User::class, groups: ['editUser'])),
         )
     )]
