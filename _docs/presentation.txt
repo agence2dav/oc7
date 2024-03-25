@@ -1,0 +1,47 @@
+[Présentation:h]
+
+- Contexte du projet : Créer une api qui propose à un reseller d'accéder à un catalogue de téléphones portables.
+
+- Analyse de besoin : focaliser sur une fonctionnalité et en présentant ses diagrammes UML, la partie User. Les utilisateur sont assoicés à un client, et peuvent être édités. Bien que les routes soient les mêmes, seul le verbe, post, put ou del, permet de différencier les actions. 
+
+- Organisation du projet et la méthodologie de gestion de projet adoptée : Documentation sur les dispositifs existants, et choix parmi trois possibilités, tout à la main, développement assisté via les serializers, OpenApi pour l'Hateoas, ou tout automatique (ApiPlatform).On a choisi la méthode la plus souple pour avoir la main sur l'ensemble des fonctionnalités et pouvoir les faire évoluer plus facilement.
+
+Une partie non négligeable a consiste à collecter les données via une autre Api, branchée sur un catalogue en ligne. Cela a permit de récoler 60 modèles de 2024 et 17 propriétés par appareil.
+
+*
+
+[Démonstration de l'API:h]
+
+- Ensemble des fonctionnalités de l'application via Postman :
+-- Clients : liste, identification, détails, et liste des utilisateurs du client.
+-- Users : Détail des utilisateurs, ajour, modification, suppression.
+-- Devices : Catalogue complet et paginé, détail d'un appareil, propriétés et attributs.
+
+- Présenter la documentation de l'API :
+-- La documentation au format Json présente des infos sur l'application, une liste de routes avec pour chacune d'elle des spécifications, une description, un schéma des données, et leurs liens. Enfin il décrit les dispositifs de sécurité utilisés et leur état.
+-- L'application en ligne permet de tester les requêtes sans avoir à passer par Postman, en spécifiant le Token une fois pour toutes, ce qui est très pratique. Pour chaque route, les paramètres qui y sont associés sont présentés. 
+Enfin, un schéma des données est fourni afin de servir de référence pour les applications qui exploitent l'Api.
+
+*
+
+[Point de vue technique:h] 
+
+- versioning
+- architecture technique 
+- librairies choisies et intégration
+- détail d'un pull request 
+- analyse de qualité et correctifs apportés 
+- bonnes pratiques
+
+- Autorisation avec Jwt (JSON Web Token), qui délivra un Token périssable. Il faut le spécifier dans l'en-tête de la requête avec la propriété bearer suivie du token.
+- Système de mise en cache des requêtes.
+- Pagination des requêtes longues.
+- Autodécouvrabilité de l'application en respect du modèle de maturité de Richardson. Elle est rendue possible par l'utilisation conjoint d'un Serializer alternatif à celui qui est natif à Symfony, nommé Jms, qui est lui-même étendu par un Bundle Hateoas signé par Willdurand. En pratique, il s'agit d'ajouter des attributes aux controllers et aux entités, qui sont reliées par un système de groupes, qui peuvent être multiples.
+- Versionning
+- La documentation est assumée par le bundle Nelmio, qui propose un site de test des requêtes et une documentation normalisée disponible à l'Url /api/doc.json.
+
+*
+
+[Conclusion:h]
+
+Une Api respectant les normes permet de rendre une application plus attractive et répond aux besoins les plus exigeants en terme d'accès rapide à des informations ponctuelles et ciblées.

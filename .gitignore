@@ -14,8 +14,6 @@
 ###< lexik/jwt-authentication-bundle ###
 
 _old
-_docs
-!docs/uml
 .vscode
 .php-cs-fixer.cache
 .gitignore

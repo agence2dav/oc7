@@ -117,6 +117,11 @@ class UserController extends AbstractController
     #[OA\Tag(name: 'User')]
     public function updateUser(User $user, int $id, Request $request): JsonResponse
     {
+        $logedId = $this->getUser()->id;
+        if ($logedId != $user->getClient()->getId()) {
+            $json = $this->serializerService->serialize(['error_intrusion' => 'modification of client is forbidden']);
+            return new JsonResponse($json, Response::HTTP_OK, [], true);
+        }
         //clear cache
         $this->cachePool->invalidateTags(['usersCache']);
         $user = $this->serializerService->deserialize($request->getContent(), USER::class, [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
