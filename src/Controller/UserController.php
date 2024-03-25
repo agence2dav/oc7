@@ -98,8 +98,7 @@ class UserController extends AbstractController
             type: 'array',
             items: new OA\Items(
                 ref: new Model(
-                    type: User::class,
-                    groups: ['getUserDetails']
+                    type: User::class
                 )
             )
         )
@@ -110,7 +109,7 @@ class UserController extends AbstractController
         content: new OA\JsonContent(
             type: 'array',
             example: '{"username":"azerty", "email":"b@b.b", "status":"1" }',
-            items: new OA\Items(ref: new Model(type: User::class, groups: ['editUser'])),
+            items: new OA\Items(ref: new Model(type: User::class)),
         )
     )]
 
