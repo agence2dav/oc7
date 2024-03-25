@@ -15,12 +15,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
- * 
- * @Hateoas\Relation(
- *      "self",
- *      href = @Hateoas\Route("clientsList", absolute = true,),
- *      exclusion = @Hateoas\Exclusion(groups="getClientsList"),
- * )
  *
  * @Hateoas\Relation(
  *      "self",
@@ -59,7 +53,7 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['getClientsList', 'getClientSummary', 'getClientDetails', 'notit'])]
+    #[Groups(['getClientSummary', 'getClientDetails', 'notit'])]
     public ?int $id = null;
 
     #[ORM\Column(length: 180)]
@@ -74,7 +68,7 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['getClientsList', 'getClientSummary', 'getClientDetails'])]
+    #[Groups(['getClientSummary', 'getClientDetails'])]
     private ?string $corporation = null;
 
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'client')]

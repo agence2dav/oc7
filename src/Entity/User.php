@@ -44,43 +44,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  *
  * @Hateoas\Relation(
- *      "delete",
- *      href = @Hateoas\Route(
- *          "delUser",
- *          absolute = true,
- *          parameters = { "id" = "expr(object.getId())" },
- *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getUserDetails"),
- * )
- *
- * @Hateoas\Relation(
- *      "update",
- *      href = @Hateoas\Route(
- *          "updateUser",
- *          absolute = true,
- *          parameters = { "id" = "expr(object.getId())" },
- *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getUserDetails"),
- * )
- *
- * @Hateoas\Relation(
- *      "create",
- *      href = @Hateoas\Route(
- *          "addUser",
- *          absolute = true,
- *          parameters = { },
- *      ),
- *      exclusion = @Hateoas\Exclusion(groups="getUserDetails"),
- * )
- *
- * @Hateoas\Relation(
  *      "viewNewUser",
  *      href = @Hateoas\Route(
  *          "userDetails",
  *          absolute = true,
  *          parameters = { "clientId" = "expr(object.getClient().getId())", "userId" = "expr(object.getId())" }
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups="newCustomer"),
+ *      exclusion = @Hateoas\Exclusion(groups="addUser"),
  * )
  *
  */
@@ -97,17 +67,17 @@ class User
 
     #[ORM\Column(length: 180, unique: true)]
     #[Groups(['getClientDetails', 'getUserSummary', 'getUserDetails', 'addUser', 'editUser'])]
-    #[Assert\NotBlank(message: "must be specified")]
+    #[Assert\NotBlank(message: "username must be specified")]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['getUserDetails', 'addUser', 'editUser'])]
-    #[Assert\NotBlank(message: "must be specified")]
+    #[Assert\NotBlank(message: "email must be specified")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['getUserDetails', 'addUser', 'editUser'])]
-    #[Assert\NotBlank(message: "must be specified")]
+    #[Assert\NotBlank(message: "status must be specified")]
     private ?string $status = null;
 
     #[ORM\Column(type: "datetime")]
