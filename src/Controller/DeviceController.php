@@ -18,7 +18,6 @@ use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-//use Hateoas\UrlGenerator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -39,9 +38,6 @@ class DeviceController extends AbstractController
         private UrlGeneratorInterface $urlGen,
     ) {
     }
-
-    /* 
-    */
 
     //list of devices
     #[Route('/api/devices', name: 'devicesList', methods: ['GET'])]
@@ -81,10 +77,11 @@ class DeviceController extends AbstractController
         $total = count($this->deviceService->getAllId());
         //cache
         $idCache = 'devicesCache';
-        //$this->cachePool->invalidateTags(['devicesCache']); //
+        if($_ENV['APP_ENV']=='dev'){
+            $this->cachePool->invalidateTags(['devicesCache']);
+        }
         $devices = $this->cache->get($idCache, function (ItemInterface $item) use ($page, $limit) {
-            $item->tag('devicesCache'); //invalidateTags
-            //return $this->deviceService->getAll();
+            $item->tag('devicesCache');
             return $this->deviceService->getAllByPage($page, $limit);
         });
         //error
@@ -93,8 +90,6 @@ class DeviceController extends AbstractController
             return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
         }
         //render
-        //$json = $this->serializerJmsService->serialize($devices, ['getDevicesSummary']);
-        //$json = $this->serializerJmsService->hateoasSerialize($devices, $this->urlGen, ['getDevicesSummary']);
         $json = $this->serializerJmsService->hateoasSerializePaginated($devices, $this->urlGen, ['getDevicesSummary'], 'devicesList', $page, $limit, $total);
         return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
@@ -130,9 +125,6 @@ class DeviceController extends AbstractController
         return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
 
-    /* 
-    */
-
     //props of device
     #[Route('/api/devices/property/{id}', name: 'deviceProps', methods: ['GET'])]
     #[OA\Response(
@@ -151,8 +143,6 @@ class DeviceController extends AbstractController
     #[Tag(name: 'Device')]
     public function prop(Prop $prop, int $id): JsonResponse
     {
-        //get
-        //$prop = $this->propService->getProp($id);
         //error
         $errors = $this->validator->validate($prop);
         if ($errors->count() > 0) {
@@ -162,9 +152,6 @@ class DeviceController extends AbstractController
         $json = $this->serializerJmsService->hateoasSerialize($prop, $this->urlGen, ['getProps']);
         return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
-
-    /* 
-    */
 
     //attribut of prop
     #[Route('/api/devices/property/attribut/{id}', name: 'devicePropAttr', methods: ['GET'])]
@@ -186,7 +173,6 @@ class DeviceController extends AbstractController
     {
         //get
         $attr = $this->attrService->getAttrById($id);
-        //dd($attr);
         //error
         $errors = $this->validator->validate($attr);
         if ($errors->count() > 0) {

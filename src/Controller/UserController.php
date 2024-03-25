@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use OA\Schema;
-use OA\Property;
 use App\Entity\User;
 use App\Service\UserService;
 use OpenApi\Attributes as OA;
@@ -32,9 +30,6 @@ class UserController extends AbstractController
         private TagAwareCacheInterface $cachePool,
     ) {
     }
-
-    /* 
-    */
 
     //create
     #[Route('/api/users', name: 'addUser', methods: ['POST'])]
@@ -65,11 +60,9 @@ class UserController extends AbstractController
 
     #[OA\Tag(name: 'User')]
     public function createUser(#[MapRequestPayload] User $user, Request $request): JsonResponse
-    //public function createUser(Request $request): JsonResponse
     {
         //clear cache
         $this->cachePool->invalidateTags(['usersCache']);
-        //$user = $this->serializerService->deserialize($request->getContent(), USER::class);
         $clientId = $request->toArray()['clientId'] ?? -1;
         //verif user exists
         $errors = $this->validator->validate($user);
@@ -84,7 +77,7 @@ class UserController extends AbstractController
         }
         //add user
         $this->userService->addUser($user, $clientId);
-        //catch error...
+        //catch error
         $errors = $this->validator->validate($user);
         if ($errors->count() > 0) {
             return new JsonResponse($this->serializerService->serialize($errors), JsonResponse::HTTP_BAD_REQUEST, [], true);
@@ -94,9 +87,6 @@ class UserController extends AbstractController
         $location = $this->urlGenerator->generate('userDetails', ['clientId' => $user->getClient()->getId(), 'userId' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         return new JsonResponse($json, Response::HTTP_CREATED, ['Location' => $location], true);
     }
-
-    /* 
-    */
 
     //update user
     #[Route('/api/users/{id}', name: 'updateUser', methods: ['PUT'])]
@@ -129,17 +119,12 @@ class UserController extends AbstractController
     {
         //clear cache
         $this->cachePool->invalidateTags(['usersCache']);
-        //alternative source of datas
-        //$user = $this->userService->getUserById($id);
         $user = $this->serializerService->deserialize($request->getContent(), USER::class, [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
         //update user
         $this->userService->updateUser($user);
         //render
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
-
-    /* 
-    */
 
     //delete user
     #[Route('/api/users/{id}', name: 'delUser', methods: ['DELETE'])]
@@ -161,8 +146,6 @@ class UserController extends AbstractController
     {
         //clear cache
         $this->cachePool->invalidateTags(['usersCache']);
-        //alternative source of datas
-        //$user = $this->userService->getUserById($id);
         //del user
         $this->userService->delUser($user);
         //render
